@@ -997,6 +997,18 @@ const formNames = new Map([
   ["alternate", "Alternate"]
 ]);
 
+const baseSlugByPokemonId = new Map([
+  ["0029", "nidoran-f"],
+  ["0032", "nidoran-m"],
+  ["0083", "farfetch-d"]
+]);
+
+const baseDisplayNameByPokemonId = new Map([
+  ["0029", "Nidoran F"],
+  ["0032", "Nidoran M"],
+  ["0083", "Farfetch'd"]
+]);
+
 function resolveDisplayInfo(sourceJson, petJson) {
   if ((sourceJson.sourceFamily === "pmd-rawasset" || sourceJson.spriteSource === "PMDCollab/RawAsset") && sourceJson.baseName) {
     const displayName = normalizeHumanLabel(sourceJson.baseName);
@@ -1017,8 +1029,13 @@ function resolveDisplayInfo(sourceJson, petJson) {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, "-");
-  const { baseSlug, formSlug } = splitPokemonSlug(slug);
-  const displayName = titleFromSlug(baseSlug || slug || petJson.displayName);
+  let { baseSlug, formSlug } = splitPokemonSlug(slug);
+  const pokemonId = String(sourceJson.pokemonId ?? "").padStart(4, "0");
+  if (baseSlugByPokemonId.get(pokemonId) === slug) {
+    baseSlug = slug;
+    formSlug = "";
+  }
+  const displayName = baseDisplayNameByPokemonId.get(pokemonId) ?? titleFromSlug(baseSlug || slug || petJson.displayName);
   const formLabel = formatFormLabel(formSlug, baseSlug);
   const { id: formGroup, label: formGroupLabel } = resolveFormGroup(formSlug);
 
