@@ -1130,6 +1130,25 @@ p {
     0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
+.type-logo-badge {
+  align-items: center;
+  justify-content: center;
+  min-width: 114px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.type-name-logo {
+  display: block;
+  width: 114px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
 .type-mark {
   position: relative;
   display: inline-grid;
@@ -1156,15 +1175,6 @@ p {
 .official-type-mark::before,
 .official-type-mark::after {
   display: none;
-}
-
-.type-logo {
-  display: block;
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  object-position: center;
-  filter: brightness(0) invert(1);
 }
 
 .type-normal .type-mark::before {
