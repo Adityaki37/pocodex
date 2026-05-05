@@ -1796,21 +1796,6 @@ p {
   text-overflow: ellipsis;
 }
 
-.entry-metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  color: #d9e8f1;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.entry-metrics span {
-  white-space: nowrap;
-}
-
 .source-badge {
   min-width: 184px;
   padding: 14px;
@@ -2752,10 +2737,6 @@ p {
   .share-wrap,
   .share-wrap .entry-action {
     width: 100%;
-  }
-
-  .entry-metrics {
-    grid-column: 1 / -1;
   }
 
   .install-card-heading {
