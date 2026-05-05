@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-mamoswine",
+  "displayName": "PMD RawAsset Mamoswine",
+  "description": "A Codex pet assembled from PMD RawAsset Mamoswine animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

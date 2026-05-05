@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0273",
+  "displayName": "Seedot",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0273",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:44.236604\tCHUNSOFT\tCUR\tUnspecified\tWalk,Attack,Strike,Shoot,Withdraw,Sleep,Hurt,Idle,Swing,Double,Hop,Charge,Rotate\n2023-08-14 23:30:01.008950\t<@!330751862590406656>\tCUR\tPMDCollab_2\tPull,DeepBreath,Nod,Sit,LookUp",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 8
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 8
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Nod",
+      "assetAction": "Nod",
+      "direction": 1,
+      "sourceFrames": 3
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Hurt",
+      "assetAction": "Hurt",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Sit",
+      "assetAction": "Sit",
+      "direction": 0,
+      "sourceFrames": 3
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 2
+    }
+  ]
+}

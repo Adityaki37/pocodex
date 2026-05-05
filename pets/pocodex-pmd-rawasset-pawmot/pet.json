@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-pawmot",
+  "displayName": "PMD RawAsset Pawmot",
+  "description": "A Codex pet assembled from PMD RawAsset Pawmot animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0827",
+  "displayName": "Nickit",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0827",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2023-08-15 03:47:17.020629\t<@!276369635304275968>\tCUR\tPMDCollab_2\tIdle,Walk,Sleep,Hurt,Attack,Charge,Shoot,RearUp,Swing,Double,Rotate,Hop,EventSleep,Wake,Eat,Tumble,Pose,Pull,Pain,Float,DeepBreath,Nod,Sit,LookUp,Sink,Trip,Laying,LeapForth,Head,Cringe,LostBalance,TumbleBack,HitGround,Faint,Special0\n2023-08-23 00:48:54.342893\t<@!276369635304275968>\tCUR\tPMDCollab_2\tHurt,Attack,Shoot,RearUp,Double,Tumble,LookUp,TumbleBack,HitGround,Faint,Special0",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 5
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 5
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Pose",
+      "assetAction": "Pose",
+      "direction": 1,
+      "sourceFrames": 5
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Eat",
+      "assetAction": "Eat",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 5
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 3
+    }
+  ]
+}

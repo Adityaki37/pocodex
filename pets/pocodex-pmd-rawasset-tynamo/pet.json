@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-tynamo",
+  "displayName": "PMD RawAsset Tynamo",
+  "description": "A Codex pet assembled from PMD RawAsset Tynamo animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

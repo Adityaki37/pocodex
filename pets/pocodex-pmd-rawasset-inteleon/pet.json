@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-inteleon",
+  "displayName": "PMD RawAsset Inteleon",
+  "description": "A Codex pet assembled from PMD RawAsset Inteleon animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

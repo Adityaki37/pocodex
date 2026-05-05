@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0543",
+  "displayName": "Venipede",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0543",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2024-05-18 23:31:57.587729\t<@!544245909639397378>\tCUR\tCC_BY-NC_4\tIdle,Walk,Attack,Shoot,Strike,Twirl,Rotate,Hop\n2024-05-18 23:36:14.001658\t<@!608107243329814529>\tCUR\tCC_BY-NC_4\t\"\n2024-06-08 04:31:11.095896\t<@!544245909639397378>\tCUR\tCC_BY-NC_4\tSleep,Charge,Swing,Double\n2024-06-08 04:34:35.642191\t<@!229131140903075840>\tCUR\tCC_BY-NC_4\t\"\n2024-06-13 09:24:36.960642\t<@!544245909639397378>\tCUR\tCC_BY-NC_4\tHurt,Charge\n2025-03-07 16:55:05.781329\t<@!702275233125630042>\tCUR\tCC_BY-NC_4\tIdle,Walk,Hurt,Attack,Charge,Shoot,Swing,Double,Rotate,Hop,EventSleep,Wake,Eat,Tumble,Pose,Pull,Pain,Float,DeepBreath,Nod,Sit,LookUp,Sink,Trip,Laying,LeapForth,Head,Cringe,LostBalance,TumbleBack,HitGround,Faint\n2025-11-09 02:28:24.639399\t<@!702275233125630042>\tCUR\tCC_BY-NC_4\tIdle,Walk,Hurt,Attack,Charge,Shoot,Swing,Double,Hop,EventSleep,Wake,Pose,Pull,Pain,Float,Nod,Laying,LeapForth,Cringe",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 4
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 4
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Pose",
+      "assetAction": "Pose",
+      "direction": 1,
+      "sourceFrames": 3
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Eat",
+      "assetAction": "Eat",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 2
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-beartic",
+  "displayName": "PMD RawAsset Beartic",
+  "description": "A Codex pet assembled from PMD RawAsset Beartic animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

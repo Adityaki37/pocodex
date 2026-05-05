@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-patrat",
+  "displayName": "PMD RawAsset Patrat",
+  "description": "A Codex pet assembled from PMD RawAsset Patrat animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

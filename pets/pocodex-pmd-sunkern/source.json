@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0191",
+  "displayName": "Sunkern",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0191",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:43.863993\tCHUNSOFT\tCUR\tUnspecified\tWalk,Attack,Strike,Shoot,Twirl,Sleep,Hurt,Idle,Swing,Double,Hop,Charge,Rotate\n2024-08-07 09:12:54.340332\t<@!237286997645983744>\tCUR\tCC_BY-NC_4\tChop,EventSleep,Wake,Eat,Float,DeepBreath,LookUp,Sink,Laying,LeapForth,Head,Cringe,LostBalance,HitGround,Faint\n2024-08-10 02:19:48.252358\t<@!237286997645983744>\tCUR\tCC_BY-NC_4\tEventSleep,Wake,Float,Laying",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 8
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 8
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Swing",
+      "assetAction": "Swing",
+      "direction": 1,
+      "sourceFrames": 9
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Eat",
+      "assetAction": "Eat",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 2
+    }
+  ]
+}

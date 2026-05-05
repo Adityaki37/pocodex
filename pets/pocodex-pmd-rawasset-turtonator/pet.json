@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-turtonator",
+  "displayName": "PMD RawAsset Turtonator",
+  "description": "A Codex pet assembled from PMD RawAsset Turtonator animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

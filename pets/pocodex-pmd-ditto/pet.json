@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-ditto",
+  "displayName": "PMD Ditto",
+  "description": "A Codex pet assembled from PMD Collab Ditto animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

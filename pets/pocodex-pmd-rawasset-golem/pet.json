@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-golem",
+  "displayName": "PMD RawAsset Golem",
+  "description": "A Codex pet assembled from PMD RawAsset Golem animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

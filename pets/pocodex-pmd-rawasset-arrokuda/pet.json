@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-arrokuda",
+  "displayName": "PMD RawAsset Arrokuda",
+  "description": "A Codex pet assembled from PMD RawAsset Arrokuda animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

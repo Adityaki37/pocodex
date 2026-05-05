@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-glimmet",
+  "displayName": "PMD RawAsset Glimmet",
+  "description": "A Codex pet assembled from PMD RawAsset Glimmet animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

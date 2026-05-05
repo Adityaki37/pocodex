@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-armaldo",
+  "displayName": "PMD RawAsset Armaldo",
+  "description": "A Codex pet assembled from PMD RawAsset Armaldo animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

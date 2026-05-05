@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-magnemite",
+  "displayName": "PMD RawAsset Magnemite",
+  "description": "A Codex pet assembled from PMD RawAsset Magnemite animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-pignite",
+  "displayName": "PMD RawAsset Pignite",
+  "description": "A Codex pet assembled from PMD RawAsset Pignite animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-wimpod",
+  "displayName": "PMD RawAsset Wimpod",
+  "description": "A Codex pet assembled from PMD RawAsset Wimpod animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

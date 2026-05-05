@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-clauncher",
+  "displayName": "PMD RawAsset Clauncher",
+  "description": "A Codex pet assembled from PMD RawAsset Clauncher animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

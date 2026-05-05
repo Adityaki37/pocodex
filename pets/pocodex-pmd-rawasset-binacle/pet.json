@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-binacle",
+  "displayName": "PMD RawAsset Binacle",
+  "description": "A Codex pet assembled from PMD RawAsset Binacle animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

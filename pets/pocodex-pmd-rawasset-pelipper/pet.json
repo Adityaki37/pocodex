@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-pelipper",
+  "displayName": "PMD RawAsset Pelipper",
+  "description": "A Codex pet assembled from PMD RawAsset Pelipper animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

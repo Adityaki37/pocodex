@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-volbeat",
+  "displayName": "PMD RawAsset Volbeat",
+  "description": "A Codex pet assembled from PMD RawAsset Volbeat animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

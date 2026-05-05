@@ -1,0 +1,108 @@
+{
+  "pokemonId": "0517",
+  "baseName": "Munna",
+  "formLabel": "Base",
+  "displayName": "Munna",
+  "sourceName": "munna",
+  "sourceFamily": "pmd-rawasset",
+  "spriteSource": "PMDCollab/RawAsset",
+  "spriteSourceUrl": "https://github.com/PMDCollab/RawAsset",
+  "spriteBrowserUrl": "https://github.com/PMDCollab/RawAsset/tree/master/Sprite/0517",
+  "sourceUrl": "https://github.com/PMDCollab/RawAsset",
+  "sourceBrowserUrl": "https://github.com/PMDCollab/RawAsset/tree/master/Sprite/0517",
+  "formPath": "",
+  "spriteDest": -1,
+  "license": "See PMDCollab/RawAsset source repository for per-asset credits and licensing; Pokemon ownership retained by respective rights holders",
+  "motionModel": "Distinct PMD RawAsset animation files mapped into Codex task states.",
+  "atlas": {
+    "frameWidth": 192,
+    "frameHeight": 208,
+    "rows": 9,
+    "columns": 8,
+    "usedFrames": [
+      6,
+      8,
+      8,
+      4,
+      5,
+      8,
+      6,
+      6,
+      6
+    ]
+  },
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 6
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 8
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 8
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Swing",
+      "assetAction": "Swing",
+      "direction": 1,
+      "sourceFrames": 9
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Hurt",
+      "assetAction": "Hurt",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Sleep",
+      "assetAction": "Sleep",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "Charge",
+      "assetAction": "Charge",
+      "direction": 1,
+      "sourceFrames": 10
+    }
+  ]
+}

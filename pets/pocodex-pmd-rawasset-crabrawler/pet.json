@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-crabrawler",
+  "displayName": "PMD RawAsset Crabrawler",
+  "description": "A Codex pet assembled from PMD RawAsset Crabrawler animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

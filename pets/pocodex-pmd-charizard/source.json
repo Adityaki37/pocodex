@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0006",
+  "displayName": "Charizard",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0006",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:43.345381\tCHUNSOFT\tCUR\tUnspecified\tAttack,Charge,Double,Hop,Hurt,Idle,Rotate,Shoot,Sleep,Strike,Swing,Walk\n2021-10-01 08:17:01.621356\t<@!237286997645983744>\tCUR\tPMDCollab_1\tCharge,Double,Faint,Hop,Hurt,Rotate,Shoot,Sleep,Strike,Swing\n2023-03-19 18:54:53.170665\t<@!237286997645983744>\tCUR\tPMDCollab_1\tFaint",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 4
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 4
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Swing",
+      "assetAction": "Swing",
+      "direction": 1,
+      "sourceFrames": 9
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Sleep",
+      "assetAction": "Sleep",
+      "direction": 0,
+      "sourceFrames": 2
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "Charge",
+      "assetAction": "Charge",
+      "direction": 1,
+      "sourceFrames": 10
+    }
+  ]
+}

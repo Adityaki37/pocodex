@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-drizzile",
+  "displayName": "PMD RawAsset Drizzile",
+  "description": "A Codex pet assembled from PMD RawAsset Drizzile animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

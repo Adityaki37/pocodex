@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0172",
+  "displayName": "Pichu",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0172",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:43.813132\tCHUNSOFT\tCUR\tUnspecified\tWalk,Attack,QuickStrike,Shock,Sing,Appeal,Sleep,Hurt,Idle,Swing,Double,Hop,Charge,Rotate\n2023-03-31 07:43:37.521359\t<@!454421330058805251>\tCUR\tPMDCollab_1\tEventSleep,Wake,Eat,Tumble,Pose,Pull,Pain,Float,DeepBreath,Nod,Sit,LookUp,Sink,Trip,Laying,LeapForth,Head,Cringe,LostBalance,TumbleBack,HitGround,Faint\n2023-04-09 15:40:44.183737\t<@!454421330058805251>\tCUR\tPMDCollab_1\tTumble,Pose,Pain,Nod,Sit,LookUp,Sink,LeapForth,TumbleBack,HitGround\n2023-04-14 22:15:16.617311\t<@!454421330058805251>\tCUR\tPMDCollab_1\tWake,Pain\n2023-04-15 00:36:45.710329\t<@!454421330058805251>\tCUR\tPMDCollab_1\tPain\n2023-04-22 10:46:17.867751\t<@!454421330058805251>\tCUR\tPMDCollab_1\tPain,Trip,HitGround,Faint\n2023-06-18 20:09:12.351687\t<@!454421330058805251>\tCUR\tPMDCollab_2\tWake,Nod\n2023-07-24 20:50:32.263698\t<@!454421330058805251>\tCUR\tPMDCollab_2\tPose,Nod,Trip,LeapForth,HitGround\n2023-10-13 20:12:56.420025\t<@!454421330058805251>\tCUR\tPMDCollab_2\tPose,Pain,Nod,Trip,HitGround,Faint\n2024-07-31 02:22:31.048084\t<@!454421330058805251>\tCUR\tCC_BY-NC_4\tEventSleep,Wake,Tumble,Pose,Pain,Float,Nod,Sink,Trip,Laying,LeapForth,TumbleBack,HitGround,Faint\n2024-08-20 01:37:43.869590\t<@!454421330058805251>\tCUR\tCC_BY-NC_4\tEventSleep,Wake,Eat,Float,Nod,Trip,Laying,Head,HitGround\n2025-08-17 17:32:13.671858\t<@!454421330058805251>\tCUR\tCC_BY-NC_4\tEventSleep,Wake,Eat,Tumble,Pose,Pull,Float,Nod,Trip,Laying,LeapForth,LostBalance,TumbleBack,HitGround,Faint\n2025-08-17 22:35:43.868958\t<@!454421330058805251>\tCUR\tCC_BY-NC_4\tNod,LeapForth\n2025-08-17 22:35:48.439766\t<@!454421330058805251>\tCUR\tCC_BY-NC_4\tNod,LeapForth",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 8
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 8
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Pose",
+      "assetAction": "Pose",
+      "direction": 1,
+      "sourceFrames": 5
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Eat",
+      "assetAction": "Eat",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 3
+    }
+  ]
+}

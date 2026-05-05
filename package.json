@@ -1,0 +1,45 @@
+{
+  "name": "@crafter-station/pocodex",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Generate and browse Pokemon Codex pet packs from animated sprite sources.",
+  "bin": {
+    "pocodex": "./bin/pocodex.mjs"
+  },
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate": "bun run generate:pmd && bun run generate:pmd-rawasset",
+    "generate:pokeapi": "bun run scripts/generate-pets.mjs",
+    "generate:pmd": "bun run scripts/generate-pmd-pets.mjs",
+    "generate:pmd-rawasset": "bun run scripts/generate-pmd-rawasset-pets.mjs",
+    "generate:showdown": "bun run scripts/generate-showdown-pets.mjs",
+    "site:data": "bun run scripts/build-site-data.mjs",
+    "site:dev": "bunx --bun vite --host 127.0.0.1",
+    "site:quality": "bun run scripts/generate-blastoise-upscale-demo.mjs",
+    "site:pixel-styles": "bun run scripts/generate-pixel-style-public-assets.mjs",
+    "site:build": "bun run site:data && bun run site:quality && bun run site:pixel-styles && bunx --bun vite build",
+    "site:preview": "bunx --bun vite preview --host 127.0.0.1",
+    "validate": "bun run scripts/validate-pets.mjs",
+    "install:pets": "bun run scripts/install-pets.mjs",
+    "cli": "bun run bin/pocodex.mjs",
+    "build": "bun run generate && bun run validate && bun run site:build",
+    "sync": "bun run build && bun run install:pets"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^5.7.2",
+    "gifuct-js": "^2.1.2",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.21"
+  }
+}

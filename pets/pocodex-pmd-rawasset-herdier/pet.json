@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-herdier",
+  "displayName": "PMD RawAsset Herdier",
+  "description": "A Codex pet assembled from PMD RawAsset Herdier animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

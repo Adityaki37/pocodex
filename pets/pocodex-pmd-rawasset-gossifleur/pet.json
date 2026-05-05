@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-gossifleur",
+  "displayName": "PMD RawAsset Gossifleur",
+  "description": "A Codex pet assembled from PMD RawAsset Gossifleur animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

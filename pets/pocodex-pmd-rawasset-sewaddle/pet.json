@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-sewaddle",
+  "displayName": "PMD RawAsset Sewaddle",
+  "description": "A Codex pet assembled from PMD RawAsset Sewaddle animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

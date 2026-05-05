@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-naclstack",
+  "displayName": "PMD RawAsset Naclstack",
+  "description": "A Codex pet assembled from PMD RawAsset Naclstack animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

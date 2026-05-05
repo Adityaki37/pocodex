@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-sobble",
+  "displayName": "PMD Sobble",
+  "description": "A Codex pet assembled from PMD Collab Sobble animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

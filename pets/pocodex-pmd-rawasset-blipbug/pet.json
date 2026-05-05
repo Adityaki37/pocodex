@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-blipbug",
+  "displayName": "PMD RawAsset Blipbug",
+  "description": "A Codex pet assembled from PMD RawAsset Blipbug animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

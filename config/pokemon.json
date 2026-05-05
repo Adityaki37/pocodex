@@ -1,0 +1,7 @@
+{
+  "seed": "pocodex-v2",
+  "includeAllAnimatedFront": true,
+  "removeLegacySeededPets": true,
+  "concurrency": 4,
+  "note": "Generate every front-facing animated Generation V Black/White GIF available in PokeAPI/sprites. Back, shiny, and female subfolders are intentionally excluded for source clarity."
+}

@@ -1,0 +1,5139 @@
+{
+  "generatedAt": "2026-05-04T05:19:34.991Z",
+  "mode": "all-base-pokemon",
+  "skippedBasePokemon": [
+    {
+      "id": "1000",
+      "name": "Gholdengo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1001",
+      "name": "Wo Chien",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1002",
+      "name": "Chien Pao",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1003",
+      "name": "Ting Lu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1004",
+      "name": "Chi Yu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1005",
+      "name": "Roaring Moon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1006",
+      "name": "Iron Valiant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1007",
+      "name": "Koraidon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1008",
+      "name": "Miraidon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1009",
+      "name": "Walking Wake",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1011",
+      "name": "Dipplin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1012",
+      "name": "Poltchageist",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1013",
+      "name": "Sinistcha",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1014",
+      "name": "Okidogi",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1015",
+      "name": "Munkidori",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1017",
+      "name": "Ogerpon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1018",
+      "name": "Archaludon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1019",
+      "name": "Hydrapple",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1020",
+      "name": "Gouging Fire",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1021",
+      "name": "Raging Bolt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1022",
+      "name": "Iron Boulder",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1023",
+      "name": "Iron Crown",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1024",
+      "name": "Terapagos",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "1025",
+      "name": "Pecharunt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0000",
+      "name": "Missingno",
+      "reason": "non-canon tracker entry"
+    },
+    {
+      "id": "0024",
+      "name": "Arbok",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0040",
+      "name": "Wigglytuff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0041",
+      "name": "Zubat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0050",
+      "name": "Diglett",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0051",
+      "name": "Dugtrio",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0054",
+      "name": "Psyduck",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0065",
+      "name": "Alakazam",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0066",
+      "name": "Machop",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0076",
+      "name": "Golem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0081",
+      "name": "Magnemite",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0088",
+      "name": "Grimer",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0089",
+      "name": "Muk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0093",
+      "name": "Haunter",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0096",
+      "name": "Drowzee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0104",
+      "name": "Cubone",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0109",
+      "name": "Koffing",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0130",
+      "name": "Gyarados",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0144",
+      "name": "Articuno",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0145",
+      "name": "Zapdos",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0146",
+      "name": "Moltres",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0174",
+      "name": "Igglybuff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0178",
+      "name": "Xatu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0182",
+      "name": "Bellossom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0192",
+      "name": "Sunflora",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0212",
+      "name": "Scizor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0224",
+      "name": "Octillery",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0227",
+      "name": "Skarmory",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0243",
+      "name": "Raikou",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0244",
+      "name": "Entei",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0245",
+      "name": "Suicune",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0248",
+      "name": "Tyranitar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0249",
+      "name": "Lugia",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0271",
+      "name": "Lombre",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0272",
+      "name": "Ludicolo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0275",
+      "name": "Shiftry",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0279",
+      "name": "Pelipper",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0282",
+      "name": "Gardevoir",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0294",
+      "name": "Loudred",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0298",
+      "name": "Azurill",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0302",
+      "name": "Sableye",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0306",
+      "name": "Aggron",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0308",
+      "name": "Medicham",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0313",
+      "name": "Volbeat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0314",
+      "name": "Illumise",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0348",
+      "name": "Armaldo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0352",
+      "name": "Kecleon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0354",
+      "name": "Banette",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0358",
+      "name": "Chimecho",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0360",
+      "name": "Wynaut",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0365",
+      "name": "Walrein",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0381",
+      "name": "Latios",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0383",
+      "name": "Groudon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0428",
+      "name": "Lopunny",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0435",
+      "name": "Skuntank",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0442",
+      "name": "Spiritomb",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0451",
+      "name": "Skorupi",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0452",
+      "name": "Drapion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0459",
+      "name": "Snover",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0461",
+      "name": "Weavile",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0462",
+      "name": "Magnezone",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0473",
+      "name": "Mamoswine",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0482",
+      "name": "Azelf",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0483",
+      "name": "Dialga",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0484",
+      "name": "Palkia",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0486",
+      "name": "Regigigas",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0494",
+      "name": "Victini",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0496",
+      "name": "Servine",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0497",
+      "name": "Serperior",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0499",
+      "name": "Pignite",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0500",
+      "name": "Emboar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0502",
+      "name": "Dewott",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0503",
+      "name": "Samurott",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0504",
+      "name": "Patrat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0505",
+      "name": "Watchog",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0507",
+      "name": "Herdier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0508",
+      "name": "Stoutland",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0509",
+      "name": "Purrloin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0510",
+      "name": "Liepard",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0511",
+      "name": "Pansage",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0512",
+      "name": "Simisage",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0513",
+      "name": "Pansear",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0514",
+      "name": "Simisear",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0515",
+      "name": "Panpour",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0516",
+      "name": "Simipour",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0517",
+      "name": "Munna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0518",
+      "name": "Musharna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0519",
+      "name": "Pidove",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0520",
+      "name": "Tranquill",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0521",
+      "name": "Unfezant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0522",
+      "name": "Blitzle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0523",
+      "name": "Zebstrika",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0524",
+      "name": "Roggenrola",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0525",
+      "name": "Boldore",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0526",
+      "name": "Gigalith",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0527",
+      "name": "Woobat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0528",
+      "name": "Swoobat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0529",
+      "name": "Drilbur",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0530",
+      "name": "Excadrill",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0531",
+      "name": "Audino",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0532",
+      "name": "Timburr",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0533",
+      "name": "Gurdurr",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0534",
+      "name": "Conkeldurr",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0535",
+      "name": "Tympole",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0536",
+      "name": "Palpitoad",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0537",
+      "name": "Seismitoad",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0538",
+      "name": "Throh",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0539",
+      "name": "Sawk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0540",
+      "name": "Sewaddle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0541",
+      "name": "Swadloon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0542",
+      "name": "Leavanny",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0544",
+      "name": "Whirlipede",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0545",
+      "name": "Scolipede",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0546",
+      "name": "Cottonee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0547",
+      "name": "Whimsicott",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0550",
+      "name": "Basculin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0551",
+      "name": "Sandile",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0552",
+      "name": "Krokorok",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0553",
+      "name": "Krookodile",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0554",
+      "name": "Darumaka",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0555",
+      "name": "Darmanitan",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0556",
+      "name": "Maractus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0558",
+      "name": "Crustle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0560",
+      "name": "Scrafty",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0561",
+      "name": "Sigilyph",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0562",
+      "name": "Yamask",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0563",
+      "name": "Cofagrigus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0564",
+      "name": "Tirtouga",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0565",
+      "name": "Carracosta",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0566",
+      "name": "Archen",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0567",
+      "name": "Archeops",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0569",
+      "name": "Garbodor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0571",
+      "name": "Zoroark",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0573",
+      "name": "Cinccino",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0574",
+      "name": "Gothita",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0575",
+      "name": "Gothorita",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0576",
+      "name": "Gothitelle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0578",
+      "name": "Duosion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0579",
+      "name": "Reuniclus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0580",
+      "name": "Ducklett",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0581",
+      "name": "Swanna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0583",
+      "name": "Vanillish",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0584",
+      "name": "Vanilluxe",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0586",
+      "name": "Sawsbuck",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0588",
+      "name": "Karrablast",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0589",
+      "name": "Escavalier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0590",
+      "name": "Foongus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0591",
+      "name": "Amoonguss",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0592",
+      "name": "Frillish",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0593",
+      "name": "Jellicent",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0594",
+      "name": "Alomomola",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0595",
+      "name": "Joltik",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0596",
+      "name": "Galvantula",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0597",
+      "name": "Ferroseed",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0598",
+      "name": "Ferrothorn",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0599",
+      "name": "Klink",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0600",
+      "name": "Klang",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0601",
+      "name": "Klinklang",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0602",
+      "name": "Tynamo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0603",
+      "name": "Eelektrik",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0604",
+      "name": "Eelektross",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0606",
+      "name": "Beheeyem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0608",
+      "name": "Lampent",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0609",
+      "name": "Chandelure",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0611",
+      "name": "Fraxure",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0612",
+      "name": "Haxorus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0613",
+      "name": "Cubchoo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0614",
+      "name": "Beartic",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0615",
+      "name": "Cryogonal",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0616",
+      "name": "Shelmet",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0617",
+      "name": "Accelgor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0618",
+      "name": "Stunfisk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0620",
+      "name": "Mienshao",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0621",
+      "name": "Druddigon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0623",
+      "name": "Golurk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0626",
+      "name": "Bouffalant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0628",
+      "name": "Braviary",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0629",
+      "name": "Vullaby",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0630",
+      "name": "Mandibuzz",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0631",
+      "name": "Heatmor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0632",
+      "name": "Durant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0634",
+      "name": "Zweilous",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0635",
+      "name": "Hydreigon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0636",
+      "name": "Larvesta",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0637",
+      "name": "Volcarona",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0638",
+      "name": "Cobalion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0639",
+      "name": "Terrakion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0640",
+      "name": "Virizion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0641",
+      "name": "Tornadus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0642",
+      "name": "Thundurus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0643",
+      "name": "Reshiram",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0644",
+      "name": "Zekrom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0645",
+      "name": "Landorus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0646",
+      "name": "Kyurem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0647",
+      "name": "Keldeo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0649",
+      "name": "Genesect",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0651",
+      "name": "Quilladin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0652",
+      "name": "Chesnaught",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0655",
+      "name": "Delphox",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0657",
+      "name": "Frogadier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0658",
+      "name": "Greninja",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0659",
+      "name": "Bunnelby",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0660",
+      "name": "Diggersby",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0661",
+      "name": "Fletchling",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0663",
+      "name": "Talonflame",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0664",
+      "name": "Scatterbug",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0665",
+      "name": "Spewpa",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0666",
+      "name": "Vivillon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0668",
+      "name": "Pyroar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0669",
+      "name": "Flabebe",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0670",
+      "name": "Floette",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0671",
+      "name": "Florges",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0673",
+      "name": "Gogoat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0674",
+      "name": "Pancham",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0675",
+      "name": "Pangoro",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0676",
+      "name": "Furfrou",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0680",
+      "name": "Doublade",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0681",
+      "name": "Aegislash",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0682",
+      "name": "Spritzee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0683",
+      "name": "Aromatisse",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0685",
+      "name": "Slurpuff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0686",
+      "name": "Inkay",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0687",
+      "name": "Malamar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0688",
+      "name": "Binacle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0689",
+      "name": "Barbaracle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0690",
+      "name": "Skrelp",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0691",
+      "name": "Dragalge",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0692",
+      "name": "Clauncher",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0693",
+      "name": "Clawitzer",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0695",
+      "name": "Heliolisk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0696",
+      "name": "Tyrunt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0697",
+      "name": "Tyrantrum",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0699",
+      "name": "Aurorus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0700",
+      "name": "Sylveon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0701",
+      "name": "Hawlucha",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0702",
+      "name": "Dedenne",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0703",
+      "name": "Carbink",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0704",
+      "name": "Goomy",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0705",
+      "name": "Sliggoo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0706",
+      "name": "Goodra",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0707",
+      "name": "Klefki",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0708",
+      "name": "Phantump",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0709",
+      "name": "Trevenant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0710",
+      "name": "Pumpkaboo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0711",
+      "name": "Gourgeist",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0712",
+      "name": "Bergmite",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0713",
+      "name": "Avalugg",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0715",
+      "name": "Noivern",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0716",
+      "name": "Xerneas",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0717",
+      "name": "Yveltal",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0718",
+      "name": "Zygarde",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0720",
+      "name": "Hoopa",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0721",
+      "name": "Volcanion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0723",
+      "name": "Dartrix",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0724",
+      "name": "Decidueye",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0726",
+      "name": "Torracat",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0727",
+      "name": "Incineroar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0729",
+      "name": "Brionne",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0730",
+      "name": "Primarina",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0731",
+      "name": "Pikipek",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0732",
+      "name": "Trumbeak",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0733",
+      "name": "Toucannon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0734",
+      "name": "Yungoos",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0735",
+      "name": "Gumshoos",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0736",
+      "name": "Grubbin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0737",
+      "name": "Charjabug",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0738",
+      "name": "Vikavolt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0739",
+      "name": "Crabrawler",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0740",
+      "name": "Crabominable",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0741",
+      "name": "Oricorio",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0742",
+      "name": "Cutiefly",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0743",
+      "name": "Ribombee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0745",
+      "name": "Lycanroc",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0746",
+      "name": "Wishiwashi",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0747",
+      "name": "Mareanie",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0748",
+      "name": "Toxapex",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0749",
+      "name": "Mudbray",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0750",
+      "name": "Mudsdale",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0751",
+      "name": "Dewpider",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0752",
+      "name": "Araquanid",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0754",
+      "name": "Lurantis",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0755",
+      "name": "Morelull",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0756",
+      "name": "Shiinotic",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0758",
+      "name": "Salazzle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0759",
+      "name": "Stufful",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0760",
+      "name": "Bewear",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0761",
+      "name": "Bounsweet",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0763",
+      "name": "Tsareena",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0764",
+      "name": "Comfey",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0765",
+      "name": "Oranguru",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0766",
+      "name": "Passimian",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0767",
+      "name": "Wimpod",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0768",
+      "name": "Golisopod",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0769",
+      "name": "Sandygast",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0770",
+      "name": "Palossand",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0771",
+      "name": "Pyukumuku",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0774",
+      "name": "Minior",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0775",
+      "name": "Komala",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0776",
+      "name": "Turtonator",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0778",
+      "name": "Mimikyu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0779",
+      "name": "Bruxish",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0780",
+      "name": "Drampa",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0781",
+      "name": "Dhelmise",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0783",
+      "name": "Hakamo o",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0784",
+      "name": "Kommo o",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0785",
+      "name": "Tapu Koko",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0787",
+      "name": "Tapu Bulu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0788",
+      "name": "Tapu Fini",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0789",
+      "name": "Cosmog",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0790",
+      "name": "Cosmoem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0791",
+      "name": "Solgaleo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0792",
+      "name": "Lunala",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0793",
+      "name": "Nihilego",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0794",
+      "name": "Buzzwole",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0795",
+      "name": "Pheromosa",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0796",
+      "name": "Xurkitree",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0797",
+      "name": "Celesteela",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0798",
+      "name": "Kartana",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0799",
+      "name": "Guzzlord",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0800",
+      "name": "Necrozma",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0801",
+      "name": "Magearna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0803",
+      "name": "Poipole",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0804",
+      "name": "Naganadel",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0805",
+      "name": "Stakataka",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0806",
+      "name": "Blacephalon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0807",
+      "name": "Zeraora",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0808",
+      "name": "Meltan",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0809",
+      "name": "Melmetal",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0811",
+      "name": "Thwackey",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0812",
+      "name": "Rillaboom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0815",
+      "name": "Cinderace",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0817",
+      "name": "Drizzile",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0818",
+      "name": "Inteleon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0819",
+      "name": "Skwovet",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0820",
+      "name": "Greedent",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0821",
+      "name": "Rookidee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0823",
+      "name": "Corviknight",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0824",
+      "name": "Blipbug",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0825",
+      "name": "Dottler",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0826",
+      "name": "Orbeetle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0828",
+      "name": "Thievul",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0829",
+      "name": "Gossifleur",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0830",
+      "name": "Eldegoss",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0832",
+      "name": "Dubwool",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0833",
+      "name": "Chewtle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0834",
+      "name": "Drednaw",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0836",
+      "name": "Boltund",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0837",
+      "name": "Rolycoly",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0838",
+      "name": "Carkol",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0839",
+      "name": "Coalossal",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0841",
+      "name": "Flapple",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0842",
+      "name": "Appletun",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0843",
+      "name": "Silicobra",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0844",
+      "name": "Sandaconda",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0845",
+      "name": "Cramorant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0846",
+      "name": "Arrokuda",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0847",
+      "name": "Barraskewda",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0848",
+      "name": "Toxel",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0849",
+      "name": "Toxtricity",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0850",
+      "name": "Sizzlipede",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0851",
+      "name": "Centiskorch",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0853",
+      "name": "Grapploct",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0854",
+      "name": "Sinistea",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0855",
+      "name": "Polteageist",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0856",
+      "name": "Hatenna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0857",
+      "name": "Hattrem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0858",
+      "name": "Hatterene",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0859",
+      "name": "Impidimp",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0860",
+      "name": "Morgrem",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0861",
+      "name": "Grimmsnarl",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0862",
+      "name": "Obstagoon",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0863",
+      "name": "Perrserker",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0864",
+      "name": "Cursola",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0865",
+      "name": "Sirfetch d",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0866",
+      "name": "Mr Rime",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0867",
+      "name": "Runerigus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0868",
+      "name": "Milcery",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0870",
+      "name": "Falinks",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0871",
+      "name": "Pincurchin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0872",
+      "name": "Snom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0873",
+      "name": "Frosmoth",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0874",
+      "name": "Stonjourner",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0875",
+      "name": "Eiscue",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0876",
+      "name": "Indeedee",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0877",
+      "name": "Morpeko",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0878",
+      "name": "Cufant",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0879",
+      "name": "Copperajah",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0880",
+      "name": "Dracozolt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0881",
+      "name": "Arctozolt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0882",
+      "name": "Dracovish",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0883",
+      "name": "Arctovish",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0885",
+      "name": "Dreepy",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0886",
+      "name": "Drakloak",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0887",
+      "name": "Dragapult",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0888",
+      "name": "Zacian",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0889",
+      "name": "Zamazenta",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0890",
+      "name": "Eternatus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0891",
+      "name": "Kubfu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0892",
+      "name": "Urshifu",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0893",
+      "name": "Zarude",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0894",
+      "name": "Regieleki",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0895",
+      "name": "Regidrago",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0896",
+      "name": "Glastrier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0897",
+      "name": "Spectrier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0898",
+      "name": "Calyrex",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0899",
+      "name": "Wyrdeer",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0900",
+      "name": "Kleavor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0901",
+      "name": "Ursaluna",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0902",
+      "name": "Basculegion",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0903",
+      "name": "Sneasler",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0904",
+      "name": "Overqwil",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0905",
+      "name": "Enamorus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0907",
+      "name": "Floragato",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0908",
+      "name": "Meowscarada",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0910",
+      "name": "Crocalor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0911",
+      "name": "Skeledirge",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0912",
+      "name": "Quaxly",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0913",
+      "name": "Quaxwell",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0914",
+      "name": "Quaquaval",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0915",
+      "name": "Lechonk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0916",
+      "name": "Oinkologne",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0917",
+      "name": "Tarountula",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0918",
+      "name": "Spidops",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0919",
+      "name": "Nymble",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0920",
+      "name": "Lokix",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0922",
+      "name": "Pawmo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0923",
+      "name": "Pawmot",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0924",
+      "name": "Tandemaus",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0925",
+      "name": "Maushold",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0927",
+      "name": "Dachsbun",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0928",
+      "name": "Smoliv",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0929",
+      "name": "Dolliv",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0930",
+      "name": "Arboliva",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0931",
+      "name": "Squawkabilly",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0932",
+      "name": "Nacli",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0933",
+      "name": "Naclstack",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0934",
+      "name": "Garganacl",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0936",
+      "name": "Armarouge",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0937",
+      "name": "Ceruledge",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0938",
+      "name": "Tadbulb",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0939",
+      "name": "Bellibolt",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0940",
+      "name": "Wattrel",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0941",
+      "name": "Kilowattrel",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0942",
+      "name": "Maschiff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0943",
+      "name": "Mabosstiff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0944",
+      "name": "Shroodle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0945",
+      "name": "Grafaiai",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0946",
+      "name": "Bramblin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0947",
+      "name": "Brambleghast",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0948",
+      "name": "Toedscool",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0949",
+      "name": "Toedscruel",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0950",
+      "name": "Klawf",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0951",
+      "name": "Capsakid",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0952",
+      "name": "Scovillain",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0953",
+      "name": "Rellor",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0954",
+      "name": "Rabsca",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0955",
+      "name": "Flittle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0956",
+      "name": "Espathra",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0957",
+      "name": "Tinkatink",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0958",
+      "name": "Tinkatuff",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0959",
+      "name": "Tinkaton",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0960",
+      "name": "Wiglett",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0961",
+      "name": "Wugtrio",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0962",
+      "name": "Bombirdier",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0963",
+      "name": "Finizen",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0964",
+      "name": "Palafin",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0965",
+      "name": "Varoom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0966",
+      "name": "Revavroom",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0967",
+      "name": "Cyclizar",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0968",
+      "name": "Orthworm",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0969",
+      "name": "Glimmet",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0970",
+      "name": "Glimmora",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0971",
+      "name": "Greavard",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0972",
+      "name": "Houndstone",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0973",
+      "name": "Flamigo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0974",
+      "name": "Cetoddle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0975",
+      "name": "Cetitan",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0976",
+      "name": "Veluza",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0977",
+      "name": "Dondozo",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0978",
+      "name": "Tatsugiri",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0979",
+      "name": "Annihilape",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0980",
+      "name": "Clodsire",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0981",
+      "name": "Farigiraf",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0982",
+      "name": "Dudunsparce",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0983",
+      "name": "Kingambit",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0984",
+      "name": "Great Tusk",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0985",
+      "name": "Scream Tail",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0986",
+      "name": "Brute Bonnet",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0987",
+      "name": "Flutter Mane",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0988",
+      "name": "Slither Wing",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0989",
+      "name": "Sandy Shocks",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0990",
+      "name": "Iron Treads",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0991",
+      "name": "Iron Bundle",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0992",
+      "name": "Iron Hands",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0993",
+      "name": "Iron Jugulis",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0994",
+      "name": "Iron Moth",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0995",
+      "name": "Iron Thorns",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0996",
+      "name": "Frigibax",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0997",
+      "name": "Arctibax",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0998",
+      "name": "Baxcalibur",
+      "reason": "no completed overworld sprite actions"
+    },
+    {
+      "id": "0999",
+      "name": "Gimmighoul",
+      "reason": "no completed overworld sprite actions"
+    }
+  ],
+  "failedPokemon": [],
+  "pets": [
+    {
+      "id": "0001",
+      "slug": "pocodex-pmd-bulbasaur",
+      "name": "Bulbasaur"
+    },
+    {
+      "id": "0002",
+      "slug": "pocodex-pmd-ivysaur",
+      "name": "Ivysaur"
+    },
+    {
+      "id": "0003",
+      "slug": "pocodex-pmd-venusaur",
+      "name": "Venusaur"
+    },
+    {
+      "id": "0004",
+      "slug": "pocodex-pmd-charmander",
+      "name": "Charmander"
+    },
+    {
+      "id": "0005",
+      "slug": "pocodex-pmd-charmeleon",
+      "name": "Charmeleon"
+    },
+    {
+      "id": "0006",
+      "slug": "pocodex-pmd-charizard",
+      "name": "Charizard"
+    },
+    {
+      "id": "0007",
+      "slug": "pocodex-pmd-squirtle",
+      "name": "Squirtle"
+    },
+    {
+      "id": "0008",
+      "slug": "pocodex-pmd-wartortle",
+      "name": "Wartortle"
+    },
+    {
+      "id": "0009",
+      "slug": "pocodex-pmd-blastoise",
+      "name": "Blastoise"
+    },
+    {
+      "id": "0010",
+      "slug": "pocodex-pmd-caterpie",
+      "name": "Caterpie"
+    },
+    {
+      "id": "0011",
+      "slug": "pocodex-pmd-metapod",
+      "name": "Metapod"
+    },
+    {
+      "id": "0012",
+      "slug": "pocodex-pmd-butterfree",
+      "name": "Butterfree"
+    },
+    {
+      "id": "0013",
+      "slug": "pocodex-pmd-weedle",
+      "name": "Weedle"
+    },
+    {
+      "id": "0014",
+      "slug": "pocodex-pmd-kakuna",
+      "name": "Kakuna"
+    },
+    {
+      "id": "0015",
+      "slug": "pocodex-pmd-beedrill",
+      "name": "Beedrill"
+    },
+    {
+      "id": "0016",
+      "slug": "pocodex-pmd-pidgey",
+      "name": "Pidgey"
+    },
+    {
+      "id": "0017",
+      "slug": "pocodex-pmd-pidgeotto",
+      "name": "Pidgeotto"
+    },
+    {
+      "id": "0018",
+      "slug": "pocodex-pmd-pidgeot",
+      "name": "Pidgeot"
+    },
+    {
+      "id": "0019",
+      "slug": "pocodex-pmd-rattata",
+      "name": "Rattata"
+    },
+    {
+      "id": "0020",
+      "slug": "pocodex-pmd-raticate",
+      "name": "Raticate"
+    },
+    {
+      "id": "0021",
+      "slug": "pocodex-pmd-spearow",
+      "name": "Spearow"
+    },
+    {
+      "id": "0022",
+      "slug": "pocodex-pmd-fearow",
+      "name": "Fearow"
+    },
+    {
+      "id": "0023",
+      "slug": "pocodex-pmd-ekans",
+      "name": "Ekans"
+    },
+    {
+      "id": "0025",
+      "slug": "pocodex-pmd-pikachu",
+      "name": "Pikachu"
+    },
+    {
+      "id": "0026",
+      "slug": "pocodex-pmd-raichu",
+      "name": "Raichu"
+    },
+    {
+      "id": "0027",
+      "slug": "pocodex-pmd-sandshrew",
+      "name": "Sandshrew"
+    },
+    {
+      "id": "0028",
+      "slug": "pocodex-pmd-sandslash",
+      "name": "Sandslash"
+    },
+    {
+      "id": "0029",
+      "slug": "pocodex-pmd-nidoran-f",
+      "name": "Nidoran F"
+    },
+    {
+      "id": "0030",
+      "slug": "pocodex-pmd-nidorina",
+      "name": "Nidorina"
+    },
+    {
+      "id": "0031",
+      "slug": "pocodex-pmd-nidoqueen",
+      "name": "Nidoqueen"
+    },
+    {
+      "id": "0032",
+      "slug": "pocodex-pmd-nidoran-m",
+      "name": "Nidoran M"
+    },
+    {
+      "id": "0033",
+      "slug": "pocodex-pmd-nidorino",
+      "name": "Nidorino"
+    },
+    {
+      "id": "0034",
+      "slug": "pocodex-pmd-nidoking",
+      "name": "Nidoking"
+    },
+    {
+      "id": "0035",
+      "slug": "pocodex-pmd-clefairy",
+      "name": "Clefairy"
+    },
+    {
+      "id": "0036",
+      "slug": "pocodex-pmd-clefable",
+      "name": "Clefable"
+    },
+    {
+      "id": "0037",
+      "slug": "pocodex-pmd-vulpix",
+      "name": "Vulpix"
+    },
+    {
+      "id": "0038",
+      "slug": "pocodex-pmd-ninetales",
+      "name": "Ninetales"
+    },
+    {
+      "id": "0039",
+      "slug": "pocodex-pmd-jigglypuff",
+      "name": "Jigglypuff"
+    },
+    {
+      "id": "0042",
+      "slug": "pocodex-pmd-golbat",
+      "name": "Golbat"
+    },
+    {
+      "id": "0043",
+      "slug": "pocodex-pmd-oddish",
+      "name": "Oddish"
+    },
+    {
+      "id": "0044",
+      "slug": "pocodex-pmd-gloom",
+      "name": "Gloom"
+    },
+    {
+      "id": "0045",
+      "slug": "pocodex-pmd-vileplume",
+      "name": "Vileplume"
+    },
+    {
+      "id": "0046",
+      "slug": "pocodex-pmd-paras",
+      "name": "Paras"
+    },
+    {
+      "id": "0047",
+      "slug": "pocodex-pmd-parasect",
+      "name": "Parasect"
+    },
+    {
+      "id": "0048",
+      "slug": "pocodex-pmd-venonat",
+      "name": "Venonat"
+    },
+    {
+      "id": "0049",
+      "slug": "pocodex-pmd-venomoth",
+      "name": "Venomoth"
+    },
+    {
+      "id": "0052",
+      "slug": "pocodex-pmd-meowth",
+      "name": "Meowth"
+    },
+    {
+      "id": "0053",
+      "slug": "pocodex-pmd-persian",
+      "name": "Persian"
+    },
+    {
+      "id": "0055",
+      "slug": "pocodex-pmd-golduck",
+      "name": "Golduck"
+    },
+    {
+      "id": "0056",
+      "slug": "pocodex-pmd-mankey",
+      "name": "Mankey"
+    },
+    {
+      "id": "0057",
+      "slug": "pocodex-pmd-primeape",
+      "name": "Primeape"
+    },
+    {
+      "id": "0058",
+      "slug": "pocodex-pmd-growlithe",
+      "name": "Growlithe"
+    },
+    {
+      "id": "0059",
+      "slug": "pocodex-pmd-arcanine",
+      "name": "Arcanine"
+    },
+    {
+      "id": "0060",
+      "slug": "pocodex-pmd-poliwag",
+      "name": "Poliwag"
+    },
+    {
+      "id": "0061",
+      "slug": "pocodex-pmd-poliwhirl",
+      "name": "Poliwhirl"
+    },
+    {
+      "id": "0062",
+      "slug": "pocodex-pmd-poliwrath",
+      "name": "Poliwrath"
+    },
+    {
+      "id": "0063",
+      "slug": "pocodex-pmd-abra",
+      "name": "Abra"
+    },
+    {
+      "id": "0064",
+      "slug": "pocodex-pmd-kadabra",
+      "name": "Kadabra"
+    },
+    {
+      "id": "0067",
+      "slug": "pocodex-pmd-machoke",
+      "name": "Machoke"
+    },
+    {
+      "id": "0068",
+      "slug": "pocodex-pmd-machamp",
+      "name": "Machamp"
+    },
+    {
+      "id": "0069",
+      "slug": "pocodex-pmd-bellsprout",
+      "name": "Bellsprout"
+    },
+    {
+      "id": "0070",
+      "slug": "pocodex-pmd-weepinbell",
+      "name": "Weepinbell"
+    },
+    {
+      "id": "0071",
+      "slug": "pocodex-pmd-victreebel",
+      "name": "Victreebel"
+    },
+    {
+      "id": "0072",
+      "slug": "pocodex-pmd-tentacool",
+      "name": "Tentacool"
+    },
+    {
+      "id": "0073",
+      "slug": "pocodex-pmd-tentacruel",
+      "name": "Tentacruel"
+    },
+    {
+      "id": "0074",
+      "slug": "pocodex-pmd-geodude",
+      "name": "Geodude"
+    },
+    {
+      "id": "0075",
+      "slug": "pocodex-pmd-graveler",
+      "name": "Graveler"
+    },
+    {
+      "id": "0077",
+      "slug": "pocodex-pmd-ponyta",
+      "name": "Ponyta"
+    },
+    {
+      "id": "0078",
+      "slug": "pocodex-pmd-rapidash",
+      "name": "Rapidash"
+    },
+    {
+      "id": "0079",
+      "slug": "pocodex-pmd-slowpoke",
+      "name": "Slowpoke"
+    },
+    {
+      "id": "0080",
+      "slug": "pocodex-pmd-slowbro",
+      "name": "Slowbro"
+    },
+    {
+      "id": "0082",
+      "slug": "pocodex-pmd-magneton",
+      "name": "Magneton"
+    },
+    {
+      "id": "0083",
+      "slug": "pocodex-pmd-farfetch-d",
+      "name": "Farfetch d"
+    },
+    {
+      "id": "0084",
+      "slug": "pocodex-pmd-doduo",
+      "name": "Doduo"
+    },
+    {
+      "id": "0085",
+      "slug": "pocodex-pmd-dodrio",
+      "name": "Dodrio"
+    },
+    {
+      "id": "0086",
+      "slug": "pocodex-pmd-seel",
+      "name": "Seel"
+    },
+    {
+      "id": "0087",
+      "slug": "pocodex-pmd-dewgong",
+      "name": "Dewgong"
+    },
+    {
+      "id": "0090",
+      "slug": "pocodex-pmd-shellder",
+      "name": "Shellder"
+    },
+    {
+      "id": "0091",
+      "slug": "pocodex-pmd-cloyster",
+      "name": "Cloyster"
+    },
+    {
+      "id": "0092",
+      "slug": "pocodex-pmd-gastly",
+      "name": "Gastly"
+    },
+    {
+      "id": "0094",
+      "slug": "pocodex-pmd-gengar",
+      "name": "Gengar"
+    },
+    {
+      "id": "0095",
+      "slug": "pocodex-pmd-onix",
+      "name": "Onix"
+    },
+    {
+      "id": "0097",
+      "slug": "pocodex-pmd-hypno",
+      "name": "Hypno"
+    },
+    {
+      "id": "0098",
+      "slug": "pocodex-pmd-krabby",
+      "name": "Krabby"
+    },
+    {
+      "id": "0099",
+      "slug": "pocodex-pmd-kingler",
+      "name": "Kingler"
+    },
+    {
+      "id": "0100",
+      "slug": "pocodex-pmd-voltorb",
+      "name": "Voltorb"
+    },
+    {
+      "id": "0101",
+      "slug": "pocodex-pmd-electrode",
+      "name": "Electrode"
+    },
+    {
+      "id": "0102",
+      "slug": "pocodex-pmd-exeggcute",
+      "name": "Exeggcute"
+    },
+    {
+      "id": "0103",
+      "slug": "pocodex-pmd-exeggutor",
+      "name": "Exeggutor"
+    },
+    {
+      "id": "0105",
+      "slug": "pocodex-pmd-marowak",
+      "name": "Marowak"
+    },
+    {
+      "id": "0106",
+      "slug": "pocodex-pmd-hitmonlee",
+      "name": "Hitmonlee"
+    },
+    {
+      "id": "0107",
+      "slug": "pocodex-pmd-hitmonchan",
+      "name": "Hitmonchan"
+    },
+    {
+      "id": "0108",
+      "slug": "pocodex-pmd-lickitung",
+      "name": "Lickitung"
+    },
+    {
+      "id": "0110",
+      "slug": "pocodex-pmd-weezing",
+      "name": "Weezing"
+    },
+    {
+      "id": "0111",
+      "slug": "pocodex-pmd-rhyhorn",
+      "name": "Rhyhorn"
+    },
+    {
+      "id": "0112",
+      "slug": "pocodex-pmd-rhydon",
+      "name": "Rhydon"
+    },
+    {
+      "id": "0113",
+      "slug": "pocodex-pmd-chansey",
+      "name": "Chansey"
+    },
+    {
+      "id": "0114",
+      "slug": "pocodex-pmd-tangela",
+      "name": "Tangela"
+    },
+    {
+      "id": "0115",
+      "slug": "pocodex-pmd-kangaskhan",
+      "name": "Kangaskhan"
+    },
+    {
+      "id": "0116",
+      "slug": "pocodex-pmd-horsea",
+      "name": "Horsea"
+    },
+    {
+      "id": "0117",
+      "slug": "pocodex-pmd-seadra",
+      "name": "Seadra"
+    },
+    {
+      "id": "0118",
+      "slug": "pocodex-pmd-goldeen",
+      "name": "Goldeen"
+    },
+    {
+      "id": "0119",
+      "slug": "pocodex-pmd-seaking",
+      "name": "Seaking"
+    },
+    {
+      "id": "0120",
+      "slug": "pocodex-pmd-staryu",
+      "name": "Staryu"
+    },
+    {
+      "id": "0121",
+      "slug": "pocodex-pmd-starmie",
+      "name": "Starmie"
+    },
+    {
+      "id": "0122",
+      "slug": "pocodex-pmd-mr-mime",
+      "name": "Mr Mime"
+    },
+    {
+      "id": "0123",
+      "slug": "pocodex-pmd-scyther",
+      "name": "Scyther"
+    },
+    {
+      "id": "0124",
+      "slug": "pocodex-pmd-jynx",
+      "name": "Jynx"
+    },
+    {
+      "id": "0125",
+      "slug": "pocodex-pmd-electabuzz",
+      "name": "Electabuzz"
+    },
+    {
+      "id": "0126",
+      "slug": "pocodex-pmd-magmar",
+      "name": "Magmar"
+    },
+    {
+      "id": "0127",
+      "slug": "pocodex-pmd-pinsir",
+      "name": "Pinsir"
+    },
+    {
+      "id": "0128",
+      "slug": "pocodex-pmd-tauros",
+      "name": "Tauros"
+    },
+    {
+      "id": "0129",
+      "slug": "pocodex-pmd-magikarp",
+      "name": "Magikarp"
+    },
+    {
+      "id": "0131",
+      "slug": "pocodex-pmd-lapras",
+      "name": "Lapras"
+    },
+    {
+      "id": "0132",
+      "slug": "pocodex-pmd-ditto",
+      "name": "Ditto"
+    },
+    {
+      "id": "0133",
+      "slug": "pocodex-pmd-eevee",
+      "name": "Eevee"
+    },
+    {
+      "id": "0134",
+      "slug": "pocodex-pmd-vaporeon",
+      "name": "Vaporeon"
+    },
+    {
+      "id": "0135",
+      "slug": "pocodex-pmd-jolteon",
+      "name": "Jolteon"
+    },
+    {
+      "id": "0136",
+      "slug": "pocodex-pmd-flareon",
+      "name": "Flareon"
+    },
+    {
+      "id": "0137",
+      "slug": "pocodex-pmd-porygon",
+      "name": "Porygon"
+    },
+    {
+      "id": "0138",
+      "slug": "pocodex-pmd-omanyte",
+      "name": "Omanyte"
+    },
+    {
+      "id": "0139",
+      "slug": "pocodex-pmd-omastar",
+      "name": "Omastar"
+    },
+    {
+      "id": "0140",
+      "slug": "pocodex-pmd-kabuto",
+      "name": "Kabuto"
+    },
+    {
+      "id": "0141",
+      "slug": "pocodex-pmd-kabutops",
+      "name": "Kabutops"
+    },
+    {
+      "id": "0142",
+      "slug": "pocodex-pmd-aerodactyl",
+      "name": "Aerodactyl"
+    },
+    {
+      "id": "0143",
+      "slug": "pocodex-pmd-snorlax",
+      "name": "Snorlax"
+    },
+    {
+      "id": "0147",
+      "slug": "pocodex-pmd-dratini",
+      "name": "Dratini"
+    },
+    {
+      "id": "0148",
+      "slug": "pocodex-pmd-dragonair",
+      "name": "Dragonair"
+    },
+    {
+      "id": "0149",
+      "slug": "pocodex-pmd-dragonite",
+      "name": "Dragonite"
+    },
+    {
+      "id": "0150",
+      "slug": "pocodex-pmd-mewtwo",
+      "name": "Mewtwo"
+    },
+    {
+      "id": "0151",
+      "slug": "pocodex-pmd-mew",
+      "name": "Mew"
+    },
+    {
+      "id": "0152",
+      "slug": "pocodex-pmd-chikorita",
+      "name": "Chikorita"
+    },
+    {
+      "id": "0153",
+      "slug": "pocodex-pmd-bayleef",
+      "name": "Bayleef"
+    },
+    {
+      "id": "0154",
+      "slug": "pocodex-pmd-meganium",
+      "name": "Meganium"
+    },
+    {
+      "id": "0155",
+      "slug": "pocodex-pmd-cyndaquil",
+      "name": "Cyndaquil"
+    },
+    {
+      "id": "0156",
+      "slug": "pocodex-pmd-quilava",
+      "name": "Quilava"
+    },
+    {
+      "id": "0157",
+      "slug": "pocodex-pmd-typhlosion",
+      "name": "Typhlosion"
+    },
+    {
+      "id": "0158",
+      "slug": "pocodex-pmd-totodile",
+      "name": "Totodile"
+    },
+    {
+      "id": "0159",
+      "slug": "pocodex-pmd-croconaw",
+      "name": "Croconaw"
+    },
+    {
+      "id": "0160",
+      "slug": "pocodex-pmd-feraligatr",
+      "name": "Feraligatr"
+    },
+    {
+      "id": "0161",
+      "slug": "pocodex-pmd-sentret",
+      "name": "Sentret"
+    },
+    {
+      "id": "0162",
+      "slug": "pocodex-pmd-furret",
+      "name": "Furret"
+    },
+    {
+      "id": "0163",
+      "slug": "pocodex-pmd-hoothoot",
+      "name": "Hoothoot"
+    },
+    {
+      "id": "0164",
+      "slug": "pocodex-pmd-noctowl",
+      "name": "Noctowl"
+    },
+    {
+      "id": "0165",
+      "slug": "pocodex-pmd-ledyba",
+      "name": "Ledyba"
+    },
+    {
+      "id": "0166",
+      "slug": "pocodex-pmd-ledian",
+      "name": "Ledian"
+    },
+    {
+      "id": "0167",
+      "slug": "pocodex-pmd-spinarak",
+      "name": "Spinarak"
+    },
+    {
+      "id": "0168",
+      "slug": "pocodex-pmd-ariados",
+      "name": "Ariados"
+    },
+    {
+      "id": "0169",
+      "slug": "pocodex-pmd-crobat",
+      "name": "Crobat"
+    },
+    {
+      "id": "0170",
+      "slug": "pocodex-pmd-chinchou",
+      "name": "Chinchou"
+    },
+    {
+      "id": "0171",
+      "slug": "pocodex-pmd-lanturn",
+      "name": "Lanturn"
+    },
+    {
+      "id": "0172",
+      "slug": "pocodex-pmd-pichu",
+      "name": "Pichu"
+    },
+    {
+      "id": "0173",
+      "slug": "pocodex-pmd-cleffa",
+      "name": "Cleffa"
+    },
+    {
+      "id": "0175",
+      "slug": "pocodex-pmd-togepi",
+      "name": "Togepi"
+    },
+    {
+      "id": "0176",
+      "slug": "pocodex-pmd-togetic",
+      "name": "Togetic"
+    },
+    {
+      "id": "0177",
+      "slug": "pocodex-pmd-natu",
+      "name": "Natu"
+    },
+    {
+      "id": "0179",
+      "slug": "pocodex-pmd-mareep",
+      "name": "Mareep"
+    },
+    {
+      "id": "0180",
+      "slug": "pocodex-pmd-flaaffy",
+      "name": "Flaaffy"
+    },
+    {
+      "id": "0181",
+      "slug": "pocodex-pmd-ampharos",
+      "name": "Ampharos"
+    },
+    {
+      "id": "0183",
+      "slug": "pocodex-pmd-marill",
+      "name": "Marill"
+    },
+    {
+      "id": "0184",
+      "slug": "pocodex-pmd-azumarill",
+      "name": "Azumarill"
+    },
+    {
+      "id": "0185",
+      "slug": "pocodex-pmd-sudowoodo",
+      "name": "Sudowoodo"
+    },
+    {
+      "id": "0186",
+      "slug": "pocodex-pmd-politoed",
+      "name": "Politoed"
+    },
+    {
+      "id": "0187",
+      "slug": "pocodex-pmd-hoppip",
+      "name": "Hoppip"
+    },
+    {
+      "id": "0188",
+      "slug": "pocodex-pmd-skiploom",
+      "name": "Skiploom"
+    },
+    {
+      "id": "0189",
+      "slug": "pocodex-pmd-jumpluff",
+      "name": "Jumpluff"
+    },
+    {
+      "id": "0190",
+      "slug": "pocodex-pmd-aipom",
+      "name": "Aipom"
+    },
+    {
+      "id": "0191",
+      "slug": "pocodex-pmd-sunkern",
+      "name": "Sunkern"
+    },
+    {
+      "id": "0193",
+      "slug": "pocodex-pmd-yanma",
+      "name": "Yanma"
+    },
+    {
+      "id": "0194",
+      "slug": "pocodex-pmd-wooper",
+      "name": "Wooper"
+    },
+    {
+      "id": "0195",
+      "slug": "pocodex-pmd-quagsire",
+      "name": "Quagsire"
+    },
+    {
+      "id": "0196",
+      "slug": "pocodex-pmd-espeon",
+      "name": "Espeon"
+    },
+    {
+      "id": "0197",
+      "slug": "pocodex-pmd-umbreon",
+      "name": "Umbreon"
+    },
+    {
+      "id": "0198",
+      "slug": "pocodex-pmd-murkrow",
+      "name": "Murkrow"
+    },
+    {
+      "id": "0199",
+      "slug": "pocodex-pmd-slowking",
+      "name": "Slowking"
+    },
+    {
+      "id": "0200",
+      "slug": "pocodex-pmd-misdreavus",
+      "name": "Misdreavus"
+    },
+    {
+      "id": "0201",
+      "slug": "pocodex-pmd-unown",
+      "name": "Unown"
+    },
+    {
+      "id": "0202",
+      "slug": "pocodex-pmd-wobbuffet",
+      "name": "Wobbuffet"
+    },
+    {
+      "id": "0203",
+      "slug": "pocodex-pmd-girafarig",
+      "name": "Girafarig"
+    },
+    {
+      "id": "0204",
+      "slug": "pocodex-pmd-pineco",
+      "name": "Pineco"
+    },
+    {
+      "id": "0205",
+      "slug": "pocodex-pmd-forretress",
+      "name": "Forretress"
+    },
+    {
+      "id": "0206",
+      "slug": "pocodex-pmd-dunsparce",
+      "name": "Dunsparce"
+    },
+    {
+      "id": "0207",
+      "slug": "pocodex-pmd-gligar",
+      "name": "Gligar"
+    },
+    {
+      "id": "0208",
+      "slug": "pocodex-pmd-steelix",
+      "name": "Steelix"
+    },
+    {
+      "id": "0209",
+      "slug": "pocodex-pmd-snubbull",
+      "name": "Snubbull"
+    },
+    {
+      "id": "0210",
+      "slug": "pocodex-pmd-granbull",
+      "name": "Granbull"
+    },
+    {
+      "id": "0211",
+      "slug": "pocodex-pmd-qwilfish",
+      "name": "Qwilfish"
+    },
+    {
+      "id": "0213",
+      "slug": "pocodex-pmd-shuckle",
+      "name": "Shuckle"
+    },
+    {
+      "id": "0214",
+      "slug": "pocodex-pmd-heracross",
+      "name": "Heracross"
+    },
+    {
+      "id": "0215",
+      "slug": "pocodex-pmd-sneasel",
+      "name": "Sneasel"
+    },
+    {
+      "id": "0216",
+      "slug": "pocodex-pmd-teddiursa",
+      "name": "Teddiursa"
+    },
+    {
+      "id": "0217",
+      "slug": "pocodex-pmd-ursaring",
+      "name": "Ursaring"
+    },
+    {
+      "id": "0218",
+      "slug": "pocodex-pmd-slugma",
+      "name": "Slugma"
+    },
+    {
+      "id": "0219",
+      "slug": "pocodex-pmd-magcargo",
+      "name": "Magcargo"
+    },
+    {
+      "id": "0220",
+      "slug": "pocodex-pmd-swinub",
+      "name": "Swinub"
+    },
+    {
+      "id": "0221",
+      "slug": "pocodex-pmd-piloswine",
+      "name": "Piloswine"
+    },
+    {
+      "id": "0222",
+      "slug": "pocodex-pmd-corsola",
+      "name": "Corsola"
+    },
+    {
+      "id": "0223",
+      "slug": "pocodex-pmd-remoraid",
+      "name": "Remoraid"
+    },
+    {
+      "id": "0225",
+      "slug": "pocodex-pmd-delibird",
+      "name": "Delibird"
+    },
+    {
+      "id": "0226",
+      "slug": "pocodex-pmd-mantine",
+      "name": "Mantine"
+    },
+    {
+      "id": "0228",
+      "slug": "pocodex-pmd-houndour",
+      "name": "Houndour"
+    },
+    {
+      "id": "0229",
+      "slug": "pocodex-pmd-houndoom",
+      "name": "Houndoom"
+    },
+    {
+      "id": "0230",
+      "slug": "pocodex-pmd-kingdra",
+      "name": "Kingdra"
+    },
+    {
+      "id": "0231",
+      "slug": "pocodex-pmd-phanpy",
+      "name": "Phanpy"
+    },
+    {
+      "id": "0232",
+      "slug": "pocodex-pmd-donphan",
+      "name": "Donphan"
+    },
+    {
+      "id": "0233",
+      "slug": "pocodex-pmd-porygon2",
+      "name": "Porygon2"
+    },
+    {
+      "id": "0234",
+      "slug": "pocodex-pmd-stantler",
+      "name": "Stantler"
+    },
+    {
+      "id": "0235",
+      "slug": "pocodex-pmd-smeargle",
+      "name": "Smeargle"
+    },
+    {
+      "id": "0236",
+      "slug": "pocodex-pmd-tyrogue",
+      "name": "Tyrogue"
+    },
+    {
+      "id": "0237",
+      "slug": "pocodex-pmd-hitmontop",
+      "name": "Hitmontop"
+    },
+    {
+      "id": "0238",
+      "slug": "pocodex-pmd-smoochum",
+      "name": "Smoochum"
+    },
+    {
+      "id": "0239",
+      "slug": "pocodex-pmd-elekid",
+      "name": "Elekid"
+    },
+    {
+      "id": "0240",
+      "slug": "pocodex-pmd-magby",
+      "name": "Magby"
+    },
+    {
+      "id": "0241",
+      "slug": "pocodex-pmd-miltank",
+      "name": "Miltank"
+    },
+    {
+      "id": "0242",
+      "slug": "pocodex-pmd-blissey",
+      "name": "Blissey"
+    },
+    {
+      "id": "0246",
+      "slug": "pocodex-pmd-larvitar",
+      "name": "Larvitar"
+    },
+    {
+      "id": "0247",
+      "slug": "pocodex-pmd-pupitar",
+      "name": "Pupitar"
+    },
+    {
+      "id": "0250",
+      "slug": "pocodex-pmd-ho-oh",
+      "name": "Ho Oh"
+    },
+    {
+      "id": "0251",
+      "slug": "pocodex-pmd-celebi",
+      "name": "Celebi"
+    },
+    {
+      "id": "0252",
+      "slug": "pocodex-pmd-treecko",
+      "name": "Treecko"
+    },
+    {
+      "id": "0253",
+      "slug": "pocodex-pmd-grovyle",
+      "name": "Grovyle"
+    },
+    {
+      "id": "0254",
+      "slug": "pocodex-pmd-sceptile",
+      "name": "Sceptile"
+    },
+    {
+      "id": "0255",
+      "slug": "pocodex-pmd-torchic",
+      "name": "Torchic"
+    },
+    {
+      "id": "0256",
+      "slug": "pocodex-pmd-combusken",
+      "name": "Combusken"
+    },
+    {
+      "id": "0257",
+      "slug": "pocodex-pmd-blaziken",
+      "name": "Blaziken"
+    },
+    {
+      "id": "0258",
+      "slug": "pocodex-pmd-mudkip",
+      "name": "Mudkip"
+    },
+    {
+      "id": "0259",
+      "slug": "pocodex-pmd-marshtomp",
+      "name": "Marshtomp"
+    },
+    {
+      "id": "0260",
+      "slug": "pocodex-pmd-swampert",
+      "name": "Swampert"
+    },
+    {
+      "id": "0261",
+      "slug": "pocodex-pmd-poochyena",
+      "name": "Poochyena"
+    },
+    {
+      "id": "0262",
+      "slug": "pocodex-pmd-mightyena",
+      "name": "Mightyena"
+    },
+    {
+      "id": "0263",
+      "slug": "pocodex-pmd-zigzagoon",
+      "name": "Zigzagoon"
+    },
+    {
+      "id": "0264",
+      "slug": "pocodex-pmd-linoone",
+      "name": "Linoone"
+    },
+    {
+      "id": "0265",
+      "slug": "pocodex-pmd-wurmple",
+      "name": "Wurmple"
+    },
+    {
+      "id": "0266",
+      "slug": "pocodex-pmd-silcoon",
+      "name": "Silcoon"
+    },
+    {
+      "id": "0267",
+      "slug": "pocodex-pmd-beautifly",
+      "name": "Beautifly"
+    },
+    {
+      "id": "0268",
+      "slug": "pocodex-pmd-cascoon",
+      "name": "Cascoon"
+    },
+    {
+      "id": "0269",
+      "slug": "pocodex-pmd-dustox",
+      "name": "Dustox"
+    },
+    {
+      "id": "0270",
+      "slug": "pocodex-pmd-lotad",
+      "name": "Lotad"
+    },
+    {
+      "id": "0273",
+      "slug": "pocodex-pmd-seedot",
+      "name": "Seedot"
+    },
+    {
+      "id": "0274",
+      "slug": "pocodex-pmd-nuzleaf",
+      "name": "Nuzleaf"
+    },
+    {
+      "id": "0276",
+      "slug": "pocodex-pmd-taillow",
+      "name": "Taillow"
+    },
+    {
+      "id": "0277",
+      "slug": "pocodex-pmd-swellow",
+      "name": "Swellow"
+    },
+    {
+      "id": "0278",
+      "slug": "pocodex-pmd-wingull",
+      "name": "Wingull"
+    },
+    {
+      "id": "0280",
+      "slug": "pocodex-pmd-ralts",
+      "name": "Ralts"
+    },
+    {
+      "id": "0281",
+      "slug": "pocodex-pmd-kirlia",
+      "name": "Kirlia"
+    },
+    {
+      "id": "0283",
+      "slug": "pocodex-pmd-surskit",
+      "name": "Surskit"
+    },
+    {
+      "id": "0284",
+      "slug": "pocodex-pmd-masquerain",
+      "name": "Masquerain"
+    },
+    {
+      "id": "0285",
+      "slug": "pocodex-pmd-shroomish",
+      "name": "Shroomish"
+    },
+    {
+      "id": "0286",
+      "slug": "pocodex-pmd-breloom",
+      "name": "Breloom"
+    },
+    {
+      "id": "0287",
+      "slug": "pocodex-pmd-slakoth",
+      "name": "Slakoth"
+    },
+    {
+      "id": "0288",
+      "slug": "pocodex-pmd-vigoroth",
+      "name": "Vigoroth"
+    },
+    {
+      "id": "0289",
+      "slug": "pocodex-pmd-slaking",
+      "name": "Slaking"
+    },
+    {
+      "id": "0290",
+      "slug": "pocodex-pmd-nincada",
+      "name": "Nincada"
+    },
+    {
+      "id": "0291",
+      "slug": "pocodex-pmd-ninjask",
+      "name": "Ninjask"
+    },
+    {
+      "id": "0292",
+      "slug": "pocodex-pmd-shedinja",
+      "name": "Shedinja"
+    },
+    {
+      "id": "0293",
+      "slug": "pocodex-pmd-whismur",
+      "name": "Whismur"
+    },
+    {
+      "id": "0295",
+      "slug": "pocodex-pmd-exploud",
+      "name": "Exploud"
+    },
+    {
+      "id": "0296",
+      "slug": "pocodex-pmd-makuhita",
+      "name": "Makuhita"
+    },
+    {
+      "id": "0297",
+      "slug": "pocodex-pmd-hariyama",
+      "name": "Hariyama"
+    },
+    {
+      "id": "0299",
+      "slug": "pocodex-pmd-nosepass",
+      "name": "Nosepass"
+    },
+    {
+      "id": "0300",
+      "slug": "pocodex-pmd-skitty",
+      "name": "Skitty"
+    },
+    {
+      "id": "0301",
+      "slug": "pocodex-pmd-delcatty",
+      "name": "Delcatty"
+    },
+    {
+      "id": "0303",
+      "slug": "pocodex-pmd-mawile",
+      "name": "Mawile"
+    },
+    {
+      "id": "0304",
+      "slug": "pocodex-pmd-aron",
+      "name": "Aron"
+    },
+    {
+      "id": "0305",
+      "slug": "pocodex-pmd-lairon",
+      "name": "Lairon"
+    },
+    {
+      "id": "0307",
+      "slug": "pocodex-pmd-meditite",
+      "name": "Meditite"
+    },
+    {
+      "id": "0309",
+      "slug": "pocodex-pmd-electrike",
+      "name": "Electrike"
+    },
+    {
+      "id": "0310",
+      "slug": "pocodex-pmd-manectric",
+      "name": "Manectric"
+    },
+    {
+      "id": "0311",
+      "slug": "pocodex-pmd-plusle",
+      "name": "Plusle"
+    },
+    {
+      "id": "0312",
+      "slug": "pocodex-pmd-minun",
+      "name": "Minun"
+    },
+    {
+      "id": "0315",
+      "slug": "pocodex-pmd-roselia",
+      "name": "Roselia"
+    },
+    {
+      "id": "0316",
+      "slug": "pocodex-pmd-gulpin",
+      "name": "Gulpin"
+    },
+    {
+      "id": "0317",
+      "slug": "pocodex-pmd-swalot",
+      "name": "Swalot"
+    },
+    {
+      "id": "0318",
+      "slug": "pocodex-pmd-carvanha",
+      "name": "Carvanha"
+    },
+    {
+      "id": "0319",
+      "slug": "pocodex-pmd-sharpedo",
+      "name": "Sharpedo"
+    },
+    {
+      "id": "0320",
+      "slug": "pocodex-pmd-wailmer",
+      "name": "Wailmer"
+    },
+    {
+      "id": "0321",
+      "slug": "pocodex-pmd-wailord",
+      "name": "Wailord"
+    },
+    {
+      "id": "0322",
+      "slug": "pocodex-pmd-numel",
+      "name": "Numel"
+    },
+    {
+      "id": "0323",
+      "slug": "pocodex-pmd-camerupt",
+      "name": "Camerupt"
+    },
+    {
+      "id": "0324",
+      "slug": "pocodex-pmd-torkoal",
+      "name": "Torkoal"
+    },
+    {
+      "id": "0325",
+      "slug": "pocodex-pmd-spoink",
+      "name": "Spoink"
+    },
+    {
+      "id": "0326",
+      "slug": "pocodex-pmd-grumpig",
+      "name": "Grumpig"
+    },
+    {
+      "id": "0327",
+      "slug": "pocodex-pmd-spinda",
+      "name": "Spinda"
+    },
+    {
+      "id": "0328",
+      "slug": "pocodex-pmd-trapinch",
+      "name": "Trapinch"
+    },
+    {
+      "id": "0329",
+      "slug": "pocodex-pmd-vibrava",
+      "name": "Vibrava"
+    },
+    {
+      "id": "0330",
+      "slug": "pocodex-pmd-flygon",
+      "name": "Flygon"
+    },
+    {
+      "id": "0331",
+      "slug": "pocodex-pmd-cacnea",
+      "name": "Cacnea"
+    },
+    {
+      "id": "0332",
+      "slug": "pocodex-pmd-cacturne",
+      "name": "Cacturne"
+    },
+    {
+      "id": "0333",
+      "slug": "pocodex-pmd-swablu",
+      "name": "Swablu"
+    },
+    {
+      "id": "0334",
+      "slug": "pocodex-pmd-altaria",
+      "name": "Altaria"
+    },
+    {
+      "id": "0335",
+      "slug": "pocodex-pmd-zangoose",
+      "name": "Zangoose"
+    },
+    {
+      "id": "0336",
+      "slug": "pocodex-pmd-seviper",
+      "name": "Seviper"
+    },
+    {
+      "id": "0337",
+      "slug": "pocodex-pmd-lunatone",
+      "name": "Lunatone"
+    },
+    {
+      "id": "0338",
+      "slug": "pocodex-pmd-solrock",
+      "name": "Solrock"
+    },
+    {
+      "id": "0339",
+      "slug": "pocodex-pmd-barboach",
+      "name": "Barboach"
+    },
+    {
+      "id": "0340",
+      "slug": "pocodex-pmd-whiscash",
+      "name": "Whiscash"
+    },
+    {
+      "id": "0341",
+      "slug": "pocodex-pmd-corphish",
+      "name": "Corphish"
+    },
+    {
+      "id": "0342",
+      "slug": "pocodex-pmd-crawdaunt",
+      "name": "Crawdaunt"
+    },
+    {
+      "id": "0343",
+      "slug": "pocodex-pmd-baltoy",
+      "name": "Baltoy"
+    },
+    {
+      "id": "0344",
+      "slug": "pocodex-pmd-claydol",
+      "name": "Claydol"
+    },
+    {
+      "id": "0345",
+      "slug": "pocodex-pmd-lileep",
+      "name": "Lileep"
+    },
+    {
+      "id": "0346",
+      "slug": "pocodex-pmd-cradily",
+      "name": "Cradily"
+    },
+    {
+      "id": "0347",
+      "slug": "pocodex-pmd-anorith",
+      "name": "Anorith"
+    },
+    {
+      "id": "0349",
+      "slug": "pocodex-pmd-feebas",
+      "name": "Feebas"
+    },
+    {
+      "id": "0350",
+      "slug": "pocodex-pmd-milotic",
+      "name": "Milotic"
+    },
+    {
+      "id": "0351",
+      "slug": "pocodex-pmd-castform",
+      "name": "Castform"
+    },
+    {
+      "id": "0353",
+      "slug": "pocodex-pmd-shuppet",
+      "name": "Shuppet"
+    },
+    {
+      "id": "0355",
+      "slug": "pocodex-pmd-duskull",
+      "name": "Duskull"
+    },
+    {
+      "id": "0356",
+      "slug": "pocodex-pmd-dusclops",
+      "name": "Dusclops"
+    },
+    {
+      "id": "0357",
+      "slug": "pocodex-pmd-tropius",
+      "name": "Tropius"
+    },
+    {
+      "id": "0359",
+      "slug": "pocodex-pmd-absol",
+      "name": "Absol"
+    },
+    {
+      "id": "0361",
+      "slug": "pocodex-pmd-snorunt",
+      "name": "Snorunt"
+    },
+    {
+      "id": "0362",
+      "slug": "pocodex-pmd-glalie",
+      "name": "Glalie"
+    },
+    {
+      "id": "0363",
+      "slug": "pocodex-pmd-spheal",
+      "name": "Spheal"
+    },
+    {
+      "id": "0364",
+      "slug": "pocodex-pmd-sealeo",
+      "name": "Sealeo"
+    },
+    {
+      "id": "0366",
+      "slug": "pocodex-pmd-clamperl",
+      "name": "Clamperl"
+    },
+    {
+      "id": "0367",
+      "slug": "pocodex-pmd-huntail",
+      "name": "Huntail"
+    },
+    {
+      "id": "0368",
+      "slug": "pocodex-pmd-gorebyss",
+      "name": "Gorebyss"
+    },
+    {
+      "id": "0369",
+      "slug": "pocodex-pmd-relicanth",
+      "name": "Relicanth"
+    },
+    {
+      "id": "0370",
+      "slug": "pocodex-pmd-luvdisc",
+      "name": "Luvdisc"
+    },
+    {
+      "id": "0371",
+      "slug": "pocodex-pmd-bagon",
+      "name": "Bagon"
+    },
+    {
+      "id": "0372",
+      "slug": "pocodex-pmd-shelgon",
+      "name": "Shelgon"
+    },
+    {
+      "id": "0373",
+      "slug": "pocodex-pmd-salamence",
+      "name": "Salamence"
+    },
+    {
+      "id": "0374",
+      "slug": "pocodex-pmd-beldum",
+      "name": "Beldum"
+    },
+    {
+      "id": "0375",
+      "slug": "pocodex-pmd-metang",
+      "name": "Metang"
+    },
+    {
+      "id": "0376",
+      "slug": "pocodex-pmd-metagross",
+      "name": "Metagross"
+    },
+    {
+      "id": "0377",
+      "slug": "pocodex-pmd-regirock",
+      "name": "Regirock"
+    },
+    {
+      "id": "0378",
+      "slug": "pocodex-pmd-regice",
+      "name": "Regice"
+    },
+    {
+      "id": "0379",
+      "slug": "pocodex-pmd-registeel",
+      "name": "Registeel"
+    },
+    {
+      "id": "0380",
+      "slug": "pocodex-pmd-latias",
+      "name": "Latias"
+    },
+    {
+      "id": "0382",
+      "slug": "pocodex-pmd-kyogre",
+      "name": "Kyogre"
+    },
+    {
+      "id": "0384",
+      "slug": "pocodex-pmd-rayquaza",
+      "name": "Rayquaza"
+    },
+    {
+      "id": "0385",
+      "slug": "pocodex-pmd-jirachi",
+      "name": "Jirachi"
+    },
+    {
+      "id": "0386",
+      "slug": "pocodex-pmd-deoxys",
+      "name": "Deoxys"
+    },
+    {
+      "id": "0387",
+      "slug": "pocodex-pmd-turtwig",
+      "name": "Turtwig"
+    },
+    {
+      "id": "0388",
+      "slug": "pocodex-pmd-grotle",
+      "name": "Grotle"
+    },
+    {
+      "id": "0389",
+      "slug": "pocodex-pmd-torterra",
+      "name": "Torterra"
+    },
+    {
+      "id": "0390",
+      "slug": "pocodex-pmd-chimchar",
+      "name": "Chimchar"
+    },
+    {
+      "id": "0391",
+      "slug": "pocodex-pmd-monferno",
+      "name": "Monferno"
+    },
+    {
+      "id": "0392",
+      "slug": "pocodex-pmd-infernape",
+      "name": "Infernape"
+    },
+    {
+      "id": "0393",
+      "slug": "pocodex-pmd-piplup",
+      "name": "Piplup"
+    },
+    {
+      "id": "0394",
+      "slug": "pocodex-pmd-prinplup",
+      "name": "Prinplup"
+    },
+    {
+      "id": "0395",
+      "slug": "pocodex-pmd-empoleon",
+      "name": "Empoleon"
+    },
+    {
+      "id": "0396",
+      "slug": "pocodex-pmd-starly",
+      "name": "Starly"
+    },
+    {
+      "id": "0397",
+      "slug": "pocodex-pmd-staravia",
+      "name": "Staravia"
+    },
+    {
+      "id": "0398",
+      "slug": "pocodex-pmd-staraptor",
+      "name": "Staraptor"
+    },
+    {
+      "id": "0399",
+      "slug": "pocodex-pmd-bidoof",
+      "name": "Bidoof"
+    },
+    {
+      "id": "0400",
+      "slug": "pocodex-pmd-bibarel",
+      "name": "Bibarel"
+    },
+    {
+      "id": "0401",
+      "slug": "pocodex-pmd-kricketot",
+      "name": "Kricketot"
+    },
+    {
+      "id": "0402",
+      "slug": "pocodex-pmd-kricketune",
+      "name": "Kricketune"
+    },
+    {
+      "id": "0403",
+      "slug": "pocodex-pmd-shinx",
+      "name": "Shinx"
+    },
+    {
+      "id": "0404",
+      "slug": "pocodex-pmd-luxio",
+      "name": "Luxio"
+    },
+    {
+      "id": "0405",
+      "slug": "pocodex-pmd-luxray",
+      "name": "Luxray"
+    },
+    {
+      "id": "0406",
+      "slug": "pocodex-pmd-budew",
+      "name": "Budew"
+    },
+    {
+      "id": "0407",
+      "slug": "pocodex-pmd-roserade",
+      "name": "Roserade"
+    },
+    {
+      "id": "0408",
+      "slug": "pocodex-pmd-cranidos",
+      "name": "Cranidos"
+    },
+    {
+      "id": "0409",
+      "slug": "pocodex-pmd-rampardos",
+      "name": "Rampardos"
+    },
+    {
+      "id": "0410",
+      "slug": "pocodex-pmd-shieldon",
+      "name": "Shieldon"
+    },
+    {
+      "id": "0411",
+      "slug": "pocodex-pmd-bastiodon",
+      "name": "Bastiodon"
+    },
+    {
+      "id": "0412",
+      "slug": "pocodex-pmd-burmy",
+      "name": "Burmy"
+    },
+    {
+      "id": "0413",
+      "slug": "pocodex-pmd-wormadam",
+      "name": "Wormadam"
+    },
+    {
+      "id": "0414",
+      "slug": "pocodex-pmd-mothim",
+      "name": "Mothim"
+    },
+    {
+      "id": "0415",
+      "slug": "pocodex-pmd-combee",
+      "name": "Combee"
+    },
+    {
+      "id": "0416",
+      "slug": "pocodex-pmd-vespiquen",
+      "name": "Vespiquen"
+    },
+    {
+      "id": "0417",
+      "slug": "pocodex-pmd-pachirisu",
+      "name": "Pachirisu"
+    },
+    {
+      "id": "0418",
+      "slug": "pocodex-pmd-buizel",
+      "name": "Buizel"
+    },
+    {
+      "id": "0419",
+      "slug": "pocodex-pmd-floatzel",
+      "name": "Floatzel"
+    },
+    {
+      "id": "0420",
+      "slug": "pocodex-pmd-cherubi",
+      "name": "Cherubi"
+    },
+    {
+      "id": "0421",
+      "slug": "pocodex-pmd-cherrim",
+      "name": "Cherrim"
+    },
+    {
+      "id": "0422",
+      "slug": "pocodex-pmd-shellos",
+      "name": "Shellos"
+    },
+    {
+      "id": "0423",
+      "slug": "pocodex-pmd-gastrodon",
+      "name": "Gastrodon"
+    },
+    {
+      "id": "0424",
+      "slug": "pocodex-pmd-ambipom",
+      "name": "Ambipom"
+    },
+    {
+      "id": "0425",
+      "slug": "pocodex-pmd-drifloon",
+      "name": "Drifloon"
+    },
+    {
+      "id": "0426",
+      "slug": "pocodex-pmd-drifblim",
+      "name": "Drifblim"
+    },
+    {
+      "id": "0427",
+      "slug": "pocodex-pmd-buneary",
+      "name": "Buneary"
+    },
+    {
+      "id": "0429",
+      "slug": "pocodex-pmd-mismagius",
+      "name": "Mismagius"
+    },
+    {
+      "id": "0430",
+      "slug": "pocodex-pmd-honchkrow",
+      "name": "Honchkrow"
+    },
+    {
+      "id": "0431",
+      "slug": "pocodex-pmd-glameow",
+      "name": "Glameow"
+    },
+    {
+      "id": "0432",
+      "slug": "pocodex-pmd-purugly",
+      "name": "Purugly"
+    },
+    {
+      "id": "0433",
+      "slug": "pocodex-pmd-chingling",
+      "name": "Chingling"
+    },
+    {
+      "id": "0434",
+      "slug": "pocodex-pmd-stunky",
+      "name": "Stunky"
+    },
+    {
+      "id": "0436",
+      "slug": "pocodex-pmd-bronzor",
+      "name": "Bronzor"
+    },
+    {
+      "id": "0437",
+      "slug": "pocodex-pmd-bronzong",
+      "name": "Bronzong"
+    },
+    {
+      "id": "0438",
+      "slug": "pocodex-pmd-bonsly",
+      "name": "Bonsly"
+    },
+    {
+      "id": "0439",
+      "slug": "pocodex-pmd-mime-jr",
+      "name": "Mime Jr"
+    },
+    {
+      "id": "0440",
+      "slug": "pocodex-pmd-happiny",
+      "name": "Happiny"
+    },
+    {
+      "id": "0441",
+      "slug": "pocodex-pmd-chatot",
+      "name": "Chatot"
+    },
+    {
+      "id": "0443",
+      "slug": "pocodex-pmd-gible",
+      "name": "Gible"
+    },
+    {
+      "id": "0444",
+      "slug": "pocodex-pmd-gabite",
+      "name": "Gabite"
+    },
+    {
+      "id": "0445",
+      "slug": "pocodex-pmd-garchomp",
+      "name": "Garchomp"
+    },
+    {
+      "id": "0446",
+      "slug": "pocodex-pmd-munchlax",
+      "name": "Munchlax"
+    },
+    {
+      "id": "0447",
+      "slug": "pocodex-pmd-riolu",
+      "name": "Riolu"
+    },
+    {
+      "id": "0448",
+      "slug": "pocodex-pmd-lucario",
+      "name": "Lucario"
+    },
+    {
+      "id": "0449",
+      "slug": "pocodex-pmd-hippopotas",
+      "name": "Hippopotas"
+    },
+    {
+      "id": "0450",
+      "slug": "pocodex-pmd-hippowdon",
+      "name": "Hippowdon"
+    },
+    {
+      "id": "0453",
+      "slug": "pocodex-pmd-croagunk",
+      "name": "Croagunk"
+    },
+    {
+      "id": "0454",
+      "slug": "pocodex-pmd-toxicroak",
+      "name": "Toxicroak"
+    },
+    {
+      "id": "0455",
+      "slug": "pocodex-pmd-carnivine",
+      "name": "Carnivine"
+    },
+    {
+      "id": "0456",
+      "slug": "pocodex-pmd-finneon",
+      "name": "Finneon"
+    },
+    {
+      "id": "0457",
+      "slug": "pocodex-pmd-lumineon",
+      "name": "Lumineon"
+    },
+    {
+      "id": "0458",
+      "slug": "pocodex-pmd-mantyke",
+      "name": "Mantyke"
+    },
+    {
+      "id": "0460",
+      "slug": "pocodex-pmd-abomasnow",
+      "name": "Abomasnow"
+    },
+    {
+      "id": "0463",
+      "slug": "pocodex-pmd-lickilicky",
+      "name": "Lickilicky"
+    },
+    {
+      "id": "0464",
+      "slug": "pocodex-pmd-rhyperior",
+      "name": "Rhyperior"
+    },
+    {
+      "id": "0465",
+      "slug": "pocodex-pmd-tangrowth",
+      "name": "Tangrowth"
+    },
+    {
+      "id": "0466",
+      "slug": "pocodex-pmd-electivire",
+      "name": "Electivire"
+    },
+    {
+      "id": "0467",
+      "slug": "pocodex-pmd-magmortar",
+      "name": "Magmortar"
+    },
+    {
+      "id": "0468",
+      "slug": "pocodex-pmd-togekiss",
+      "name": "Togekiss"
+    },
+    {
+      "id": "0469",
+      "slug": "pocodex-pmd-yanmega",
+      "name": "Yanmega"
+    },
+    {
+      "id": "0470",
+      "slug": "pocodex-pmd-leafeon",
+      "name": "Leafeon"
+    },
+    {
+      "id": "0471",
+      "slug": "pocodex-pmd-glaceon",
+      "name": "Glaceon"
+    },
+    {
+      "id": "0472",
+      "slug": "pocodex-pmd-gliscor",
+      "name": "Gliscor"
+    },
+    {
+      "id": "0474",
+      "slug": "pocodex-pmd-porygon-z",
+      "name": "Porygon Z"
+    },
+    {
+      "id": "0475",
+      "slug": "pocodex-pmd-gallade",
+      "name": "Gallade"
+    },
+    {
+      "id": "0476",
+      "slug": "pocodex-pmd-probopass",
+      "name": "Probopass"
+    },
+    {
+      "id": "0477",
+      "slug": "pocodex-pmd-dusknoir",
+      "name": "Dusknoir"
+    },
+    {
+      "id": "0478",
+      "slug": "pocodex-pmd-froslass",
+      "name": "Froslass"
+    },
+    {
+      "id": "0479",
+      "slug": "pocodex-pmd-rotom",
+      "name": "Rotom"
+    },
+    {
+      "id": "0480",
+      "slug": "pocodex-pmd-uxie",
+      "name": "Uxie"
+    },
+    {
+      "id": "0481",
+      "slug": "pocodex-pmd-mesprit",
+      "name": "Mesprit"
+    },
+    {
+      "id": "0485",
+      "slug": "pocodex-pmd-heatran",
+      "name": "Heatran"
+    },
+    {
+      "id": "0487",
+      "slug": "pocodex-pmd-giratina",
+      "name": "Giratina"
+    },
+    {
+      "id": "0488",
+      "slug": "pocodex-pmd-cresselia",
+      "name": "Cresselia"
+    },
+    {
+      "id": "0489",
+      "slug": "pocodex-pmd-phione",
+      "name": "Phione"
+    },
+    {
+      "id": "0490",
+      "slug": "pocodex-pmd-manaphy",
+      "name": "Manaphy"
+    },
+    {
+      "id": "0491",
+      "slug": "pocodex-pmd-darkrai",
+      "name": "Darkrai"
+    },
+    {
+      "id": "0492",
+      "slug": "pocodex-pmd-shaymin",
+      "name": "Shaymin"
+    },
+    {
+      "id": "0493",
+      "slug": "pocodex-pmd-arceus",
+      "name": "Arceus"
+    },
+    {
+      "id": "0495",
+      "slug": "pocodex-pmd-snivy",
+      "name": "Snivy"
+    },
+    {
+      "id": "0498",
+      "slug": "pocodex-pmd-tepig",
+      "name": "Tepig"
+    },
+    {
+      "id": "0501",
+      "slug": "pocodex-pmd-oshawott",
+      "name": "Oshawott"
+    },
+    {
+      "id": "0506",
+      "slug": "pocodex-pmd-lillipup",
+      "name": "Lillipup"
+    },
+    {
+      "id": "0543",
+      "slug": "pocodex-pmd-venipede",
+      "name": "Venipede"
+    },
+    {
+      "id": "0548",
+      "slug": "pocodex-pmd-petilil",
+      "name": "Petilil"
+    },
+    {
+      "id": "0549",
+      "slug": "pocodex-pmd-lilligant",
+      "name": "Lilligant"
+    },
+    {
+      "id": "0557",
+      "slug": "pocodex-pmd-dwebble",
+      "name": "Dwebble"
+    },
+    {
+      "id": "0559",
+      "slug": "pocodex-pmd-scraggy",
+      "name": "Scraggy"
+    },
+    {
+      "id": "0568",
+      "slug": "pocodex-pmd-trubbish",
+      "name": "Trubbish"
+    },
+    {
+      "id": "0570",
+      "slug": "pocodex-pmd-zorua",
+      "name": "Zorua"
+    },
+    {
+      "id": "0572",
+      "slug": "pocodex-pmd-minccino",
+      "name": "Minccino"
+    },
+    {
+      "id": "0577",
+      "slug": "pocodex-pmd-solosis",
+      "name": "Solosis"
+    },
+    {
+      "id": "0582",
+      "slug": "pocodex-pmd-vanillite",
+      "name": "Vanillite"
+    },
+    {
+      "id": "0585",
+      "slug": "pocodex-pmd-deerling",
+      "name": "Deerling"
+    },
+    {
+      "id": "0587",
+      "slug": "pocodex-pmd-emolga",
+      "name": "Emolga"
+    },
+    {
+      "id": "0605",
+      "slug": "pocodex-pmd-elgyem",
+      "name": "Elgyem"
+    },
+    {
+      "id": "0607",
+      "slug": "pocodex-pmd-litwick",
+      "name": "Litwick"
+    },
+    {
+      "id": "0610",
+      "slug": "pocodex-pmd-axew",
+      "name": "Axew"
+    },
+    {
+      "id": "0619",
+      "slug": "pocodex-pmd-mienfoo",
+      "name": "Mienfoo"
+    },
+    {
+      "id": "0622",
+      "slug": "pocodex-pmd-golett",
+      "name": "Golett"
+    },
+    {
+      "id": "0624",
+      "slug": "pocodex-pmd-pawniard",
+      "name": "Pawniard"
+    },
+    {
+      "id": "0625",
+      "slug": "pocodex-pmd-bisharp",
+      "name": "Bisharp"
+    },
+    {
+      "id": "0627",
+      "slug": "pocodex-pmd-rufflet",
+      "name": "Rufflet"
+    },
+    {
+      "id": "0633",
+      "slug": "pocodex-pmd-deino",
+      "name": "Deino"
+    },
+    {
+      "id": "0648",
+      "slug": "pocodex-pmd-meloetta",
+      "name": "Meloetta"
+    },
+    {
+      "id": "0650",
+      "slug": "pocodex-pmd-chespin",
+      "name": "Chespin"
+    },
+    {
+      "id": "0653",
+      "slug": "pocodex-pmd-fennekin",
+      "name": "Fennekin"
+    },
+    {
+      "id": "0654",
+      "slug": "pocodex-pmd-braixen",
+      "name": "Braixen"
+    },
+    {
+      "id": "0656",
+      "slug": "pocodex-pmd-froakie",
+      "name": "Froakie"
+    },
+    {
+      "id": "0662",
+      "slug": "pocodex-pmd-fletchinder",
+      "name": "Fletchinder"
+    },
+    {
+      "id": "0667",
+      "slug": "pocodex-pmd-litleo",
+      "name": "Litleo"
+    },
+    {
+      "id": "0672",
+      "slug": "pocodex-pmd-skiddo",
+      "name": "Skiddo"
+    },
+    {
+      "id": "0677",
+      "slug": "pocodex-pmd-espurr",
+      "name": "Espurr"
+    },
+    {
+      "id": "0678",
+      "slug": "pocodex-pmd-meowstic",
+      "name": "Meowstic"
+    },
+    {
+      "id": "0679",
+      "slug": "pocodex-pmd-honedge",
+      "name": "Honedge"
+    },
+    {
+      "id": "0684",
+      "slug": "pocodex-pmd-swirlix",
+      "name": "Swirlix"
+    },
+    {
+      "id": "0694",
+      "slug": "pocodex-pmd-helioptile",
+      "name": "Helioptile"
+    },
+    {
+      "id": "0698",
+      "slug": "pocodex-pmd-amaura",
+      "name": "Amaura"
+    },
+    {
+      "id": "0714",
+      "slug": "pocodex-pmd-noibat",
+      "name": "Noibat"
+    },
+    {
+      "id": "0719",
+      "slug": "pocodex-pmd-diancie",
+      "name": "Diancie"
+    },
+    {
+      "id": "0722",
+      "slug": "pocodex-pmd-rowlet",
+      "name": "Rowlet"
+    },
+    {
+      "id": "0725",
+      "slug": "pocodex-pmd-litten",
+      "name": "Litten"
+    },
+    {
+      "id": "0728",
+      "slug": "pocodex-pmd-popplio",
+      "name": "Popplio"
+    },
+    {
+      "id": "0744",
+      "slug": "pocodex-pmd-rockruff",
+      "name": "Rockruff"
+    },
+    {
+      "id": "0753",
+      "slug": "pocodex-pmd-fomantis",
+      "name": "Fomantis"
+    },
+    {
+      "id": "0757",
+      "slug": "pocodex-pmd-salandit",
+      "name": "Salandit"
+    },
+    {
+      "id": "0762",
+      "slug": "pocodex-pmd-steenee",
+      "name": "Steenee"
+    },
+    {
+      "id": "0772",
+      "slug": "pocodex-pmd-type-null",
+      "name": "Type Null"
+    },
+    {
+      "id": "0773",
+      "slug": "pocodex-pmd-silvally",
+      "name": "Silvally"
+    },
+    {
+      "id": "0777",
+      "slug": "pocodex-pmd-togedemaru",
+      "name": "Togedemaru"
+    },
+    {
+      "id": "0782",
+      "slug": "pocodex-pmd-jangmo-o",
+      "name": "Jangmo o"
+    },
+    {
+      "id": "0786",
+      "slug": "pocodex-pmd-tapu-lele",
+      "name": "Tapu Lele"
+    },
+    {
+      "id": "0802",
+      "slug": "pocodex-pmd-marshadow",
+      "name": "Marshadow"
+    },
+    {
+      "id": "0810",
+      "slug": "pocodex-pmd-grookey",
+      "name": "Grookey"
+    },
+    {
+      "id": "0813",
+      "slug": "pocodex-pmd-scorbunny",
+      "name": "Scorbunny"
+    },
+    {
+      "id": "0814",
+      "slug": "pocodex-pmd-raboot",
+      "name": "Raboot"
+    },
+    {
+      "id": "0816",
+      "slug": "pocodex-pmd-sobble",
+      "name": "Sobble"
+    },
+    {
+      "id": "0822",
+      "slug": "pocodex-pmd-corvisquire",
+      "name": "Corvisquire"
+    },
+    {
+      "id": "0827",
+      "slug": "pocodex-pmd-nickit",
+      "name": "Nickit"
+    },
+    {
+      "id": "0831",
+      "slug": "pocodex-pmd-wooloo",
+      "name": "Wooloo"
+    },
+    {
+      "id": "0835",
+      "slug": "pocodex-pmd-yamper",
+      "name": "Yamper"
+    },
+    {
+      "id": "0840",
+      "slug": "pocodex-pmd-applin",
+      "name": "Applin"
+    },
+    {
+      "id": "0852",
+      "slug": "pocodex-pmd-clobbopus",
+      "name": "Clobbopus"
+    },
+    {
+      "id": "0869",
+      "slug": "pocodex-pmd-alcremie",
+      "name": "Alcremie"
+    },
+    {
+      "id": "0884",
+      "slug": "pocodex-pmd-duraludon",
+      "name": "Duraludon"
+    },
+    {
+      "id": "0906",
+      "slug": "pocodex-pmd-sprigatito",
+      "name": "Sprigatito"
+    },
+    {
+      "id": "0909",
+      "slug": "pocodex-pmd-fuecoco",
+      "name": "Fuecoco"
+    },
+    {
+      "id": "0921",
+      "slug": "pocodex-pmd-pawmi",
+      "name": "Pawmi"
+    },
+    {
+      "id": "0926",
+      "slug": "pocodex-pmd-fidough",
+      "name": "Fidough"
+    },
+    {
+      "id": "0935",
+      "slug": "pocodex-pmd-charcadet",
+      "name": "Charcadet"
+    },
+    {
+      "id": "1010",
+      "slug": "pocodex-pmd-iron-leaves",
+      "name": "Iron Leaves"
+    },
+    {
+      "id": "1016",
+      "slug": "pocodex-pmd-fezandipiti",
+      "name": "Fezandipiti"
+    }
+  ]
+}

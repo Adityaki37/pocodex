@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-varoom",
+  "displayName": "PMD RawAsset Varoom",
+  "description": "A Codex pet assembled from PMD RawAsset Varoom animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-phantump",
+  "displayName": "PMD RawAsset Phantump",
+  "description": "A Codex pet assembled from PMD RawAsset Phantump animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0114",
+  "displayName": "Tangela",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0114",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:43.657547\tCHUNSOFT\tCUR\tUnspecified\tWalk,Attack,Strike,Shoot,Shake,Sleep,Hurt,Idle,Swing,Double,Hop,Charge,Rotate",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 6
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 6
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Swing",
+      "assetAction": "Swing",
+      "direction": 1,
+      "sourceFrames": 9
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Hurt",
+      "assetAction": "Hurt",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Sleep",
+      "assetAction": "Sleep",
+      "direction": 0,
+      "sourceFrames": 2
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 6
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "Charge",
+      "assetAction": "Charge",
+      "direction": 1,
+      "sourceFrames": 10
+    }
+  ]
+}

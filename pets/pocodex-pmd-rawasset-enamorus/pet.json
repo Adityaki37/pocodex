@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-enamorus",
+  "displayName": "PMD RawAsset Enamorus",
+  "description": "A Codex pet assembled from PMD RawAsset Enamorus animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

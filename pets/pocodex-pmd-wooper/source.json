@@ -1,0 +1,83 @@
+{
+  "pokemonId": "0194",
+  "displayName": "Wooper",
+  "spriteSource": "PMDCollab/SpriteCollab",
+  "spriteSourceUrl": "https://github.com/PMDCollab/SpriteCollab",
+  "spriteBrowserUrl": "https://sprites.pmdcollab.org/#/0194",
+  "license": "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
+  "credits": "2020-10-07 17:58:43.869977\tCHUNSOFT\tCUR\tUnspecified\tWalk,Attack,Strike,Shoot,Twirl,Sleep,Hurt,Idle,Swing,Double,Hop,Charge,Rotate\n2023-06-11 07:27:53.275338\t<@!330751862590406656>\tCUR\tPMDCollab_2\tEventSleep,Wake,Eat,Pose,Float,DeepBreath,Nod,Sink,Laying,Cringe\n2023-06-13 06:29:33.565597\t<@!330751862590406656>\tCUR\tPMDCollab_2\tSink\n2023-09-20 05:52:47.956486\t<@!555919605265203232>\tCUR\tPMDCollab_2\tTumble,Pose,Pull,Pain,Nod,Sit,LookUp,Trip,LeapForth,Head,LostBalance,TumbleBack,HitGround,Faint\n2023-10-08 17:43:15.848418\t<@!555919605265203232>\tCUR\tPMDCollab_2\tHead\n2024-03-16 01:22:36.254149\t<@!402958234371227648>\tCUR\tCC_BY-NC_4\tEventSleep,Wake,Tumble,Pain,Float,Nod,Sit,Trip,Laying,Head,TumbleBack,HitGround,Faint",
+  "rowSources": [
+    {
+      "row": 0,
+      "state": "idle",
+      "action": "Idle",
+      "assetAction": "Idle",
+      "direction": 1,
+      "sourceFrames": 2
+    },
+    {
+      "row": 1,
+      "state": "running-right",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 2,
+      "sourceFrames": 8
+    },
+    {
+      "row": 2,
+      "state": "running-left",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 6,
+      "sourceFrames": 8
+    },
+    {
+      "row": 3,
+      "state": "waving",
+      "action": "Pose",
+      "assetAction": "Pose",
+      "direction": 1,
+      "sourceFrames": 5
+    },
+    {
+      "row": 4,
+      "state": "jumping",
+      "action": "Hop",
+      "assetAction": "Hop",
+      "direction": 1,
+      "sourceFrames": 10
+    },
+    {
+      "row": 5,
+      "state": "failed",
+      "action": "Faint",
+      "assetAction": "Faint",
+      "direction": 1,
+      "sourceFrames": 4
+    },
+    {
+      "row": 6,
+      "state": "waiting",
+      "action": "Eat",
+      "assetAction": "Eat",
+      "direction": 0,
+      "sourceFrames": 4
+    },
+    {
+      "row": 7,
+      "state": "running",
+      "action": "Walk",
+      "assetAction": "Walk",
+      "direction": 0,
+      "sourceFrames": 8
+    },
+    {
+      "row": 8,
+      "state": "review",
+      "action": "LookUp",
+      "assetAction": "LookUp",
+      "direction": 0,
+      "sourceFrames": 3
+    }
+  ]
+}

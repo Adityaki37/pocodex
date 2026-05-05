@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-finizen",
+  "displayName": "PMD RawAsset Finizen",
+  "description": "A Codex pet assembled from PMD RawAsset Finizen animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

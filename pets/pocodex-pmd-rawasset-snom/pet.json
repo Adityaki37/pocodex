@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-snom",
+  "displayName": "PMD RawAsset Snom",
+  "description": "A Codex pet assembled from PMD RawAsset Snom animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-houndstone",
+  "displayName": "PMD RawAsset Houndstone",
+  "description": "A Codex pet assembled from PMD RawAsset Houndstone animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

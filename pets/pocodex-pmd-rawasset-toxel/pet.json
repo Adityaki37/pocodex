@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-toxel",
+  "displayName": "PMD RawAsset Toxel",
+  "description": "A Codex pet assembled from PMD RawAsset Toxel animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

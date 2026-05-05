@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-grubbin",
+  "displayName": "PMD RawAsset Grubbin",
+  "description": "A Codex pet assembled from PMD RawAsset Grubbin animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

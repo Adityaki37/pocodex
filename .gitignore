@@ -1,0 +1,13 @@
+node_modules/
+dist/
+dist-verify/
+public/
+logs/
+output/
+hatch-pet-runs/
+tmp-style-bench/
+.vite-pocodex.err.log
+.vite-pocodex.pid
+.vite-pocodex.log
+.vite-pocodex.out.log
+tmp-*.png

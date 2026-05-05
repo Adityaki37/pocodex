@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-vanilluxe",
+  "displayName": "PMD RawAsset Vanilluxe",
+  "description": "A Codex pet assembled from PMD RawAsset Vanilluxe animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

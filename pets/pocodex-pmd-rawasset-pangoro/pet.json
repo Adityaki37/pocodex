@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-pangoro",
+  "displayName": "PMD RawAsset Pangoro",
+  "description": "A Codex pet assembled from PMD RawAsset Pangoro animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

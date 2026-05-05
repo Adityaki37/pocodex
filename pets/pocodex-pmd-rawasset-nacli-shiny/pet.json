@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-nacli-shiny",
+  "displayName": "PMD RawAsset Nacli Shiny",
+  "description": "A Codex pet assembled from PMD RawAsset Nacli Shiny animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-cosmoem",
+  "displayName": "PMD RawAsset Cosmoem",
+  "description": "A Codex pet assembled from PMD RawAsset Cosmoem animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

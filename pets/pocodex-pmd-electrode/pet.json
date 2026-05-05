@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-electrode",
+  "displayName": "PMD Electrode",
+  "description": "A Codex pet assembled from PMD Collab Electrode animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

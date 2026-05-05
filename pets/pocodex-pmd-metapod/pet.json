@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-metapod",
+  "displayName": "PMD Metapod",
+  "description": "A Codex pet assembled from PMD Collab Metapod animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

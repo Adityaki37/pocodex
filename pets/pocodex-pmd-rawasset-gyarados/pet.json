@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-gyarados",
+  "displayName": "PMD RawAsset Gyarados",
+  "description": "A Codex pet assembled from PMD RawAsset Gyarados animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

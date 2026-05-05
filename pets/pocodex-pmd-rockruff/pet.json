@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rockruff",
+  "displayName": "PMD Rockruff",
+  "description": "A Codex pet assembled from PMD Collab Rockruff animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

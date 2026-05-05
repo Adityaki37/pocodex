@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-goomy",
+  "displayName": "PMD RawAsset Goomy",
+  "description": "A Codex pet assembled from PMD RawAsset Goomy animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}

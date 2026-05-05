@@ -1,0 +1,6 @@
+{
+  "id": "pocodex-pmd-rawasset-jellicent",
+  "displayName": "PMD RawAsset Jellicent",
+  "description": "A Codex pet assembled from PMD RawAsset Jellicent animation rows.",
+  "spritesheetPath": "spritesheet.webp"
+}
