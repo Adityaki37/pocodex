@@ -2066,6 +2066,8 @@ p {
 }
 
 .state-left-column .variation-panel {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 0;
 }
 
@@ -2078,10 +2080,22 @@ p {
 }
 
 .state-left-column .variation-strip {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   max-height: 348px;
   overflow: auto;
   padding-right: 4px;
+}
+
+.state-left-column .variation-card {
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 8px;
+  min-height: 76px;
+  padding: 6px;
+}
+
+.state-left-column .variation-card-preview {
+  width: 56px;
+  height: 56px;
 }
 
 .state-layout.expanded .viewer-note {
@@ -2783,5 +2797,11 @@ p {
 
   .about-panel {
     padding: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .state-left-column .variation-strip {
+    grid-template-columns: 1fr;
   }
 }
