@@ -94,6 +94,7 @@ a {
 .install-strip,
 .pet-grid,
 .variation-panel,
+.evolution-panel,
 .package-layout,
 .state-layout,
 .load-row {
@@ -1596,10 +1597,10 @@ p {
 
 .entry-explore-panel {
   display: grid;
-  flex: 0 0 min(360px, 34%);
+  flex: 0 0 min(430px, 38%);
   gap: 10px;
   align-self: stretch;
-  min-width: 260px;
+  min-width: 320px;
   padding: 12px;
   border: 2px solid rgba(142, 232, 255, 0.35);
   border-radius: 8px;
@@ -1616,6 +1617,69 @@ p {
 .entry-explore-list {
   display: grid;
   gap: 8px;
+}
+
+.pokemon-nav-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  height: 100%;
+}
+
+.pokemon-nav-card {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 136px;
+  padding: 10px 8px;
+  border: 2px solid rgba(109, 170, 183, 0.75);
+  border-radius: 8px;
+  background: #fffdfa;
+  color: #172033;
+  text-align: center;
+}
+
+.pokemon-nav-card:not(:disabled):hover {
+  border-color: var(--dex-yellow);
+  box-shadow: 0 0 0 3px rgba(244, 197, 66, 0.18);
+}
+
+.pokemon-nav-card.current {
+  border-color: var(--dex-yellow);
+  background:
+    linear-gradient(180deg, rgba(244, 197, 66, 0.18), rgba(255, 255, 255, 0)),
+    #fffdfa;
+  cursor: default;
+}
+
+.pokemon-nav-card:disabled {
+  opacity: 1;
+}
+
+.pokemon-nav-card.empty {
+  opacity: 0.66;
+  border-style: dashed;
+}
+
+.pokemon-nav-thumb {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 64px;
+  overflow: hidden;
+  border: 2px solid #b9d4df;
+  border-radius: 6px;
+  background: #dff7ed;
+}
+
+.pokemon-nav-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .entry-explore-card {
@@ -1678,6 +1742,134 @@ p {
   font-size: 15px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.pokemon-nav-card .entry-explore-meta strong {
+  white-space: normal;
+}
+
+.evolution-panel {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 18px;
+  border: 3px solid #2a050d;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%) 0 0 / 42px 42px,
+    linear-gradient(135deg, transparent 62%, rgba(0, 0, 0, 0.1) 62%) 0 0 / 42px 42px,
+    #59606a;
+  color: #ffffff;
+}
+
+.evolution-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.evolution-heading h2 {
+  font-size: 22px;
+}
+
+.evolution-heading span {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.evolution-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.evolution-card {
+  display: grid;
+  flex: 1 1 170px;
+  justify-items: center;
+  gap: 10px;
+  max-width: 260px;
+  min-height: 206px;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-align: center;
+}
+
+.evolution-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.evolution-card.active {
+  box-shadow:
+    inset 0 0 0 3px var(--dex-yellow),
+    0 0 0 3px rgba(244, 197, 66, 0.18);
+}
+
+.evolution-portrait {
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.evolution-portrait img {
+  display: block;
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.evolution-meta {
+  display: grid;
+  gap: 2px;
+}
+
+.evolution-meta strong {
+  font-size: 17px;
+}
+
+.evolution-meta em {
+  color: #d1d8e0;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.evolution-arrow {
+  justify-self: center;
+  color: #ffffff;
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tag-row.compact {
+  justify-content: center;
+  gap: 5px;
+  margin-top: 0;
+}
+
+.tag-row.compact .tag-badge {
+  min-height: 23px;
+  padding: 3px 8px;
+  font-size: 11px;
 }
 
 .entry-kicker {
@@ -2642,6 +2834,7 @@ p {
   .install-strip,
   .entry-header,
   .variation-heading,
+  .evolution-heading,
   .state-layout,
   .package-layout {
     align-items: stretch;
@@ -2660,6 +2853,10 @@ p {
   .entry-explore-panel {
     width: 100%;
     min-width: 0;
+  }
+
+  .pokemon-nav-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .entry-explore-list {
@@ -2745,6 +2942,7 @@ p {
   .install-strip,
   .pet-grid,
   .variation-panel,
+  .evolution-panel,
   .state-viewer,
   .package-panel {
     border-width: 2px;
@@ -2794,6 +2992,31 @@ p {
 
   .entry-explore-list {
     grid-template-columns: 1fr;
+  }
+
+  .pokemon-nav-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .pokemon-nav-card {
+    grid-template-columns: 74px minmax(0, 1fr);
+    justify-items: start;
+    min-height: 92px;
+    text-align: left;
+  }
+
+  .pokemon-nav-card.empty {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .evolution-chain {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .evolution-arrow {
+    transform: rotate(90deg);
   }
 
   .controls {
