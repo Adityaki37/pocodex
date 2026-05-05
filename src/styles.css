@@ -1110,8 +1110,10 @@ p {
   padding: 4px 8px;
   border-radius: 999px;
   color: #344155;
+  font-family: "Flexo-Demi", "Flexo", "Trebuchet MS", "Arial Rounded MT Bold", Arial, sans-serif;
   font-size: 12px;
   font-weight: 900;
+  letter-spacing: 0.03em;
 }
 
 .type-badge {
@@ -1122,23 +1124,299 @@ p {
     linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 58%),
     var(--type);
   color: var(--type-ink);
+  text-transform: uppercase;
   box-shadow:
     inset 0 -2px 0 rgba(0, 0, 0, 0.18),
     0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .type-mark {
-  display: inline-grid;
-  place-items: center;
-  min-width: 22px;
-  height: 22px;
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
   padding: 0 4px;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.18);
-  color: var(--type-ink);
-  font-size: 9px;
-  line-height: 1;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.type-mark::before,
+.type-mark::after {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.type-normal .type-mark::before {
+  inset: 5px;
+  border: 4px solid currentColor;
+  border-radius: 50%;
+}
+
+.type-fire .type-mark::before {
+  left: 7px;
+  top: 3px;
+  width: 11px;
+  height: 17px;
+  border-radius: 72% 28% 70% 30% / 66% 30% 70% 34%;
+  background: currentColor;
+  transform: rotate(26deg);
+}
+
+.type-fire .type-mark::after {
+  left: 8px;
+  top: 9px;
+  width: 7px;
+  height: 10px;
+  border-radius: 80% 20% 75% 25%;
+  background: rgba(0, 0, 0, 0.22);
+  transform: rotate(24deg);
+}
+
+.type-water .type-mark::before {
+  left: 6px;
+  top: 3px;
+  width: 12px;
+  height: 16px;
+  border-radius: 78% 22% 78% 58% / 82% 42% 78% 46%;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.type-electric .type-mark::before {
+  left: 7px;
+  top: 3px;
+  width: 11px;
+  height: 18px;
+  background: currentColor;
+  clip-path: polygon(58% 0, 18% 47%, 50% 47%, 35% 100%, 84% 37%, 53% 37%);
+}
+
+.type-grass .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 15px;
+  height: 11px;
+  border-radius: 100% 0 100% 0;
+  background: currentColor;
+  transform: rotate(-28deg);
+}
+
+.type-grass .type-mark::after {
+  left: 12px;
+  top: 7px;
+  width: 2px;
+  height: 12px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.2);
+  transform: rotate(42deg);
+}
+
+.type-ice .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  border: 3px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.type-ice .type-mark::after {
+  left: 10px;
+  top: 3px;
+  width: 4px;
+  height: 18px;
+  border-radius: 4px;
+  background: currentColor;
+}
+
+.type-fighting .type-mark::before {
+  left: 6px;
+  top: 8px;
+  width: 13px;
+  height: 10px;
+  border-radius: 5px 5px 7px 7px;
+  background: currentColor;
+}
+
+.type-fighting .type-mark::after {
+  left: 5px;
+  top: 5px;
+  width: 14px;
+  height: 6px;
+  border-radius: 4px;
+  background: currentColor;
+  box-shadow:
+    3px -2px 0 -1px currentColor,
+    7px -2px 0 -1px currentColor;
+}
+
+.type-poison .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 14px;
+  height: 12px;
+  border-radius: 50% 50% 42% 42%;
+  background: currentColor;
+}
+
+.type-poison .type-mark::after {
+  left: 8px;
+  top: 13px;
+  width: 8px;
+  height: 5px;
+  border-radius: 0 0 7px 7px;
+  background: currentColor;
+}
+
+.type-ground .type-mark::before {
+  left: 4px;
+  top: 7px;
+  width: 16px;
+  height: 11px;
+  background: currentColor;
+  clip-path: polygon(0 100%, 33% 18%, 48% 54%, 68% 0, 100% 100%);
+}
+
+.type-flying .type-mark::before {
+  left: 4px;
+  top: 6px;
+  width: 17px;
+  height: 11px;
+  border-radius: 100% 0 100% 0;
+  background: currentColor;
+  transform: skewX(-16deg) rotate(-12deg);
+}
+
+.type-flying .type-mark::after {
+  left: 8px;
+  top: 10px;
+  width: 11px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.22);
+  box-shadow: -2px 4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.type-psychic .type-mark::before {
+  inset: 5px;
+  border: 3px solid currentColor;
+  border-radius: 50%;
+}
+
+.type-psychic .type-mark::after {
+  left: 10px;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.type-bug .type-mark::before {
+  left: 6px;
+  top: 7px;
+  width: 12px;
+  height: 11px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.type-bug .type-mark::after {
+  left: 7px;
+  top: 4px;
+  width: 10px;
+  height: 7px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  border-radius: 9px 9px 0 0;
+}
+
+.type-rock .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 15px;
+  height: 14px;
+  background: currentColor;
+  clip-path: polygon(23% 0, 82% 6%, 100% 56%, 68% 100%, 14% 83%, 0 34%);
+}
+
+.type-ghost .type-mark::before {
+  left: 6px;
+  top: 5px;
+  width: 13px;
+  height: 15px;
+  border-radius: 48% 48% 20% 20%;
+  background: currentColor;
+  clip-path: polygon(0 34%, 17% 7%, 50% 0, 82% 8%, 100% 35%, 100% 100%, 72% 82%, 50% 100%, 28% 82%, 0 100%);
+}
+
+.type-dragon .type-mark::before {
+  left: 6px;
+  top: 4px;
+  width: 13px;
+  height: 17px;
+  background: currentColor;
+  clip-path: polygon(55% 0, 100% 24%, 74% 25%, 100% 72%, 62% 100%, 46% 64%, 20% 100%, 0 64%, 38% 34%);
+}
+
+.type-dark .type-mark::before {
+  left: 5px;
+  top: 4px;
+  width: 15px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.type-dark .type-mark::after {
+  left: 10px;
+  top: 3px;
+  width: 13px;
+  height: 17px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.type-steel .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  clip-path: polygon(50% 0, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+}
+
+.type-steel .type-mark::after {
+  left: 10px;
+  top: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.type-fairy .type-mark::before {
+  left: 5px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%);
+}
+
+.type-fairy .type-mark::after {
+  left: 15px;
+  top: 4px;
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
 }
 
 .meta-badge {
