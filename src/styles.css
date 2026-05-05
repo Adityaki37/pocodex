@@ -1132,11 +1132,13 @@ p {
 
 .type-mark {
   position: relative;
-  display: inline-block;
+  display: inline-grid;
+  place-items: center;
   flex: 0 0 auto;
+  box-sizing: border-box;
   width: 24px;
   height: 24px;
-  padding: 0 4px;
+  padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.18);
@@ -1149,6 +1151,20 @@ p {
   content: "";
   position: absolute;
   box-sizing: border-box;
+}
+
+.official-type-mark::before,
+.official-type-mark::after {
+  display: none;
+}
+
+.type-logo {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(0) invert(1);
 }
 
 .type-normal .type-mark::before {
@@ -1425,24 +1441,24 @@ p {
   color: #344155;
 }
 
-.type-normal { --type: #a8a77a; --type-ink: #111827; }
+.type-normal { --type: #a8a77a; --type-ink: #ffffff; }
 .type-fire { --type: #ee8130; --type-ink: #ffffff; }
 .type-water { --type: #6390f0; --type-ink: #ffffff; }
-.type-electric { --type: #f7d02c; --type-ink: #172033; }
-.type-grass { --type: #7ac74c; --type-ink: #10210c; }
-.type-ice { --type: #96d9d6; --type-ink: #102936; }
+.type-electric { --type: #f7d02c; --type-ink: #ffffff; }
+.type-grass { --type: #7ac74c; --type-ink: #ffffff; }
+.type-ice { --type: #96d9d6; --type-ink: #ffffff; }
 .type-fighting { --type: #c22e28; --type-ink: #ffffff; }
 .type-poison { --type: #a33ea1; --type-ink: #ffffff; }
-.type-ground { --type: #e2bf65; --type-ink: #241900; }
-.type-flying { --type: #a98ff3; --type-ink: #161127; }
+.type-ground { --type: #e2bf65; --type-ink: #ffffff; }
+.type-flying { --type: #a98ff3; --type-ink: #ffffff; }
 .type-psychic { --type: #f95587; --type-ink: #ffffff; }
-.type-bug { --type: #a6b91a; --type-ink: #172033; }
-.type-rock { --type: #b6a136; --type-ink: #1d1605; }
+.type-bug { --type: #a6b91a; --type-ink: #ffffff; }
+.type-rock { --type: #b6a136; --type-ink: #ffffff; }
 .type-ghost { --type: #735797; --type-ink: #ffffff; }
 .type-dragon { --type: #6f35fc; --type-ink: #ffffff; }
 .type-dark { --type: #705746; --type-ink: #ffffff; }
-.type-steel { --type: #b7b7ce; --type-ink: #172033; }
-.type-fairy { --type: #d685ad; --type-ink: #24101b; }
+.type-steel { --type: #b7b7ce; --type-ink: #ffffff; }
+.type-fairy { --type: #d685ad; --type-ink: #ffffff; }
 
 .tag-row.large .tag-badge {
   font-size: 13px;
