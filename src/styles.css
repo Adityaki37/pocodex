@@ -2458,12 +2458,29 @@ p {
   align-items: stretch;
 }
 
+.source-files-layout {
+  display: block;
+  margin-top: 6px;
+}
+
 .package-panel {
   flex: 1;
   padding: 22px;
   border: 3px solid #2a050d;
   border-radius: 8px;
   background: var(--surface);
+}
+
+.source-files-panel {
+  padding: 16px;
+}
+
+.source-files-panel .panel-heading {
+  margin-bottom: 10px;
+}
+
+.source-files-panel .file-list {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
 .panel-heading {
