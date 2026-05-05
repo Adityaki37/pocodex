@@ -1133,9 +1133,10 @@ p {
 .type-logo-badge {
   align-items: center;
   justify-content: center;
-  min-width: 104px;
+  width: fit-content;
+  min-width: 0;
   height: 28px;
-  padding: 4px 8px;
+  padding: 4px 7px;
   gap: 0;
   overflow: hidden;
 }
@@ -1143,7 +1144,7 @@ p {
 .type-name-logo {
   display: block;
   width: auto;
-  max-width: 96px;
+  max-width: 86px;
   height: 16px;
   object-fit: contain;
   object-position: center;
