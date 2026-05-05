@@ -2061,7 +2061,7 @@ p {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
 .state-left-column .variation-panel {
@@ -2084,6 +2084,10 @@ p {
 }
 
 .state-layout.expanded .viewer-note {
+  display: none;
+}
+
+.state-layout.expanded .viewer-heading p {
   display: none;
 }
 
@@ -2161,7 +2165,7 @@ p {
   display: grid;
   place-items: center;
   position: relative;
-  min-height: 306px;
+  min-height: 290px;
   min-width: 0;
   overflow: hidden;
   border: 3px solid #6daab7;
