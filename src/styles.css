@@ -2037,8 +2037,10 @@ p {
 }
 
 .state-layout.expanded {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(430px, 34%) minmax(0, 1fr);
   gap: 18px;
+  align-items: start;
 }
 
 .state-layout.compact {
@@ -2047,13 +2049,42 @@ p {
 }
 
 .state-viewer {
-  flex: 0 0 34%;
-  min-width: 450px;
+  min-width: 0;
   padding: 22px;
   border: 3px solid #2a050d;
   border-radius: 8px;
   background:
     linear-gradient(180deg, #202938 0%, #111827 100%);
+}
+
+.state-left-column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.state-left-column .variation-panel {
+  margin-bottom: 0;
+}
+
+.state-left-column .variation-heading {
+  align-items: center;
+}
+
+.state-left-column .variation-heading p {
+  display: none;
+}
+
+.state-left-column .variation-strip {
+  grid-template-columns: 1fr;
+  max-height: 348px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.state-layout.expanded .viewer-note {
+  display: none;
 }
 
 .animation-panel {
@@ -2130,7 +2161,7 @@ p {
   display: grid;
   place-items: center;
   position: relative;
-  min-height: 466px;
+  min-height: 306px;
   min-width: 0;
   overflow: hidden;
   border: 3px solid #6daab7;
@@ -2532,6 +2563,10 @@ p {
   .state-viewer {
     flex-basis: auto;
     min-width: 0;
+  }
+
+  .state-layout.expanded {
+    grid-template-columns: 1fr;
   }
 
   .state-layout.compact {
