@@ -21,6 +21,7 @@
     "site:dev": "bunx --bun vite --host 127.0.0.1",
     "site:quality": "bun run scripts/generate-blastoise-upscale-demo.mjs",
     "site:pixel-styles": "bun run scripts/generate-pixel-style-public-assets.mjs",
+    "site:audit-base-coverage": "bun run scripts/audit-base-coverage.mjs",
     "site:build": "bun run site:data && bun run site:quality && bun run site:pixel-styles && bunx --bun vite build",
     "site:preview": "bunx --bun vite preview --host 127.0.0.1",
     "validate": "bun run scripts/validate-pets.mjs",
