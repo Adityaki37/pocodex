@@ -2050,6 +2050,7 @@ p {
 
 .state-viewer {
   min-width: 0;
+  min-height: calc(3 * 126px + 2 * 14px);
   padding: 22px;
   border: 3px solid #2a050d;
   border-radius: 8px;
@@ -2395,6 +2396,7 @@ p {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(190px, 1fr));
+  grid-auto-rows: 126px;
   gap: 14px;
 }
 
@@ -2403,6 +2405,7 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  height: 100%;
   min-height: 126px;
   padding: 18px;
   border: 2px solid #222c3b;
