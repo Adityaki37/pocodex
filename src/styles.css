@@ -1454,7 +1454,7 @@ p {
 .pixel-style-hq4x .sprite-frame,
 .pixel-style-hq4x .motion-frame-canvas,
 .sprite-frame.pixel-style-hq4x {
-  image-rendering: pixelated;
+  image-rendering: auto;
   filter: none;
 }
 
