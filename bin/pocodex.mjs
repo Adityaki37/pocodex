@@ -4,7 +4,6 @@ import { homedir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 import JSZip from "jszip";
-import sharp from "sharp";
 
 const VERSION = "0.1.0";
 const DEFAULT_BASE_URL = process.env.POCODEX_URL ?? "https://pocodex.dev";
@@ -19,6 +18,7 @@ const spriteWebpOptions = {
   effort: 6,
   smartSubsample: true
 };
+let sharpModulePromise = null;
 const codexPetStates = [
   { id: "idle", label: "Idle", row: 0, frames: 6, durationMs: 1100 },
   { id: "running-right", label: "Run Right", row: 1, frames: 8, durationMs: 1060 },
@@ -357,6 +357,7 @@ async function applyPixelStyleToInstalledPet(sourceJson, dest) {
 }
 
 async function writePixelStyleImage(inputPath, outputPath, style) {
+  const sharp = await loadSharp();
   const metadata = await sharp(inputPath).metadata();
   const targetWidth = metadata.width;
   const targetHeight = metadata.height;
@@ -406,6 +407,7 @@ async function writePixelStyleImage(inputPath, outputPath, style) {
 }
 
 async function writeInstalledPreview(spritesheetPath, outputPath) {
+  const sharp = await loadSharp();
   const composites = [];
   for (let row = 0; row < atlasRows; row += 1) {
     composites.push({
@@ -441,6 +443,7 @@ async function writeInstalledPreview(spritesheetPath, outputPath) {
 }
 
 async function writeInstalledThumbnail(spritesheetPath, outputPath) {
+  const sharp = await loadSharp();
   const { data, info } = await sharp(spritesheetPath)
     .extract({ left: 0, top: 0, width: frameWidth, height: frameHeight })
     .ensureAlpha()
@@ -475,6 +478,15 @@ async function writeInstalledThumbnail(spritesheetPath, outputPath) {
     ])
     .webp(spriteWebpOptions)
     .toFile(outputPath);
+}
+
+async function loadSharp() {
+  sharpModulePromise ??= import("sharp")
+    .then((module) => module.default ?? module)
+    .catch((error) => {
+      throw new Error(`Installing this legacy pixel-style pet requires the optional sharp dependency: ${error.message}`);
+    });
+  return sharpModulePromise;
 }
 
 function alphaBounds(data, info) {
