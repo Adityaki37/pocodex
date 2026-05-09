@@ -737,26 +737,59 @@ p {
 .install-strip {
   order: 2;
   display: grid;
-  grid-template-columns: minmax(230px, 0.62fr) minmax(0, 1.8fr) auto;
+  grid-template-columns: minmax(245px, 0.72fr) minmax(250px, 0.82fr) minmax(420px, 1.7fr);
   align-items: center;
-  gap: 18px;
-  padding: 18px 20px;
+  gap: clamp(18px, 2.5vw, 34px);
+  padding: 22px 26px;
   margin-bottom: 18px;
   border: 3px solid #2a050d;
   border-radius: 8px;
   background:
-    linear-gradient(90deg, rgba(142, 232, 255, 0.08), transparent 26%),
-    linear-gradient(180deg, #253147 0%, #111827 100%);
+    linear-gradient(90deg, rgba(127, 233, 255, 0.16), transparent 18%, rgba(255, 255, 255, 0.04) 52%, transparent 82%),
+    linear-gradient(180deg, #263449 0%, #141d2b 54%, #101827 100%);
   color: #edf7ff;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.18),
+    0 10px 22px rgba(48, 4, 12, 0.18);
+}
+
+.install-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  background:
+    linear-gradient(90deg, rgba(132, 232, 255, 0.28), transparent 21%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.install-strip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 5px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, #8ceeff, #f5c441 48%, #ff697e);
+  box-shadow: 0 0 18px rgba(140, 238, 255, 0.38);
+  pointer-events: none;
 }
 
 .install-strip.has-attribution {
-  grid-template-columns: minmax(220px, 0.58fr) minmax(230px, 0.7fr) minmax(0, 1.9fr);
+  grid-template-columns: minmax(245px, 0.72fr) minmax(250px, 0.82fr) minmax(420px, 1.7fr);
 }
 
 .install-attribution-inline {
   order: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-self: center;
+  align-items: center;
+  gap: 14px;
   margin-bottom: 0;
   padding: 0;
   border: 0;
@@ -766,17 +799,23 @@ p {
 
 .install-attribution-inline p {
   color: #d7e7ef;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.38;
 }
 
 .install-attribution-inline .home-attribution-label {
-  border-color: #83d5e1;
-  background: rgba(255, 255, 255, 0.08);
-  color: #9deeff;
+  padding: 7px 10px;
+  border-color: #8eeeff;
+  background: rgba(10, 25, 40, 0.72);
+  color: #aaf2ff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(142, 238, 255, 0.12);
 }
 
 .install-attribution-inline a {
   color: #8feaff;
+  text-decoration-color: rgba(143, 234, 255, 0.72);
 }
 
 .install-heading,
@@ -786,22 +825,78 @@ p {
 }
 
 .install-heading {
-  gap: 10px;
+  gap: 13px;
   min-width: 0;
+}
+
+.install-heading > svg {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border: 1px solid rgba(143, 234, 255, 0.42);
+  border-radius: 8px;
+  background: rgba(8, 17, 29, 0.74);
+  color: #f5c441;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 16px rgba(0, 0, 0, 0.18);
 }
 
 .install-heading h2 {
   color: #ffffff;
-  font-size: 20px;
+  font-size: 23px;
   line-height: 1.2;
 }
 
 .install-heading p {
-  margin-top: 3px;
+  margin-top: 5px;
   color: #bfd3df;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.35;
   overflow-wrap: anywhere;
+}
+
+.install-strip .install-commands {
+  align-self: stretch;
+  align-items: center;
+}
+
+.install-strip .command-row {
+  grid-template-columns: 44px minmax(0, 1fr) 42px;
+  min-height: 58px;
+  padding: 10px 12px;
+  border-color: #89dce7;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45), transparent 38%),
+    linear-gradient(rgba(255, 255, 255, 0.38) 50%, rgba(255, 255, 255, 0) 50%),
+    #dff7ed;
+  background-size: auto, 100% 8px, auto;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.install-strip .command-row > span {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(4, 73, 103, 0.1);
+  color: #044967;
+}
+
+.install-strip .command-row code {
+  font-size: 13px;
+}
+
+.install-strip .copy-mini {
+  width: 38px;
+  height: 38px;
+  border-color: #6daab7;
+  box-shadow: 0 2px 0 rgba(4, 73, 103, 0.12);
 }
 
 .install-commands,
