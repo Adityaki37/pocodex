@@ -1,4 +1,5 @@
 const PACKAGE_SOURCE = "github:Adityaki37/pocodex";
+const NPM_PACKAGE_SOURCE = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main";
 const EXTRA_HOME_ROWS = ["npm", "curl"];
 const ENTRY_ROWS = ["npx", "npm", "curl", "powershell"];
 
@@ -21,7 +22,7 @@ function commandSet(slug) {
   const speed = slug === "all" ? "" : ` --speed ${currentSpeed()}`;
   return {
     npx: `npx --yes --package ${PACKAGE_SOURCE} pocodex install ${slug} --url ${origin}${speed}`,
-    npm: `npm install -g ${PACKAGE_SOURCE} && pocodex install ${slug} --url ${origin}${speed}`,
+    npm: `npm install -g ${NPM_PACKAGE_SOURCE} && pocodex install ${slug} --url ${origin}${speed}`,
     curl: `curl -fsSL ${origin}/install/${slug} | sh`,
     powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${origin}/install/${slug}.ps1 | iex"`,
     zip: `${origin}/pocodex/downloads/${slug}.zip`

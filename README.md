@@ -41,7 +41,7 @@ npx --yes --package github:Adityaki37/pocodex pocodex install pocodex-pmd-pikach
 ```
 
 ```sh
-npm install -g github:Adityaki37/pocodex && pocodex install pocodex-pmd-pikachu --url http://127.0.0.1:5173
+npm install -g https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main && pocodex install pocodex-pmd-pikachu --url http://127.0.0.1:5173
 ```
 
 ```powershell
@@ -59,7 +59,7 @@ npx --yes --package github:Adityaki37/pocodex pocodex install all --url http://1
 ```
 
 ```sh
-npm install -g github:Adityaki37/pocodex && pocodex install all --url http://127.0.0.1:5173
+npm install -g https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main && pocodex install all --url http://127.0.0.1:5173
 ```
 
 ```powershell

@@ -23,6 +23,7 @@ const publicDownloadsDir = path.join(publicRoot, "downloads");
 const publicInstallDir = path.join(rootDir, "public", "install");
 const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "http://127.0.0.1:5173");
 const npxPackageSource = "github:Adityaki37/pocodex";
+const npmPackageSource = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main";
 const creditNameSources = [
   "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/credit_names.txt",
   "https://raw.githubusercontent.com/PMDCollab/RawAsset/master/spritebot_credits.txt"
@@ -542,7 +543,7 @@ async function createPixelStylePet(entry, style, creditNameLookup) {
 function buildInstallCommands(slug) {
   return {
     npx: `npx --yes --package ${npxPackageSource} pocodex install ${slug} --url ${publicBaseUrl}`,
-    npm: `npm install -g ${npxPackageSource} && pocodex install ${slug} --url ${publicBaseUrl}`,
+    npm: `npm install -g ${npmPackageSource} && pocodex install ${slug} --url ${publicBaseUrl}`,
     shell: `curl -fsSL ${publicBaseUrl}/install/${slug} | sh`,
     powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${slug}.ps1 | iex"`
   };
