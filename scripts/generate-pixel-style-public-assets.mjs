@@ -30,6 +30,7 @@ const publicInstallDir = path.join(rootDir, "public", "install");
 const manifestPath = path.join(publicRoot, "manifest.json");
 const catalogPath = path.join(publicRoot, "catalog.json");
 const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "http://127.0.0.1:5173");
+const npxPackageSource = "github:Adityaki37/pocodex";
 const previewScale = 0.5;
 const workerCount = Math.max(1, Number(process.env.POCODEX_PIXEL_STYLE_WORKERS ?? 4) || 4);
 const force = process.env.POCODEX_PIXEL_STYLE_FORCE === "1";
@@ -459,10 +460,23 @@ async function updateCatalog(pixelPets) {
     entry.zip = pet.assets.zip;
     entry.install = pet.assets.installSh;
     entry.installPowerShell = pet.assets.installPs1;
+    entry.installNpx = buildInstallCommands(pet.id).npx;
+    entry.installNpm = buildInstallCommands(pet.id).npm;
+    entry.installCurl = buildInstallCommands(pet.id).shell;
+    entry.installPowerShellCommand = buildInstallCommands(pet.id).powershell;
     entry.form = pet.formLabel;
     entry.packageDisplayName = pet.packageDisplayName;
   }
   await writeFile(catalogPath, `${JSON.stringify(catalog)}\n`);
+}
+
+function buildInstallCommands(slug) {
+  return {
+    npx: `npx --yes --package ${npxPackageSource} pocodex install ${slug} --url ${publicBaseUrl}`,
+    npm: `npm install -g ${npxPackageSource} && pocodex install ${slug} --url ${publicBaseUrl}`,
+    shell: `curl -fsSL ${publicBaseUrl}/install/${slug} | sh`,
+    powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${slug}.ps1 | iex"`
+  };
 }
 
 function parseRequestedIds(args) {

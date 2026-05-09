@@ -35,6 +35,7 @@
     "sync": "npm run build && npm run install:pets"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "fast-xml-parser": "^5.7.2",
     "gifuct-js": "^2.1.2",
     "jszip": "^3.10.1",

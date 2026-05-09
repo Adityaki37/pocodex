@@ -20,7 +20,7 @@ npm run site:dev
 
 Then open Codex, go to Settings -> Appearance -> Pets, and select one of the `pocodex-*` custom pets. Use `/pet` to show or hide it.
 
-The Pocodex website runs at `http://127.0.0.1:5173/` during `npm run site:dev`. It lets you search, filter by source, inspect the nine Codex state rows, download each pet as a zip, or copy Petdex-style `npx` terminal install commands.
+The Pocodex website runs at `http://127.0.0.1:5173/` during `npm run site:dev`. It lets you search, filter by source, inspect the nine Codex state rows, download each pet as a zip, or copy Petdex-style terminal install commands: `npx`, global `npm`, shell, and PowerShell.
 
 The CLI mirrors Petdex's install shape:
 
@@ -40,6 +40,10 @@ Install a single pet from the local site:
 npx --yes --package github:Adityaki37/pocodex pocodex install pocodex-pmd-pikachu --url http://127.0.0.1:5173
 ```
 
+```sh
+npm install -g github:Adityaki37/pocodex && pocodex install pocodex-pmd-pikachu --url http://127.0.0.1:5173
+```
+
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -Command "irm http://127.0.0.1:5173/install/pocodex-pmd-pikachu.ps1 | iex"
 ```
@@ -54,6 +58,10 @@ Install the full generated gallery:
 npx --yes --package github:Adityaki37/pocodex pocodex install all --url http://127.0.0.1:5173
 ```
 
+```sh
+npm install -g github:Adityaki37/pocodex && pocodex install all --url http://127.0.0.1:5173
+```
+
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -Command "irm http://127.0.0.1:5173/install/all.ps1 | iex"
 ```
@@ -62,7 +70,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "irm http://127.0.0.1:517
 curl -fsSL http://127.0.0.1:5173/install/all | sh
 ```
 
-The CLI and install scripts honor `CODEX_HOME` for the target Codex home. The CLI accepts `--url`, while the shell/PowerShell scripts also honor `POCODEX_URL` when the gallery is hosted somewhere other than local dev.
+The CLI and install scripts honor `CODEX_HOME` for the target Codex home. The CLI accepts `--url`, while the shell/PowerShell scripts also honor `POCODEX_URL` when the gallery is hosted somewhere other than local dev. The production site includes Vercel Web Analytics via `@vercel/analytics`.
 
 ## Scripts
 

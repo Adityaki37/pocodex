@@ -124,11 +124,7 @@ async function main() {
         installSh: `/install/${petJson.id}`,
         installPs1: `/install/${petJson.id}.ps1`
       },
-      commands: {
-        npx: `npx --yes --package ${npxPackageSource} pocodex install ${petJson.id} --url ${publicBaseUrl}`,
-        shell: `curl -fsSL ${publicBaseUrl}/install/${petJson.id} | sh`,
-        powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${petJson.id}.ps1 | iex"`
-      }
+      commands: buildInstallCommands(petJson.id)
     };
     pet.tags = buildTags(sourceJson, collection, displayInfo, pet.pokemonMeta);
     pets.push(pet);
@@ -159,6 +155,9 @@ async function main() {
         formGroup: pet.formGroup,
         zip: pet.assets.zip,
         installNpx: pet.commands.npx,
+        installNpm: pet.commands.npm,
+        installCurl: pet.commands.shell,
+        installPowerShellCommand: pet.commands.powershell,
         install: pet.assets.installSh,
         installPowerShell: pet.assets.installPs1
       }))
@@ -536,11 +535,16 @@ async function createPixelStylePet(entry, style, creditNameLookup) {
       installSh: `/install/${slug}`,
       installPs1: `/install/${slug}.ps1`
     },
-    commands: {
-      npx: `npx --yes --package ${npxPackageSource} pocodex install ${slug} --url ${publicBaseUrl}`,
-      shell: `curl -fsSL ${publicBaseUrl}/install/${slug} | sh`,
-      powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${slug}.ps1 | iex"`
-    }
+    commands: buildInstallCommands(slug)
+  };
+}
+
+function buildInstallCommands(slug) {
+  return {
+    npx: `npx --yes --package ${npxPackageSource} pocodex install ${slug} --url ${publicBaseUrl}`,
+    npm: `npm install -g ${npxPackageSource} && pocodex install ${slug} --url ${publicBaseUrl}`,
+    shell: `curl -fsSL ${publicBaseUrl}/install/${slug} | sh`,
+    powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${slug}.ps1 | iex"`
   };
 }
 

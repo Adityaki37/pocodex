@@ -842,6 +842,51 @@ p {
   color: var(--dex-red);
 }
 
+.install-extra-row {
+  grid-template-columns: 36px minmax(0, 1fr) 48px;
+}
+
+.install-extra-row .copy-mini {
+  width: 48px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.install-method-augment {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.install-method-augment h3 {
+  margin: 0;
+  color: #263244;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.install-zip-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 2px solid #6daab7;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #044967;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.install-zip-link:hover {
+  border-color: var(--dex-blue);
+  color: var(--dex-blue-dark);
+}
+
 .pet-grid {
   order: 4;
   display: grid;
