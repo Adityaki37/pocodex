@@ -3045,6 +3045,33 @@ p {
   color: #263244;
 }
 
+.install-help-note {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #e3e8ef;
+  border-radius: 6px;
+  background: #f8fbfd;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.install-help-note p {
+  margin: 0;
+  color: #263244;
+  font-weight: 900;
+}
+
+.install-help-note ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.install-help-note li {
+  margin: 2px 0;
+}
+
 .os-pills {
   flex-wrap: wrap;
   justify-content: flex-end;
