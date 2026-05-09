@@ -1,6 +1,8 @@
 {
-  "note": "Generate every base PMD Collab Pokemon with usable overworld animation files. Forms/shinies are intentionally excluded for now.",
+  "note": "Generate every base PMD Collab Pokemon with usable overworld animation files, plus completed SpriteCollab form and shiny subgroups.",
   "includeAllBasePokemon": true,
+  "includeVariantPokemon": true,
+  "includeShinyPokemon": true,
   "includeCompleteSpritePokemon": true,
   "starterPokemonIds": ["0001", "0004", "0007", "0025", "0133", "0158", "0252", "0255", "0258", "0447"]
 }

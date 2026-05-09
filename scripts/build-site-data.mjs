@@ -22,6 +22,7 @@ const publicPetsDir = path.join(publicRoot, "pets");
 const publicDownloadsDir = path.join(publicRoot, "downloads");
 const publicInstallDir = path.join(rootDir, "public", "install");
 const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "http://127.0.0.1:5173");
+const npxPackageSource = "github:Adityaki37/pocodex";
 const creditNameSources = [
   "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/credit_names.txt",
   "https://raw.githubusercontent.com/PMDCollab/RawAsset/master/spritebot_credits.txt"
@@ -124,7 +125,7 @@ async function main() {
         installPs1: `/install/${petJson.id}.ps1`
       },
       commands: {
-        bunx: `bunx --bun --package @crafter-station/pocodex pocodex install ${petJson.id} --url ${publicBaseUrl}`,
+        npx: `npx --yes --package ${npxPackageSource} pocodex install ${petJson.id} --url ${publicBaseUrl}`,
         shell: `curl -fsSL ${publicBaseUrl}/install/${petJson.id} | sh`,
         powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${petJson.id}.ps1 | iex"`
       }
@@ -157,7 +158,7 @@ async function main() {
         form: pet.formLabel,
         formGroup: pet.formGroup,
         zip: pet.assets.zip,
-        installBunx: pet.commands.bunx,
+        installNpx: pet.commands.npx,
         install: pet.assets.installSh,
         installPowerShell: pet.assets.installPs1
       }))
@@ -272,7 +273,7 @@ async function writeInstallAllScripts() {
 function buildShellInstaller(slug, zipName) {
   return `#!/bin/sh
 set -eu
-BASE_URL="\${POCODEX_URL:-http://127.0.0.1:5173}"
+BASE_URL="\${POCODEX_URL:-${publicBaseUrl}}"
 SLUG="${escapeShell(slug)}"
 ZIP_NAME="${escapeShell(zipName)}"
 CODEX_HOME_DIR="\${CODEX_HOME:-$HOME/.codex}"
@@ -326,7 +327,7 @@ echo "Installed $SLUG to $DEST"
 
 function buildPowerShellInstaller(slug, zipName) {
   return `$ErrorActionPreference = "Stop"
-$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "http://127.0.0.1:5173" }
+$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "${escapePowerShell(publicBaseUrl)}" }
 $Slug = "${escapePowerShell(slug)}"
 $ZipName = "${escapePowerShell(zipName)}"
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
@@ -353,7 +354,7 @@ try {
 function buildShellInstallAll() {
   return `#!/bin/sh
 set -eu
-BASE_URL="\${POCODEX_URL:-http://127.0.0.1:5173}"
+BASE_URL="\${POCODEX_URL:-${publicBaseUrl}}"
 if command -v curl >/dev/null 2>&1; then
   CATALOG="$(curl -fsSL "$BASE_URL/pocodex/catalog.json")"
 elif command -v wget >/dev/null 2>&1; then
@@ -377,7 +378,7 @@ done
 
 function buildPowerShellInstallAll() {
   return `$ErrorActionPreference = "Stop"
-$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "http://127.0.0.1:5173" }
+$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "${escapePowerShell(publicBaseUrl)}" }
 $Catalog = Invoke-RestMethod -Uri ($BaseUrl.TrimEnd("/") + "/pocodex/catalog.json")
 $PreviousPocodexUrl = $env:POCODEX_URL
 try {
@@ -536,7 +537,7 @@ async function createPixelStylePet(entry, style, creditNameLookup) {
       installPs1: `/install/${slug}.ps1`
     },
     commands: {
-      bunx: `bunx --bun --package @crafter-station/pocodex pocodex install ${slug} --url ${publicBaseUrl}`,
+      npx: `npx --yes --package ${npxPackageSource} pocodex install ${slug} --url ${publicBaseUrl}`,
       shell: `curl -fsSL ${publicBaseUrl}/install/${slug} | sh`,
       powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${publicBaseUrl}/install/${slug}.ps1 | iex"`
     }
@@ -625,7 +626,8 @@ function formOrderValue(formGroup) {
 function buildMotionSource(sourceJson) {
   const rowSources = Array.isArray(sourceJson.rowSources) ? sourceJson.rowSources : [];
   if (sourceJson.spriteSource === "PMDCollab/SpriteCollab" && sourceJson.pokemonId) {
-    const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/sprite/${sourceJson.pokemonId}`;
+    const spritePath = sourceJson.spriteSourcePath ?? `sprite/${sourceJson.pokemonId}`;
+    const baseUrl = `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/${spritePath}`;
     return {
       type: "pmd-collab",
       baseUrl,
@@ -1010,7 +1012,7 @@ const baseDisplayNameByPokemonId = new Map([
 ]);
 
 function resolveDisplayInfo(sourceJson, petJson) {
-  if ((sourceJson.sourceFamily === "pmd-rawasset" || sourceJson.spriteSource === "PMDCollab/RawAsset") && sourceJson.baseName) {
+  if (sourceJson.baseName && sourceJson.formLabel) {
     const displayName = normalizeHumanLabel(sourceJson.baseName);
     const formLabel = normalizeHumanLabel(sourceJson.formLabel ?? "Base") || "Base";
     const formSlug = formLabel === "Base" ? "" : slugifyLabel(formLabel);

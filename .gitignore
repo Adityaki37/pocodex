@@ -11,3 +11,4 @@ tmp-style-bench/
 .vite-pocodex.log
 .vite-pocodex.out.log
 tmp-*.png
+.vercel

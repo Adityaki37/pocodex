@@ -29,6 +29,7 @@ const publicDownloadsDir = path.join(publicRoot, "downloads");
 const publicInstallDir = path.join(rootDir, "public", "install");
 const manifestPath = path.join(publicRoot, "manifest.json");
 const catalogPath = path.join(publicRoot, "catalog.json");
+const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "http://127.0.0.1:5173");
 const previewScale = 0.5;
 const workerCount = Math.max(1, Number(process.env.POCODEX_PIXEL_STYLE_WORKERS ?? 4) || 4);
 const force = process.env.POCODEX_PIXEL_STYLE_FORCE === "1";
@@ -379,7 +380,7 @@ async function writeInstallScripts(slug, zipName) {
 function buildShellInstaller(slug, zipName) {
   return `#!/bin/sh
 set -eu
-BASE_URL="\${POCODEX_URL:-http://127.0.0.1:5173}"
+BASE_URL="\${POCODEX_URL:-${publicBaseUrl}}"
 SLUG="${escapeShell(slug)}"
 ZIP_NAME="${escapeShell(zipName)}"
 CODEX_HOME_DIR="\${CODEX_HOME:-$HOME/.codex}"
@@ -425,7 +426,7 @@ echo "Installed $SLUG to $DEST"
 
 function buildPowerShellInstaller(slug, zipName) {
   return `$ErrorActionPreference = "Stop"
-$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "http://127.0.0.1:5173" }
+$BaseUrl = if ($env:POCODEX_URL) { $env:POCODEX_URL } else { "${escapePowerShell(publicBaseUrl)}" }
 $Slug = "${escapePowerShell(slug)}"
 $ZipName = "${escapePowerShell(zipName)}"
 $CodexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
@@ -513,6 +514,10 @@ function escapeShell(value) {
 
 function escapePowerShell(value) {
   return String(value).replace(/`/g, "``").replace(/"/g, '`"').replace(/\$/g, "`$");
+}
+
+function normalizeBaseUrl(value) {
+  return String(value).replace(/\/+$/, "");
 }
 
 async function mapLimit(items, limit, worker) {

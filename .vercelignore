@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dist-verify/
+pets/
+output/
+hatch-pet-runs/
+logs/
+tmp-petdex/
+tmp-style-bench/
+tmp-*.png
+.vite-*.log
+.vite-*.pid
+.pocodex-*.log
+.git/
+public/pocodex/downloads/
+public/install/

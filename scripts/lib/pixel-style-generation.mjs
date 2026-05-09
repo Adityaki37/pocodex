@@ -758,7 +758,7 @@ function clamp(value, min, max) {
 }
 
 async function fetchText(url) {
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url);
   if (!response.ok) {
     throw new Error(`${url} returned ${response.status}`);
   }
@@ -766,9 +766,37 @@ async function fetchText(url) {
 }
 
 async function fetchBuffer(url) {
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url);
   if (!response.ok) {
     throw new Error(`${url} returned ${response.status}`);
   }
   return Buffer.from(await response.arrayBuffer());
+}
+
+async function fetchWithRetry(url, attempts = 4) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetch(url);
+      if (response.ok || !isRetryableStatus(response.status) || attempt === attempts) {
+        return response;
+      }
+      lastError = new Error(`${url} returned ${response.status}`);
+    } catch (error) {
+      lastError = error;
+      if (attempt === attempts) {
+        throw error;
+      }
+    }
+    await sleep(300 * attempt * attempt);
+  }
+  throw lastError ?? new Error(`Unable to fetch ${url}`);
+}
+
+function isRetryableStatus(status) {
+  return status === 408 || status === 425 || status === 429 || status >= 500;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

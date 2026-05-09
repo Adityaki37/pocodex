@@ -1,4 +1,5 @@
 const VIEWER_SELECTOR = ".state-viewer .viewer-stage";
+const PREVIEW_SELECTOR = ".variation-card-preview";
 const FRAME_SELECTOR = ".sprite-frame, .motion-frame-canvas";
 const BASE_FRAME_WIDTH = 384;
 const BASE_FRAME_HEIGHT = 416;
@@ -34,6 +35,7 @@ function scheduleViewerFit() {
   window.requestAnimationFrame(() => {
     scheduled = false;
     fitViewerSprites();
+    fitPreviewSprites();
   });
 }
 
@@ -88,11 +90,45 @@ function fitCanvasSprite(stage, frame) {
   applyFit(stage, frame, naturalWidth, naturalHeight, fitScale, 0, 0);
 }
 
-function applyFit(stage, frame, naturalWidth, naturalHeight, fitScale, offsetX, offsetY) {
+function fitPreviewSprites() {
+  for (const preview of document.querySelectorAll(PREVIEW_SELECTOR)) {
+    const frame = preview.querySelector(":scope > .sprite-frame");
+    if (!frame) {
+      continue;
+    }
+
+    fitPreviewAtlasSprite(preview, frame);
+  }
+}
+
+async function fitPreviewAtlasSprite(preview, frame) {
+  const naturalWidth = parseFloat(frame.style.width) || BASE_FRAME_WIDTH;
+  const naturalHeight = parseFloat(frame.style.height) || BASE_FRAME_HEIGHT;
+  const fallbackBounds = {
+    left: 0,
+    top: 0,
+    width: naturalWidth,
+    height: naturalHeight
+  };
+  const bounds = await measureVisibleBounds(frame, naturalWidth, naturalHeight) || fallbackBounds;
+  const scale = readCssNumber(preview, "--variation-preview-sprite-scale", 1);
+  const frameCenterX = naturalWidth / 2;
+  const frameCenterY = naturalHeight / 2;
+  const spriteCenterX = bounds.left + bounds.width / 2;
+  const spriteCenterY = bounds.top + bounds.height / 2;
+  const offsetX = (frameCenterX - spriteCenterX) * scale;
+  const offsetY = (frameCenterY - spriteCenterY) * scale;
+
+  applyFit(preview, frame, naturalWidth, naturalHeight, scale, offsetX, offsetY, "--preview-frame-width", "--preview-frame-height");
+}
+
+function applyFit(stage, frame, naturalWidth, naturalHeight, fitScale, offsetX, offsetY, widthProperty = "--viewer-frame-width", heightProperty = "--viewer-frame-height") {
   const nextPosition = "absolute";
   const nextLeft = `calc(50% - ${round(naturalWidth / 2)}px)`;
   const nextTop = `calc(50% - ${round(naturalHeight / 2)}px)`;
-  const nextTransform = `matrix(${round(fitScale)}, 0, 0, ${round(fitScale)}, ${round(offsetX)}, ${round(offsetY)})`;
+  const motionTransform = frame.style.getPropertyValue("--pocodex-motion-transform").trim();
+  const fitTransform = `matrix(${round(fitScale)}, 0, 0, ${round(fitScale)}, ${round(offsetX)}, ${round(offsetY)})`;
+  const nextTransform = motionTransform ? `${fitTransform} ${motionTransform}` : fitTransform;
 
   if (frame.style.position !== nextPosition) {
     frame.style.position = nextPosition;
@@ -110,8 +146,8 @@ function applyFit(stage, frame, naturalWidth, naturalHeight, fitScale, offsetX, 
   }
 
   if (stage.style.setProperty) {
-    stage.style.setProperty("--viewer-frame-width", `${Math.ceil(naturalWidth * fitScale)}px`);
-    stage.style.setProperty("--viewer-frame-height", `${Math.ceil(naturalHeight * fitScale)}px`);
+    stage.style.setProperty(widthProperty, `${Math.ceil(naturalWidth * fitScale)}px`);
+    stage.style.setProperty(heightProperty, `${Math.ceil(naturalHeight * fitScale)}px`);
   }
 }
 
@@ -253,4 +289,9 @@ function clamp(value, min, max) {
 
 function round(value) {
   return Number(value.toFixed(4));
+}
+
+function readCssNumber(element, property, fallback) {
+  const value = parseFloat(window.getComputedStyle(element).getPropertyValue(property));
+  return Number.isFinite(value) ? value : fallback;
 }

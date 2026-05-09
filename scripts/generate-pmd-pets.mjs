@@ -145,23 +145,23 @@ async function main() {
   const tracker = await fetchJson(`${sourceBase}/tracker.json`);
   await mkdir(petsDir, { recursive: true });
 
-  const pokemonIds = resolvePokemonIds(config, tracker, parseCliPokemonIds(process.argv.slice(2)));
+  const cliPokemonIds = parseCliPokemonIds(process.argv.slice(2));
+  const pokemonIds = resolvePokemonIds(config, tracker, cliPokemonIds);
+  const variants = resolvePokemonVariants(config, tracker, pokemonIds, cliPokemonIds);
   const skipped = findSkippedBasePokemon(tracker, pokemonIds, config);
   const failed = [];
   const generated = [];
-  for (const id of pokemonIds) {
-    const trackerEntry = tracker[id] ?? {};
-    const displayName = cleanDisplayName(trackerEntry.name ?? `Pokemon ${id}`);
-    const slug = `pocodex-pmd-${slugify(displayName)}`;
+  for (const variant of variants) {
+    const { id, displayName, formLabel, slug, spritePath, spriteBrowserPath } = variant;
     const targetDir = path.join(petsDir, slug);
     const workDir = path.join(petsDir, `.tmp-${slug}`);
 
-    console.log(`Generating PMD ${displayName} (${id})...`);
+    console.log(`Generating PMD ${displayName}${formLabel === "Base" ? "" : ` ${formLabel}`} (${id})...`);
     await removeDir(workDir);
     await mkdir(workDir, { recursive: true });
 
     try {
-      const animData = await fetchText(`${sourceBase}/sprite/${id}/AnimData.xml`);
+      const animData = await fetchText(`${sourceBase}/${spritePath}/AnimData.xml`);
       const animMap = parseAnimData(animData);
       const assetCache = new Map();
       const rowSources = [];
@@ -169,7 +169,7 @@ async function main() {
 
       for (let row = 0; row < rows; row += 1) {
         const state = states[row];
-        const rowResult = await renderStateRow(id, animMap, state, assetCache);
+        const rowResult = await renderStateRow(variant, animMap, state, assetCache);
         rowSources.push({
           row,
           state: state.key,
@@ -202,8 +202,8 @@ async function main() {
         `${JSON.stringify(
           {
             id: slug,
-            displayName: `PMD ${displayName}`,
-            description: `A Codex pet assembled from PMD Collab ${displayName} animation rows.`,
+            displayName: `PMD ${displayName}${formLabel === "Base" ? "" : ` ${formLabel}`}`,
+            description: `A Codex pet assembled from PMD Collab ${displayName}${formLabel === "Base" ? "" : ` ${formLabel}`} animation rows.`,
             spritesheetPath: "spritesheet.webp"
           },
           null,
@@ -213,17 +213,21 @@ async function main() {
       traceQuality("pet.json complete");
 
       traceQuality("credits fetch start");
-      const credits = await fetchOptionalText(`${sourceBase}/sprite/${id}/credits.txt`);
+      const credits = await fetchOptionalText(`${sourceBase}/${spritePath}/credits.txt`);
       traceQuality("credits fetch complete");
       await writeFile(
         path.join(workDir, "source.json"),
         `${JSON.stringify(
           {
             pokemonId: id,
+            baseName: displayName,
             displayName,
+            formLabel,
+            sourceName: formLabel === "Base" ? displayName : `${displayName} ${formLabel}`,
             spriteSource: "PMDCollab/SpriteCollab",
             spriteSourceUrl: "https://github.com/PMDCollab/SpriteCollab",
-            spriteBrowserUrl: `https://sprites.pmdcollab.org/#/${id}`,
+            spriteBrowserUrl: `https://sprites.pmdcollab.org/#/${spriteBrowserPath}`,
+            spriteSourcePath: spritePath,
             license: "CC BY-NC 4.0, with Pokemon ownership retained by respective rights holders",
             credits: credits?.trim() ?? null,
             rowSources
@@ -238,12 +242,12 @@ async function main() {
       traceQuality("preview complete");
       await replaceDir(workDir, targetDir);
       traceQuality("rename complete");
-      generated.push({ id, slug, name: displayName });
+      generated.push({ id, slug, name: displayName, formLabel });
     } catch (error) {
       traceQuality(`catch ${error.stack ?? error.message}`);
       await removeDir(workDir);
-      failed.push({ id, name: displayName, reason: error.message });
-      console.warn(`Skipped PMD ${displayName} (${id}): ${error.message}`);
+      failed.push({ id, name: displayName, formLabel, reason: error.message });
+      console.warn(`Skipped PMD ${displayName}${formLabel === "Base" ? "" : ` ${formLabel}`} (${id}): ${error.message}`);
     }
   }
 
@@ -278,11 +282,90 @@ function resolvePokemonIds(config, tracker, cliPokemonIds) {
   }
   if (config.includeAllBasePokemon) {
     return Object.entries(tracker)
-      .filter(([id, entry]) => isEligibleBasePokemon(id, entry, config))
+      .filter(([id, entry]) =>
+        isEligibleBasePokemon(id, entry, config) ||
+        (config.includeVariantPokemon !== false && findCompletedVariantSubgroups(entry).length > 0)
+      )
       .map(([id]) => id)
       .sort((a, b) => Number(a) - Number(b));
   }
   return config.pokemonIds ?? config.starterPokemonIds ?? [];
+}
+
+function resolvePokemonVariants(config, tracker, pokemonIds, cliPokemonIds = []) {
+  const cliRequested = new Set(cliPokemonIds);
+  return pokemonIds.flatMap((id) => {
+    const trackerEntry = tracker[id] ?? {};
+    const displayName = cleanDisplayName(trackerEntry.name ?? `Pokemon ${id}`);
+    const baseSlug = `pocodex-pmd-${slugify(displayName)}`;
+    const variants = [];
+    if (isEligibleBasePokemon(id, trackerEntry, config) || cliRequested.has(id)) {
+      variants.push({
+        id,
+        displayName,
+        formLabel: "Base",
+        slug: baseSlug,
+        spritePath: `sprite/${id}`,
+        spriteBrowserPath: id
+      });
+    }
+
+    if (config.includeVariantPokemon === false) {
+      return variants;
+    }
+
+    for (const subgroup of findCompletedVariantSubgroups(trackerEntry)) {
+      if (config.includeShinyPokemon === false && /shiny/i.test(subgroup.label)) {
+        continue;
+      }
+      const formLabel = normalizeFormLabel(subgroup.label);
+      variants.push({
+        id,
+        displayName,
+        formLabel,
+        slug: `${baseSlug}-${slugify(formLabel)}`,
+        spritePath: `sprite/${id}/${subgroup.path}`,
+        spriteBrowserPath: `${id}/${subgroup.path}`
+      });
+    }
+
+    return variants;
+  });
+}
+
+function findCompletedVariantSubgroups(entry, parentPath = [], parentLabels = []) {
+  const variants = [];
+  for (const [groupId, group] of Object.entries(entry?.subgroups ?? {})) {
+    const pathParts = [...parentPath, groupId];
+    const labelParts = group.name ? [...parentLabels, group.name] : parentLabels;
+    const label = labelParts.join(" ");
+    if (label && isEligibleSpriteSubgroup(group)) {
+      variants.push({
+        path: pathParts.join("/"),
+        label
+      });
+    }
+    variants.push(...findCompletedVariantSubgroups(group, pathParts, labelParts));
+  }
+  return variants;
+}
+
+function isEligibleSpriteSubgroup(entry) {
+  if (entry?.canon === false) {
+    return false;
+  }
+  if (Number(entry?.sprite_complete ?? 0) < 2) {
+    return false;
+  }
+  const files = entry?.sprite_files ?? {};
+  return states.every((state) => state.candidates.some((candidate) => Object.hasOwn(files, candidate.action)));
+}
+
+function normalizeFormLabel(value) {
+  return cleanDisplayName(value)
+    .replace(/\bAltcolor\b/gi, "Alt Color")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function parseCliPokemonIds(args) {
@@ -344,15 +427,15 @@ function skipReason(id, entry) {
   return missingRows.length ? `missing actions for ${missingRows.join(", ")}` : null;
 }
 
-async function renderStateRow(pokemonId, animMap, state, assetCache) {
+async function renderStateRow(variant, animMap, state, assetCache) {
   const choice = chooseAnimation(animMap, state.candidates);
   if (!choice) {
-    throw new Error(`${pokemonId} has no usable animation for ${state.key}`);
+    throw new Error(`${variant.id} has no usable animation for ${state.key}`);
   }
 
   const cacheKey = choice.assetAction;
   if (!assetCache.has(cacheKey)) {
-    assetCache.set(cacheKey, await fetchBuffer(`${sourceBase}/sprite/${pokemonId}/${choice.assetAction}-Anim.png`));
+    assetCache.set(cacheKey, await fetchBuffer(`${sourceBase}/${variant.spritePath}/${choice.assetAction}-Anim.png`));
   }
   const pngBuffer = assetCache.get(cacheKey);
   const frames = await extractAnimationFrames(pngBuffer, choice.anim, choice.direction, state);

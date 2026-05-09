@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 import process from "node:process";
@@ -7,7 +7,7 @@ import JSZip from "jszip";
 import sharp from "sharp";
 
 const VERSION = "0.1.0";
-const DEFAULT_BASE_URL = process.env.POCODEX_URL ?? "http://127.0.0.1:5173";
+const DEFAULT_BASE_URL = process.env.POCODEX_URL ?? "https://pocodex.dev";
 const frameWidth = 192;
 const frameHeight = 208;
 const atlasRows = 9;
@@ -19,6 +19,17 @@ const spriteWebpOptions = {
   effort: 6,
   smartSubsample: true
 };
+const codexPetStates = [
+  { id: "idle", label: "Idle", row: 0, frames: 6, durationMs: 1100 },
+  { id: "running-right", label: "Run Right", row: 1, frames: 8, durationMs: 1060 },
+  { id: "running-left", label: "Run Left", row: 2, frames: 8, durationMs: 1060 },
+  { id: "waving", label: "Waving", row: 3, frames: 4, durationMs: 700 },
+  { id: "jumping", label: "Jumping", row: 4, frames: 5, durationMs: 840 },
+  { id: "failed", label: "Failed", row: 5, frames: 8, durationMs: 1220 },
+  { id: "waiting", label: "Waiting", row: 6, frames: 6, durationMs: 1010 },
+  { id: "running", label: "Running", row: 7, frames: 6, durationMs: 820 },
+  { id: "review", label: "Review", row: 8, frames: 6, durationMs: 1030 }
+];
 const pixelInstallStyles = new Map([
   ["original-unchanged", { id: "original-unchanged" }],
   ["pixel-nearest", { id: "pixel-nearest", pixelate: 0.5 }],
@@ -113,6 +124,7 @@ function printHelp() {
   Options
     --url <origin>       Pocodex site URL (default: ${DEFAULT_BASE_URL})
     --codex-home <path>  Codex home folder (default: CODEX_HOME or ~/.codex)
+    --speed <0.5-2.0>    Animation speed metadata written into installed pets
 
   Examples
     pocodex install pocodex-pmd-pikachu
@@ -124,7 +136,8 @@ function parseArgs(argv) {
   const args = [];
   const options = {
     baseUrl: DEFAULT_BASE_URL,
-    codexHome: process.env.CODEX_HOME ?? path.join(homedir(), ".codex")
+    codexHome: process.env.CODEX_HOME ?? path.join(homedir(), ".codex"),
+    animationSpeed: normalizeAnimationSpeed(process.env.POCODEX_ANIMATION_SPEED)
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -145,6 +158,15 @@ function parseArgs(argv) {
     }
     if (arg.startsWith("--codex-home=")) {
       options.codexHome = arg.slice("--codex-home=".length);
+      continue;
+    }
+    if (arg === "--speed" && argv[index + 1]) {
+      options.animationSpeed = parseAnimationSpeed(argv[index + 1]);
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith("--speed=")) {
+      options.animationSpeed = parseAnimationSpeed(arg.slice("--speed=".length));
       continue;
     }
     args.push(arg);
@@ -205,22 +227,92 @@ async function fetchCatalog(baseUrl) {
 }
 
 async function installPet(pet, options) {
-  if (!pet?.id || !pet?.zip) {
-    throw new Error("catalog entry is missing id or zip");
-  }
-
-  const zipUrl = joinUrl(options.baseUrl, pet.zip);
-  const zipRes = await fetch(zipUrl);
-  if (!zipRes.ok) {
-    throw new Error(`download failed for ${pet.id}: ${zipRes.status}`);
+  if (!pet?.id) {
+    throw new Error("catalog entry is missing id");
   }
 
   const dest = path.join(options.codexHome, "pets", pet.id);
   await mkdir(dest, { recursive: true });
-  await extractZip(Buffer.from(await zipRes.arrayBuffer()), dest);
+  await downloadPetFiles(pet, options, dest);
   const sourceJson = await overlayPetMetadata(pet, options, dest);
   await applyPixelStyleToInstalledPet(sourceJson, dest);
+  await applyAnimationSpeedToInstalledPet(dest, options.animationSpeed);
   console.log(`Installed ${pet.displayName ?? pet.id} to ${dest}`);
+}
+
+async function downloadPetFiles(pet, options, dest) {
+  for (const fileName of ["pet.json", "spritesheet.webp"]) {
+    await downloadRequiredFile(joinUrl(options.baseUrl, `/pocodex/pets/${pet.id}/${fileName}`), path.join(dest, fileName));
+  }
+  for (const fileName of ["source.json", "preview.png", "thumbnail.webp"]) {
+    await downloadOptionalFile(joinUrl(options.baseUrl, `/pocodex/pets/${pet.id}/${fileName}`), path.join(dest, fileName));
+  }
+}
+
+async function downloadRequiredFile(url, outputPath) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`download failed for ${url}: ${res.status}`);
+  }
+  await writeFile(outputPath, Buffer.from(await res.arrayBuffer()));
+}
+
+async function downloadOptionalFile(url, outputPath) {
+  try {
+    const res = await fetch(url);
+    if (res.ok) {
+      await writeFile(outputPath, Buffer.from(await res.arrayBuffer()));
+    }
+  } catch {
+    // Optional preview assets are nice to have, but Codex only needs pet.json and spritesheet.webp.
+  }
+}
+
+async function applyAnimationSpeedToInstalledPet(dest, speed) {
+  const petJsonPath = path.join(dest, "pet.json");
+  const petJson = JSON.parse(await readFile(petJsonPath, "utf8"));
+  await writeFile(petJsonPath, `${JSON.stringify(applyAnimationSpeedToPetJson(petJson, speed), null, 2)}\n`);
+}
+
+function applyAnimationSpeedToPetJson(petJson, speed) {
+  const animationSpeed = normalizeAnimationSpeed(speed);
+  const animationDurationsMs = {};
+  const states = codexPetStates.map((state) => {
+    const durationMs = Math.max(1, Math.round(state.durationMs / animationSpeed));
+    animationDurationsMs[state.id] = durationMs;
+    animationDurationsMs[normalizeStateAlias(state.id)] = durationMs;
+    return { ...state, durationMs };
+  });
+  return {
+    ...petJson,
+    states,
+    animationSpeed,
+    animationFrameMs: Math.max(1, Math.round(120 / animationSpeed)),
+    animationDurationsMs
+  };
+}
+
+function normalizeStateAlias(stateId) {
+  if (stateId === "running-right") {
+    return "run-right";
+  }
+  if (stateId === "running-left") {
+    return "run-left";
+  }
+  return stateId;
+}
+
+function parseAnimationSpeed(value) {
+  const speed = Number(value);
+  if (!Number.isFinite(speed) || speed <= 0) {
+    throw new Error("--speed must be a positive number");
+  }
+  return normalizeAnimationSpeed(speed);
+}
+
+function normalizeAnimationSpeed(value) {
+  const speed = Number(value);
+  return Math.min(2, Math.max(0.5, Number.isFinite(speed) ? speed : 1));
 }
 
 async function overlayPetMetadata(pet, options, dest) {
@@ -254,7 +346,7 @@ async function fetchOptionalText(url) {
 async function applyPixelStyleToInstalledPet(sourceJson, dest) {
   const styleId = sourceJson?.pixelStyle?.id;
   const style = pixelInstallStyles.get(styleId);
-  if (!style || style.id === "original-unchanged") {
+  if (!style || style.id === "original-unchanged" || sourceJson?.pixelStyle?.generatedAssets === true) {
     return;
   }
 

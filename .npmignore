@@ -1,0 +1,14 @@
+dist/
+public/
+pets/
+output/
+hatch-pet-runs/
+logs/
+tmp-*/
+tmp-*.png
+.vite-*.log
+.vite-*.pid
+src/
+scripts/
+config/
+node_modules/

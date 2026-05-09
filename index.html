@@ -1,14 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="pocodex-booting">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Pocodex, a source-differentiated Pokemon Codex pet gallery." />
     <title>Pocodex</title>
+    <style>
+      html.pocodex-booting #root {
+        display: none !important;
+      }
+
+      body {
+        background: #98282d;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <script type="module" src="/src/responsive-viewer-overlay.js"></script>
+    <script>
+      const resetPocodexScroll = () => {
+        if (!location.hash) window.scrollTo(0, 0);
+      };
+
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      resetPocodexScroll();
+      window.addEventListener("DOMContentLoaded", resetPocodexScroll);
+      window.addEventListener("pageshow", resetPocodexScroll);
+      window.addEventListener("load", resetPocodexScroll);
+    </script>
+    <script type="module" src="/src/main.jsx?v=loader-sentinel-8"></script>
+    <script type="module" src="/src/home-attribution.js?v=home-attribution-1"></script>
+    <script type="module" src="/src/topbar-seam.js"></script>
+    <script type="module" src="/src/responsive-viewer-overlay.js?v=viewer-fit-3"></script>
+    <script type="module" src="/src/motion-labels.js?v=motion-labels-5"></script>
+    <script type="module" src="/src/source-files-placement.js?v=source-placement-2"></script>
   </body>
 </html>
