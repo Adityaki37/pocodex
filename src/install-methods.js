@@ -1,6 +1,6 @@
 const PACKAGE_SOURCE = "github:Adityaki37/pocodex";
 const NPM_PACKAGE_SOURCE = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main";
-const EXTRA_HOME_ROWS = ["npm", "curl"];
+const EXTRA_HOME_ROWS = [];
 
 function siteOrigin() {
   return window.location.origin || "https://pocodex.dev";
