@@ -756,30 +756,27 @@ p {
 
 .install-attribution-inline {
   order: 0;
-  align-self: stretch;
+  align-self: center;
   margin-bottom: 0;
-  padding: 10px 12px;
-  border-color: #6daab7;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.38) 50%, rgba(255, 255, 255, 0) 50%),
-    #dff7ed;
-  background-size: 100% 8px;
-  color: #102936;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #edf7ff;
 }
 
 .install-attribution-inline p {
-  color: #102936;
-  font-size: 13px;
+  color: #d7e7ef;
+  font-size: 14px;
 }
 
 .install-attribution-inline .home-attribution-label {
-  border-color: #2a050d;
-  background: #fffdfa;
-  color: #044967;
+  border-color: #83d5e1;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9deeff;
 }
 
 .install-attribution-inline a {
-  color: #044967;
+  color: #8feaff;
 }
 
 .install-heading,
