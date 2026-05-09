@@ -14,7 +14,7 @@ export const pixelStyleGenerationSource = "original-motion-source-normalized-v2"
 
 const parser = new XMLParser({ ignoreAttributes: false });
 
-const defaultWebpOptions = { quality: 88, alphaQuality: 95, effort: 5, smartSubsample: true };
+const defaultWebpOptions = { quality: 96, alphaQuality: 100, effort: 6, smartSubsample: false };
 
 export const pixelQualityStyles = [
   {
@@ -54,15 +54,16 @@ export const pixelQualityStyles = [
     id: "plain-xbrz",
     label: "xBRZ",
     description: "xBRZ-style edge expansion without extra sharpening or contrast restoration.",
-    rendering: "auto",
+    rendering: "pixelated",
     kernel: "lanczos3",
-    scale2xPasses: 2
+    scale2xPasses: 2,
+    webp: { quality: 96, alphaQuality: 100, effort: 6, smartSubsample: false }
   },
   {
     id: "hq4x",
     label: "HQ4-Smooth",
     description: "HQ4x-inspired smooth edge treatment with restored line contrast.",
-    rendering: "auto",
+    rendering: "pixelated",
     kernel: "mks2021",
     scale2xPasses: 2,
     sharpen: { sigma: 0.42, m1: 0.25, m2: 1.2, x1: 2.2, y2: 6, y3: 10 },
@@ -70,8 +71,11 @@ export const pixelQualityStyles = [
       contrast: 1.04,
       saturation: 1.04,
       outlineDarken: 0.82,
-      outlineThreshold: 86
-    }
+      outlineThreshold: 86,
+      alphaSnapLow: 3,
+      alphaSnapHigh: 252
+    },
+    webp: { quality: 96, alphaQuality: 100, effort: 6, smartSubsample: false }
   }
 ];
 

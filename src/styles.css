@@ -1449,12 +1449,14 @@ p {
 .pixel-style-plain-xbrz img,
 .pixel-style-plain-xbrz .sprite-frame,
 .pixel-style-plain-xbrz .motion-frame-canvas,
+.pixel-style-plain-xbrz .motion-sprite-frame,
 .sprite-frame.pixel-style-plain-xbrz,
 .pixel-style-hq4x img,
 .pixel-style-hq4x .sprite-frame,
 .pixel-style-hq4x .motion-frame-canvas,
+.pixel-style-hq4x .motion-sprite-frame,
 .sprite-frame.pixel-style-hq4x {
-  image-rendering: auto;
+  image-rendering: pixelated !important;
   filter: none;
 }
 
