@@ -9,10 +9,10 @@ function createLink(href, label) {
   return link;
 }
 
-function createAttribution() {
+function createAttribution(className = "home-attribution-strip") {
   const section = document.createElement("section");
   section.id = ATTRIBUTION_ID;
-  section.className = "home-attribution-strip";
+  section.className = className;
   section.setAttribute("aria-label", "Pocodex inspiration and sprite sources");
 
   const label = document.createElement("span");
@@ -34,15 +34,27 @@ function createAttribution() {
 function mountHomeAttribution() {
   const shell = document.querySelector(".app-shell");
   const controls = shell?.querySelector(".controls");
+  const installStrip = shell?.querySelector(".install-strip");
   if (!shell || !controls) {
     document.getElementById(ATTRIBUTION_ID)?.remove();
+    return;
+  }
+
+  if (installStrip) {
+    installStrip.classList.add("has-attribution");
+    const existing = document.getElementById(ATTRIBUTION_ID);
+    if (existing && existing.parentElement !== installStrip) {
+      existing.remove();
+    }
+    if (!installStrip.querySelector(`#${ATTRIBUTION_ID}`)) {
+      installStrip.prepend(createAttribution("home-attribution-strip install-attribution-inline"));
+    }
     return;
   }
 
   if (shell.querySelector(`#${ATTRIBUTION_ID}`)) {
     return;
   }
-
   controls.insertAdjacentElement("afterend", createAttribution());
 }
 

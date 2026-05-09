@@ -750,6 +750,38 @@ p {
   color: #edf7ff;
 }
 
+.install-strip.has-attribution {
+  grid-template-columns: minmax(220px, 0.58fr) minmax(230px, 0.7fr) minmax(0, 1.9fr);
+}
+
+.install-attribution-inline {
+  order: 0;
+  align-self: stretch;
+  margin-bottom: 0;
+  padding: 10px 12px;
+  border-color: #6daab7;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.38) 50%, rgba(255, 255, 255, 0) 50%),
+    #dff7ed;
+  background-size: 100% 8px;
+  color: #102936;
+}
+
+.install-attribution-inline p {
+  color: #102936;
+  font-size: 13px;
+}
+
+.install-attribution-inline .home-attribution-label {
+  border-color: #2a050d;
+  background: #fffdfa;
+  color: #044967;
+}
+
+.install-attribution-inline a {
+  color: #044967;
+}
+
 .install-heading,
 .command-row {
   display: flex;
@@ -3855,6 +3887,10 @@ p {
   }
 
   .install-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .install-strip.has-attribution {
     grid-template-columns: 1fr;
   }
 
