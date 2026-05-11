@@ -784,19 +784,22 @@ p {
 }
 
 .install-strip-compact {
-  align-self: flex-start;
-  width: fit-content !important;
+  align-self: stretch;
+  width: 100% !important;
   max-width: 100%;
-  padding-right: clamp(34px, 5vw, 58px);
 }
 
 .install-strip.install-strip-compact,
 .install-strip.install-strip-compact.has-attribution {
-  grid-template-columns: minmax(245px, 0.72fr) minmax(250px, 0.82fr);
+  grid-template-columns: minmax(260px, 0.95fr) minmax(280px, 1fr) minmax(285px, 0.92fr);
 }
 
 .install-strip-compact .install-heading {
   max-width: 620px;
+}
+
+.install-system-support h2 {
+  color: #aaf2ff;
 }
 
 .install-attribution-inline {
@@ -4011,6 +4014,11 @@ p {
   }
 
   .install-strip.has-attribution {
+    grid-template-columns: 1fr;
+  }
+
+  .install-strip.install-strip-compact,
+  .install-strip.install-strip-compact.has-attribution {
     grid-template-columns: 1fr;
   }
 
