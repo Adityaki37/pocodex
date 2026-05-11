@@ -783,6 +783,22 @@ p {
   grid-template-columns: minmax(245px, 0.72fr) minmax(250px, 0.82fr) minmax(420px, 1.7fr);
 }
 
+.install-strip-compact {
+  align-self: flex-start;
+  width: fit-content !important;
+  max-width: 100%;
+  padding-right: clamp(34px, 5vw, 58px);
+}
+
+.install-strip.install-strip-compact,
+.install-strip.install-strip-compact.has-attribution {
+  grid-template-columns: minmax(245px, 0.72fr) minmax(250px, 0.82fr);
+}
+
+.install-strip-compact .install-heading {
+  max-width: 620px;
+}
+
 .install-attribution-inline {
   order: 0;
   display: grid;
@@ -897,51 +913,6 @@ p {
   height: 38px;
   border-color: #6daab7;
   box-shadow: 0 2px 0 rgba(4, 73, 103, 0.12);
-}
-
-.install-guidance {
-  align-self: stretch;
-  align-content: center;
-  gap: 10px;
-}
-
-.install-guidance-card {
-  display: block;
-  padding: 12px 14px;
-  border: 1px solid rgba(143, 234, 255, 0.42);
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(143, 234, 255, 0.16), rgba(255, 255, 255, 0.04) 48%, rgba(245, 196, 65, 0.1)),
-    rgba(8, 17, 29, 0.58);
-  color: #e8f7ff;
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1.4;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 8px 18px rgba(0, 0, 0, 0.16);
-}
-
-.install-method-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.install-method-pill {
-  display: inline-flex;
-  min-height: 30px;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 11px;
-  border: 1px solid rgba(143, 234, 255, 0.48);
-  border-radius: 999px;
-  background: rgba(224, 248, 244, 0.1);
-  color: #aaf2ff;
-  font-size: 12px;
-  font-weight: 950;
-  letter-spacing: 0;
-  text-transform: uppercase;
 }
 
 .install-commands,
