@@ -995,7 +995,17 @@ async function overlayPetMetadata(pet, options, dest) {
   }
 
   try {
-    return JSON.parse(await readFile(path.join(dest, "source.json"), "utf8"));
+    const sourceJsonPath = path.join(dest, "source.json");
+    const sourceJson = JSON.parse(await readFile(sourceJsonPath, "utf8"));
+    const mergedSourceJson = {
+      ...sourceJson,
+      pixelStyle: {
+        ...sourceJson.pixelStyle,
+        ...pet.pixelStyle
+      }
+    };
+    await writeFile(sourceJsonPath, `${JSON.stringify(mergedSourceJson, null, 2)}\n`);
+    return mergedSourceJson;
   } catch {
     return null;
   }
