@@ -1,4 +1,4 @@
-const PACKAGE_SOURCE = "github:Adityaki37/pocodex";
+const CLI_PACKAGE_FILE = "pocodex-cli.tgz";
 const NPM_PACKAGE_SOURCE = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main";
 const EXTRA_HOME_ROWS = [];
 
@@ -9,7 +9,7 @@ function siteOrigin() {
 function commandSet(slug) {
   const origin = siteOrigin();
   return {
-    npx: `npx --yes --package ${PACKAGE_SOURCE} pocodex install ${slug} --url ${origin}`,
+    npx: `npx --yes --package ${origin}/${CLI_PACKAGE_FILE} pocodex install ${slug} --url ${origin}`,
     npm: `npm install -g ${NPM_PACKAGE_SOURCE} && pocodex install ${slug} --url ${origin}`,
     curl: `curl -fsSL ${origin}/install/${slug} | sh`,
     powershell: `powershell -NoProfile -ExecutionPolicy Bypass -Command "irm ${origin}/install/${slug}.ps1 | iex"`,

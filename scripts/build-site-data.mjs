@@ -21,8 +21,8 @@ const publicRoot = path.join(rootDir, "public", "pocodex");
 const publicPetsDir = path.join(publicRoot, "pets");
 const publicDownloadsDir = path.join(publicRoot, "downloads");
 const publicInstallDir = path.join(rootDir, "public", "install");
-const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "http://127.0.0.1:5173");
-const npxPackageSource = "github:Adityaki37/pocodex";
+const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "https://pocodex.dev");
+const npxPackageSource = `${publicBaseUrl}/pocodex-cli.tgz`;
 const npmPackageSource = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/refs/heads/main";
 const creditNameSources = [
   "https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/credit_names.txt",
