@@ -278,24 +278,35 @@ async function installPet(pet, options) {
     throw new Error("catalog entry is missing id");
   }
 
+  const manifestPet = await fetchManifestPet(options.baseUrl, pet.id);
   const dest = path.join(options.codexHome, "pets", pet.id);
   await mkdir(dest, { recursive: true });
-  await downloadPetFiles(pet, options, dest);
-  const sourceJson = await overlayPetMetadata(pet, options, dest);
-  const customMotionApplied = await applyCustomMotionMapToInstalledPet(pet, options, dest);
+  await downloadPetFiles(manifestPet, options, dest);
+  const sourceJson = await overlayPetMetadata(manifestPet, options, dest);
+  const customMotionApplied = await applyCustomMotionMapToInstalledPet(manifestPet, options, dest);
   if (!customMotionApplied) {
     await applyPixelStyleToInstalledPet(sourceJson, dest);
   }
   await applyAnimationSpeedToInstalledPet(dest, options.animationSpeed);
-  console.log(`Installed ${pet.displayName ?? pet.id} to ${dest}`);
+  console.log(`Installed ${manifestPet.displayName ?? pet.displayName ?? pet.id} to ${dest}`);
 }
 
 async function downloadPetFiles(pet, options, dest) {
-  for (const fileName of ["pet.json", "spritesheet.webp"]) {
-    await downloadRequiredFile(joinUrl(options.baseUrl, `/pocodex/pets/${pet.id}/${fileName}`), path.join(dest, fileName));
+  const requiredFiles = [
+    ["pet.json", pet.assets?.petJson ?? `/pocodex/pets/${pet.id}/pet.json`],
+    ["spritesheet.webp", pet.assets?.spritesheet ?? `/pocodex/pets/${pet.id}/spritesheet.webp`]
+  ];
+  const optionalFiles = [
+    ["source.json", pet.assets?.sourceJson ?? `/pocodex/pets/${pet.id}/source.json`],
+    ["preview.png", pet.assets?.preview ?? `/pocodex/pets/${pet.id}/preview.png`],
+    ["thumbnail.webp", pet.assets?.thumbnail ?? `/pocodex/pets/${pet.id}/thumbnail.webp`]
+  ];
+
+  for (const [fileName, assetPath] of requiredFiles) {
+    await downloadRequiredFile(joinUrl(options.baseUrl, assetPath), path.join(dest, fileName));
   }
-  for (const fileName of ["source.json", "preview.png", "thumbnail.webp"]) {
-    await downloadOptionalFile(joinUrl(options.baseUrl, `/pocodex/pets/${pet.id}/${fileName}`), path.join(dest, fileName));
+  for (const [fileName, assetPath] of optionalFiles) {
+    await downloadOptionalFile(joinUrl(options.baseUrl, assetPath), path.join(dest, fileName));
   }
 }
 
@@ -983,18 +994,11 @@ async function overlayPetMetadata(pet, options, dest) {
     return null;
   }
 
-  let sourceJson = null;
-  for (const fileName of ["pet.json", "source.json"]) {
-    const text = await fetchOptionalText(joinUrl(options.baseUrl, `/pocodex/pets/${pet.id}/${fileName}`));
-    if (!text) {
-      continue;
-    }
-    await writeFile(path.join(dest, fileName), text);
-    if (fileName === "source.json") {
-      sourceJson = JSON.parse(text);
-    }
+  try {
+    return JSON.parse(await readFile(path.join(dest, "source.json"), "utf8"));
+  } catch {
+    return null;
   }
-  return sourceJson;
 }
 
 async function fetchOptionalText(url) {
