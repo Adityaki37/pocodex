@@ -47,7 +47,7 @@ async function main() {
     const animatedPath = path.join(animatedSpriteDir, `${pet.id}.webp`);
 
     if (await fileExists(generatedPath)) {
-      applyGeneratedPetAssets(pet, style);
+      await applyGeneratedPetAssets(pet, style, sourcePet);
       applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
       stats.generatedPetAssets += 1;
     } else if (await fileExists(animatedPath)) {
@@ -66,12 +66,18 @@ async function main() {
   console.log(JSON.stringify(stats, null, 2));
 }
 
-function applyGeneratedPetAssets(pet, style) {
+async function applyGeneratedPetAssets(pet, style, sourcePet) {
   const zipName = `${pet.id}.zip`;
+  const preview = await fileExists(path.join(generatedPetDir, pet.id, "preview.png"))
+    ? `/pocodex/pets/${pet.id}/preview.png`
+    : sourcePet.assets?.preview ?? pet.assets?.preview;
+  const thumbnail = await fileExists(path.join(generatedPetDir, pet.id, "thumbnail.webp"))
+    ? `/pocodex/pets/${pet.id}/thumbnail.webp`
+    : sourcePet.assets?.thumbnail ?? pet.assets?.thumbnail;
   pet.assets = {
     ...pet.assets,
-    preview: `/pocodex/pets/${pet.id}/preview.png`,
-    thumbnail: `/pocodex/pets/${pet.id}/thumbnail.webp`,
+    preview,
+    thumbnail,
     spritesheet: `/pocodex/pets/${pet.id}/spritesheet.webp`,
     petJson: `/pocodex/pets/${pet.id}/pet.json`,
     sourceJson: `/pocodex/pets/${pet.id}/source.json`,
