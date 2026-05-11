@@ -42,6 +42,29 @@ const codexPetStates = [
 ];
 const pixelInstallStyles = new Map([
   ["original-unchanged", { id: "original-unchanged" }],
+  ["scale2x", { id: "scale2x", kernel: "nearest", scale2xPasses: 1 }],
+  [
+    "epx",
+    {
+      id: "epx",
+      kernel: "nearest",
+      scale2xPasses: 1,
+      pixelAdjust: {
+        contrast: 1.05,
+        saturation: 1.04,
+        outlineDarken: 0.82,
+        outlineThreshold: 92
+      }
+    }
+  ],
+  [
+    "plain-xbrz",
+    {
+      id: "plain-xbrz",
+      kernel: "lanczos3",
+      scale2xPasses: 2
+    }
+  ],
   ["pixel-nearest", { id: "pixel-nearest", pixelate: 0.5 }],
   [
     "inked-crisp",
@@ -66,22 +89,25 @@ const pixelInstallStyles = new Map([
     "hq4x",
     {
       id: "hq4x",
-      resample: { factor: 4, upKernel: "cubic", downKernel: "mitchell" },
-      blur: 0.3,
+      kernel: "mks2021",
+      scale2xPasses: 2,
       sharpen: { sigma: 0.42, m1: 0.25, m2: 1.2, x1: 2.2, y2: 6, y3: 10 },
-      modulate: { saturation: 1.04 },
-      linear: { a: 1.03, b: -2 }
+      pixelAdjust: {
+        contrast: 1.04,
+        saturation: 1.04,
+        outlineDarken: 0.82,
+        outlineThreshold: 86,
+        alphaSnapLow: 3,
+        alphaSnapHigh: 252
+      }
     }
   ],
   [
     "xbrz",
     {
       id: "xbrz",
-      resample: { factor: 4, upKernel: "lanczos3", downKernel: "mks2021" },
-      blur: 0.3,
-      sharpen: { sigma: 0.55, m1: 0.36, m2: 1.65, x1: 2.4, y2: 7, y3: 15 },
-      modulate: { saturation: 1.08 },
-      linear: { a: 1.07, b: -5 }
+      kernel: "lanczos3",
+      scale2xPasses: 2
     }
   ]
 ]);
@@ -256,8 +282,10 @@ async function installPet(pet, options) {
   await mkdir(dest, { recursive: true });
   await downloadPetFiles(pet, options, dest);
   const sourceJson = await overlayPetMetadata(pet, options, dest);
-  await applyCustomMotionMapToInstalledPet(pet, options, dest);
-  await applyPixelStyleToInstalledPet(sourceJson, dest);
+  const customMotionApplied = await applyCustomMotionMapToInstalledPet(pet, options, dest);
+  if (!customMotionApplied) {
+    await applyPixelStyleToInstalledPet(sourceJson, dest);
+  }
   await applyAnimationSpeedToInstalledPet(dest, options.animationSpeed);
   console.log(`Installed ${pet.displayName ?? pet.id} to ${dest}`);
 }
@@ -375,7 +403,7 @@ function normalizeMotionStateKey(value) {
 
 async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
   if (!options.customMotionMap) {
-    return;
+    return false;
   }
 
   const manifestPet = await fetchManifestPet(options.baseUrl, catalogPet.id);
@@ -385,7 +413,7 @@ async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
 
   const assignments = normalizeCustomMotionAssignments(options.customMotionMap, manifestPet);
   if (Object.keys(assignments).length === 0) {
-    return;
+    return false;
   }
 
   const spritesheetPath = path.join(dest, "spritesheet.webp");
@@ -398,6 +426,7 @@ async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
   await writeInstalledPreview(spritesheetPath, path.join(dest, "preview.png"));
   await writeInstalledThumbnail(spritesheetPath, path.join(dest, "thumbnail.webp"));
   await annotateCustomMotionMetadata(dest, assignments);
+  return true;
 }
 
 function normalizeCustomMotionAssignments(assignments, pet) {
@@ -478,6 +507,7 @@ async function annotateCustomMotionMetadata(dest, assignments) {
 async function writeCustomSpritesheetFromMotionSource({ pet, assignments, outputPath, existingSpritesheetPath }) {
   const sharp = await loadSharp();
   const motionSource = pet.motionSource;
+  const style = customMotionPixelStyle(pet);
   const animMap = parseAnimData(await fetchText(motionSource.animDataUrl));
   const assetCache = new Map();
   const composites = [];
@@ -516,7 +546,8 @@ async function writeCustomSpritesheetFromMotionSource({ pet, assignments, output
       animMap,
       assetCache,
       rowSource: renderSource,
-      state
+      state,
+      style
     });
     for (let column = 0; column < cells.length; column += 1) {
       composites.push({ input: cells[column], left: column * frameWidth, top: state.row * frameHeight });
@@ -541,7 +572,7 @@ function findMotionRowSource(rowSources, state) {
     rowSources.find((rowSource) => normalizeMotionStateKey(rowSource.state) === normalizeMotionStateKey(state.id));
 }
 
-async function renderCustomSourceRow({ sharp, motionSource, animMap, assetCache, rowSource, state }) {
+async function renderCustomSourceRow({ sharp, motionSource, animMap, assetCache, rowSource, state, style }) {
   const choice = resolveRowAnimation(animMap, rowSource);
   if (!choice) {
     throw new Error(`No usable animation for ${rowSource.action ?? state.id}`);
@@ -558,7 +589,7 @@ async function renderCustomSourceRow({ sharp, motionSource, animMap, assetCache,
     choiceDirection: Number(rowSource.direction ?? defaultDirectionForState(normalizeMotionStateKey(state.id))),
     state
   });
-  return Promise.all(frames.map((frame) => customFrameToCell(sharp, frame)));
+  return Promise.all(frames.map((frame) => customFrameToCell(sharp, frame, style)));
 }
 
 function resolveRowAnimation(animMap, rowSource) {
@@ -631,28 +662,20 @@ async function extractCustomAnimationFrames({ sharp, pngBuffer, anim, choiceDire
   return filledFrames.map((frame) => ({ ...frame, crop: unionBox }));
 }
 
-async function customFrameToCell(sharp, frame) {
+function customMotionPixelStyle(pet) {
+  const styleId = pet?.pixelStyle?.id;
+  const style = pixelInstallStyles.get(styleId);
+  return style && style.id !== "original-unchanged" ? style : null;
+}
+
+async function customFrameToCell(sharp, frame, style = null) {
   const cropBuffer = await sharp(frame.raw, {
     raw: { width: frame.width, height: frame.height, channels: 4 }
   })
     .extract(frame.crop)
     .png()
     .toBuffer();
-
-  const targetScale = Math.min(spriteMaxWidth / frame.crop.width, spriteMaxHeight / frame.crop.height);
-  const scale = targetScale >= 1 ? Math.max(1, Math.floor(targetScale)) : targetScale;
-  const scaledWidth = Math.max(1, Math.round(frame.crop.width * scale));
-  const scaledHeight = Math.max(1, Math.round(frame.crop.height * scale));
-  const { data, info } = await sharp(cropBuffer)
-    .resize({
-      width: scaledWidth,
-      height: scaledHeight,
-      fit: "fill",
-      kernel: sharp.kernel.nearest,
-      withoutEnlargement: false
-    })
-    .png()
-    .toBuffer({ resolveWithObject: true });
+  const { data, info } = await resizeCustomCrop(sharp, cropBuffer, frame.crop, style);
   const left = Math.round((frameWidth - info.width) / 2);
   const jumpOffset =
     frame.motion === "jump" && frame.totalCells > 1
@@ -675,6 +698,164 @@ async function customFrameToCell(sharp, frame) {
     .composite([{ input: data, left, top }])
     .png()
     .toBuffer();
+}
+
+async function resizeCustomCrop(sharp, cropBuffer, crop, style) {
+  const targetWidth = spriteMaxWidth;
+  const targetHeight = spriteMaxHeight;
+  if (!style) {
+    const targetScale = Math.min(targetWidth / crop.width, targetHeight / crop.height);
+    const scale = targetScale >= 1 ? Math.max(1, Math.floor(targetScale)) : targetScale;
+    return sharp(cropBuffer)
+      .resize({
+        width: Math.max(1, Math.round(crop.width * scale)),
+        height: Math.max(1, Math.round(crop.height * scale)),
+        fit: "fill",
+        kernel: sharp.kernel.nearest,
+        withoutEnlargement: false
+      })
+      .png()
+      .toBuffer({ resolveWithObject: true });
+  }
+
+  let imageBuffer = cropBuffer;
+  for (let pass = 0; pass < (style.scale2xPasses ?? 0); pass += 1) {
+    imageBuffer = await scale2xBuffer(sharp, imageBuffer);
+  }
+
+  let image = sharp(imageBuffer);
+  const kernel = sharp.kernel[style.kernel] ?? sharp.kernel.lanczos3;
+  image = image.resize({
+    width: targetWidth,
+    height: targetHeight,
+    fit: "inside",
+    kernel,
+    withoutEnlargement: false
+  });
+
+  if (style.blur) {
+    image = image.blur(style.blur);
+  }
+  if (style.sharpen) {
+    image = image.sharpen(style.sharpen);
+  }
+  if (style.modulate) {
+    image = image.modulate(style.modulate);
+  }
+  if (style.linear) {
+    image = image.linear(style.linear.a, style.linear.b);
+  }
+
+  imageBuffer = await image.png().toBuffer();
+  if (style.pixelAdjust) {
+    imageBuffer = await adjustPixels(sharp, imageBuffer, style.pixelAdjust);
+  }
+
+  return sharp(imageBuffer).png().toBuffer({ resolveWithObject: true });
+}
+
+async function scale2xBuffer(sharp, inputBuffer) {
+  const { data, info } = await sharp(inputBuffer)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const { width, height } = info;
+  const output = Buffer.alloc(width * height * 16);
+
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const center = pixelAt(data, width, height, x, y);
+      const up = pixelAt(data, width, height, x, y - 1);
+      const left = pixelAt(data, width, height, x - 1, y);
+      const right = pixelAt(data, width, height, x + 1, y);
+      const down = pixelAt(data, width, height, x, y + 1);
+      const useEdges = !samePixel(up, down) && !samePixel(left, right);
+      const outX = x * 2;
+      const outY = y * 2;
+
+      writePixel(output, width * 2, outX, outY, useEdges && samePixel(left, up) ? left : center);
+      writePixel(output, width * 2, outX + 1, outY, useEdges && samePixel(up, right) ? right : center);
+      writePixel(output, width * 2, outX, outY + 1, useEdges && samePixel(left, down) ? left : center);
+      writePixel(output, width * 2, outX + 1, outY + 1, useEdges && samePixel(down, right) ? right : center);
+    }
+  }
+
+  return sharp(output, {
+    raw: { width: width * 2, height: height * 2, channels: 4 }
+  })
+    .png()
+    .toBuffer();
+}
+
+async function adjustPixels(sharp, inputBuffer, options) {
+  const { data, info } = await sharp(inputBuffer)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  const output = Buffer.from(data);
+  const contrast = options.contrast ?? 1;
+  const saturation = options.saturation ?? 1;
+  const outlineThreshold = options.outlineThreshold ?? 96;
+  const outlineDarken = options.outlineDarken ?? 1;
+
+  for (let index = 0; index < output.length; index += 4) {
+    let alpha = output[index + 3];
+    if (alpha <= 0) {
+      continue;
+    }
+    if (options.alphaSnapLow !== undefined && alpha <= options.alphaSnapLow) {
+      output[index + 3] = 0;
+      continue;
+    }
+    if (options.alphaSnapHigh !== undefined && alpha >= options.alphaSnapHigh) {
+      output[index + 3] = 255;
+      alpha = 255;
+    }
+
+    const r0 = output[index];
+    const g0 = output[index + 1];
+    const b0 = output[index + 2];
+    const luma = 0.2126 * r0 + 0.7152 * g0 + 0.0722 * b0;
+    const satBlend = (value) => luma + (value - luma) * saturation;
+    let r = (satBlend(r0) - 128) * contrast + 128;
+    let g = (satBlend(g0) - 128) * contrast + 128;
+    let b = (satBlend(b0) - 128) * contrast + 128;
+
+    if (luma < outlineThreshold && alpha > 80) {
+      r *= outlineDarken;
+      g *= outlineDarken;
+      b *= outlineDarken;
+    }
+
+    output[index] = clamp(Math.round(r), 0, 255);
+    output[index + 1] = clamp(Math.round(g), 0, 255);
+    output[index + 2] = clamp(Math.round(b), 0, 255);
+  }
+
+  return sharp(output, {
+    raw: { width: info.width, height: info.height, channels: 4 }
+  })
+    .png()
+    .toBuffer();
+}
+
+function pixelAt(data, width, height, x, y) {
+  const clampedX = clamp(x, 0, width - 1);
+  const clampedY = clamp(y, 0, height - 1);
+  const index = (clampedY * width + clampedX) * 4;
+  return [data[index], data[index + 1], data[index + 2], data[index + 3]];
+}
+
+function samePixel(a, b) {
+  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
+}
+
+function writePixel(output, width, x, y, pixel) {
+  const index = (y * width + x) * 4;
+  output[index] = pixel[0];
+  output[index + 1] = pixel[1];
+  output[index + 2] = pixel[2];
+  output[index + 3] = pixel[3];
 }
 
 async function firstCellFromSpritesheet(spritesheetPath, row, sharp) {

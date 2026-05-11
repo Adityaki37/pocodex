@@ -101,7 +101,7 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
   const targetMotionDir = path.join(targetDir, "motion");
   const sourceJson = await readJsonIfExists(targetSourceJson);
   const styleFingerprint = pixelStyleFingerprint(style);
-  const motionActions = Object.keys(pet.assets?.motionSprites ?? {});
+  const motionActions = pixelStyleMotionActions(pet, style, context);
   const sourceGenerated =
     sourceJson?.pixelStyle?.generationSource === pixelStyleGenerationSource &&
     sourceJson?.pixelStyle?.generatedAssets === true &&
@@ -193,7 +193,15 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
     spritesheet: `/pocodex/pets/${pet.id}/spritesheet.webp`,
     zip: `/pocodex/downloads/${zipName}`,
     installSh: `/install/${pet.id}`,
-    installPs1: `/install/${pet.id}.ps1`
+    installPs1: `/install/${pet.id}.ps1`,
+    ...(motionActions.length > 0
+      ? {
+          motionSpriteLayout: "codex-cell-v1",
+          motionSprites: Object.fromEntries(
+            motionActions.map((action) => [action, `/pocodex/pets/${pet.id}/motion/${action}-Anim.webp`])
+          )
+        }
+      : {})
   };
   pet.pixelStyle = {
     ...pet.pixelStyle,
@@ -206,6 +214,19 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
     generatedAssets: true,
     styleFingerprint
   };
+}
+
+function pixelStyleMotionActions(pet, style, context) {
+  const existing = Object.keys(pet.assets?.motionSprites ?? {});
+  if (existing.length > 0) {
+    return existing;
+  }
+  if (!["plain-xbrz", "hq4x"].includes(style.id)) {
+    return [];
+  }
+  return [...context.animMap.keys()]
+    .filter((action) => action && action !== "Head")
+    .sort((a, b) => a.localeCompare(b));
 }
 
 async function anyMotionSpriteMissing(targetMotionDir, actions) {
