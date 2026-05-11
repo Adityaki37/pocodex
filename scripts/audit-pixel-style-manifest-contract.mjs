@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,6 +10,7 @@ const reportPath = path.join(rootDir, "output", "pixel-style-manifest-contract.j
 
 const stylesThatMayUseAnimatedSprites = new Set(["original-unchanged", "scale2x", "epx"]);
 const generatedOnlyStyles = new Set(["plain-xbrz", "hq4x"]);
+const pixelStyleOrder = ["original-unchanged", "scale2x", "epx", "plain-xbrz", "hq4x"];
 
 await main();
 
@@ -22,7 +24,11 @@ async function main() {
     hiddenFallbacks: 0,
     generatedPetAssets: 0,
     animatedSprites: 0,
-    sourceFallbacks: 0
+    sourceFallbacks: 0,
+    sourceGroupsChecked: 0,
+    fullFiveStyleGroups: 0,
+    groupsWithAtLeastThreeStyles: 0,
+    duplicateStylePairs: 0
   };
 
   for (const pet of manifest.pets) {
@@ -106,6 +112,12 @@ async function main() {
 
   const missingAssets = await findMissingVisualAssets(manifest.pets);
   failures.push(...missingAssets);
+  const duplicateStyleAssets = await findDuplicateVisualStyleAssets(manifest.pets);
+  summary.sourceGroupsChecked = duplicateStyleAssets.sourceGroupsChecked;
+  summary.fullFiveStyleGroups = duplicateStyleAssets.fullFiveStyleGroups;
+  summary.groupsWithAtLeastThreeStyles = duplicateStyleAssets.groupsWithAtLeastThreeStyles;
+  summary.duplicateStylePairs = duplicateStyleAssets.failures.length;
+  failures.push(...duplicateStyleAssets.failures);
 
   const report = {
     manifest: path.relative(rootDir, manifestPath),
@@ -173,6 +185,83 @@ async function findMissingVisualAssets(pets) {
     }
   }
   return failures;
+}
+
+async function findDuplicateVisualStyleAssets(pets) {
+  const failures = [];
+  const bySource = new Map();
+  for (const pet of pets) {
+    if (pet.formGroup !== "pixel" || !isVisualReady(pet)) {
+      continue;
+    }
+    const sourcePetId = pet.pixelStyle?.sourcePetId;
+    const styleId = pixelStyleId(pet);
+    if (!sourcePetId || !styleId) {
+      continue;
+    }
+    if (!bySource.has(sourcePetId)) {
+      bySource.set(sourcePetId, new Map());
+    }
+    bySource.get(sourcePetId).set(styleId, pet);
+  }
+
+  let fullFiveStyleGroups = 0;
+  let groupsWithAtLeastThreeStyles = 0;
+  for (const [sourcePetId, styleMap] of bySource) {
+    if (styleMap.size === pixelStyleOrder.length) {
+      fullFiveStyleGroups += 1;
+    }
+    if (styleMap.size >= 3) {
+      groupsWithAtLeastThreeStyles += 1;
+    }
+
+    const resolved = [];
+    for (const [styleId, pet] of [...styleMap.entries()].sort(compareStyleEntries)) {
+      const spritesheet = normalizePublicPath(pet.assets?.spritesheet);
+      try {
+        resolved.push({
+          styleId,
+          petId: pet.id,
+          spritesheet,
+          hash: await hashAsset(spritesheet)
+        });
+      } catch {
+        continue;
+      }
+    }
+
+    for (let i = 0; i < resolved.length; i += 1) {
+      for (let j = i + 1; j < resolved.length; j += 1) {
+        if (resolved[i].spritesheet === resolved[j].spritesheet || resolved[i].hash === resolved[j].hash) {
+          failures.push({
+            sourcePetId,
+            styleA: resolved[i].styleId,
+            petA: resolved[i].petId,
+            spritesheetA: resolved[i].spritesheet,
+            styleB: resolved[j].styleId,
+            petB: resolved[j].petId,
+            spritesheetB: resolved[j].spritesheet,
+            reason: "visual-ready styles for a source pet must use different spritesheets"
+          });
+        }
+      }
+    }
+  }
+
+  return {
+    sourceGroupsChecked: bySource.size,
+    fullFiveStyleGroups,
+    groupsWithAtLeastThreeStyles,
+    failures
+  };
+}
+
+function compareStyleEntries([styleA], [styleB]) {
+  return pixelStyleOrder.indexOf(styleA) - pixelStyleOrder.indexOf(styleB) || styleA.localeCompare(styleB);
+}
+
+async function hashAsset(publicPath) {
+  return createHash("sha256").update(await readFile(publicPathToDiskPath(publicPath))).digest("hex");
 }
 
 function normalizePublicPath(value) {
