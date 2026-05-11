@@ -4,12 +4,19 @@ import { homedir } from "node:os";
 import path from "node:path";
 import process from "node:process";
 import JSZip from "jszip";
+import { XMLParser } from "fast-xml-parser";
 
 const VERSION = "0.1.0";
 const DEFAULT_BASE_URL = process.env.POCODEX_URL ?? "https://pocodex.dev";
 const frameWidth = 192;
 const frameHeight = 208;
+const atlasColumns = 8;
 const atlasRows = 9;
+const sheetWidth = frameWidth * atlasColumns;
+const sheetHeight = frameHeight * atlasRows;
+const spriteMaxWidth = 168;
+const spriteMaxHeight = 184;
+const spriteBottomPadding = 12;
 const previewScale = 0.5;
 const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
 const spriteWebpOptions = {
@@ -18,7 +25,10 @@ const spriteWebpOptions = {
   effort: 6,
   smartSubsample: true
 };
+const customSpriteWebpOptions = { lossless: true, effort: 6 };
+const parser = new XMLParser({ ignoreAttributes: false });
 let sharpModulePromise = null;
+let manifestPromise = null;
 const codexPetStates = [
   { id: "idle", label: "Idle", row: 0, frames: 6, durationMs: 1100 },
   { id: "running-right", label: "Run Right", row: 1, frames: 8, durationMs: 1060 },
@@ -125,6 +135,7 @@ function printHelp() {
     --url <origin>       Pocodex site URL (default: ${DEFAULT_BASE_URL})
     --codex-home <path>  Codex home folder (default: CODEX_HOME or ~/.codex)
     --speed <0.5-2.0>    Animation speed metadata written into installed pets
+    --motion-map <data>  Base64url JSON state-to-source-action map for custom rows
 
   Examples
     pocodex install pocodex-pmd-pikachu
@@ -137,7 +148,8 @@ function parseArgs(argv) {
   const options = {
     baseUrl: DEFAULT_BASE_URL,
     codexHome: process.env.CODEX_HOME ?? path.join(homedir(), ".codex"),
-    animationSpeed: normalizeAnimationSpeed(process.env.POCODEX_ANIMATION_SPEED)
+    animationSpeed: normalizeAnimationSpeed(process.env.POCODEX_ANIMATION_SPEED),
+    customMotionMap: parseMotionMap(process.env.POCODEX_MOTION_MAP)
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -167,6 +179,15 @@ function parseArgs(argv) {
     }
     if (arg.startsWith("--speed=")) {
       options.animationSpeed = parseAnimationSpeed(arg.slice("--speed=".length));
+      continue;
+    }
+    if (arg === "--motion-map" && argv[index + 1]) {
+      options.customMotionMap = parseMotionMap(argv[index + 1]);
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith("--motion-map=")) {
+      options.customMotionMap = parseMotionMap(arg.slice("--motion-map=".length));
       continue;
     }
     args.push(arg);
@@ -235,6 +256,7 @@ async function installPet(pet, options) {
   await mkdir(dest, { recursive: true });
   await downloadPetFiles(pet, options, dest);
   const sourceJson = await overlayPetMetadata(pet, options, dest);
+  await applyCustomMotionMapToInstalledPet(pet, options, dest);
   await applyPixelStyleToInstalledPet(sourceJson, dest);
   await applyAnimationSpeedToInstalledPet(dest, options.animationSpeed);
   console.log(`Installed ${pet.displayName ?? pet.id} to ${dest}`);
@@ -315,6 +337,466 @@ function normalizeAnimationSpeed(value) {
   return Math.min(2, Math.max(0.5, Number.isFinite(speed) ? speed : 1));
 }
 
+function parseMotionMap(value) {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const raw = String(value).trim();
+    const json = raw.startsWith("{")
+      ? raw
+      : Buffer.from(raw.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf8");
+    const parsed = JSON.parse(json);
+    const normalized = {};
+    for (const [state, action] of Object.entries(parsed ?? {})) {
+      const stateKey = normalizeMotionStateKey(state);
+      const actionName = String(action ?? "").trim();
+      if (stateKey && actionName) {
+        normalized[stateKey] = actionName;
+      }
+    }
+    return Object.keys(normalized).length ? normalized : null;
+  } catch (error) {
+    throw new Error(`--motion-map must be base64url encoded JSON: ${error.message}`);
+  }
+}
+
+function normalizeMotionStateKey(value) {
+  const key = String(value ?? "").trim().toLowerCase();
+  if (key === "running-right") {
+    return "run-right";
+  }
+  if (key === "running-left") {
+    return "run-left";
+  }
+  return key;
+}
+
+async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
+  if (!options.customMotionMap) {
+    return;
+  }
+
+  const manifestPet = await fetchManifestPet(options.baseUrl, catalogPet.id);
+  if (!manifestPet?.motionSource?.baseUrl || !manifestPet?.motionSource?.animDataUrl) {
+    throw new Error(`${catalogPet.id} does not include motion source metadata for custom sprite assignments`);
+  }
+
+  const assignments = normalizeCustomMotionAssignments(options.customMotionMap, manifestPet);
+  if (Object.keys(assignments).length === 0) {
+    return;
+  }
+
+  const spritesheetPath = path.join(dest, "spritesheet.webp");
+  await writeCustomSpritesheetFromMotionSource({
+    pet: manifestPet,
+    assignments,
+    outputPath: spritesheetPath,
+    existingSpritesheetPath: spritesheetPath
+  });
+  await writeInstalledPreview(spritesheetPath, path.join(dest, "preview.png"));
+  await writeInstalledThumbnail(spritesheetPath, path.join(dest, "thumbnail.webp"));
+  await annotateCustomMotionMetadata(dest, assignments);
+}
+
+function normalizeCustomMotionAssignments(assignments, pet) {
+  const defaultByState = new Map(
+    (pet.motionSource?.rowSources ?? []).map((rowSource) => [
+      normalizeMotionStateKey(rowSource.state ?? codexPetStates[rowSource.row]?.id),
+      String(rowSource.action ?? rowSource.assetAction ?? "")
+    ])
+  );
+  const normalized = {};
+
+  for (const [state, action] of Object.entries(assignments ?? {})) {
+    const stateKey = normalizeMotionStateKey(state);
+    if (!codexPetStates.some((petState) => normalizeMotionStateKey(petState.id) === stateKey)) {
+      continue;
+    }
+    const actionName = String(action ?? "").trim();
+    if (!actionName || actionName === defaultByState.get(stateKey)) {
+      continue;
+    }
+    normalized[stateKey] = actionName;
+  }
+
+  return normalized;
+}
+
+async function fetchManifestPet(baseUrl, id) {
+  if (!manifestPromise) {
+    manifestPromise = fetch(joinUrl(baseUrl, "/pocodex/manifest.json")).then(async (res) => {
+      if (!res.ok) {
+        throw new Error(`manifest fetch failed: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
+  const manifest = await manifestPromise;
+  const pet = manifest?.pets?.find((entry) => entry.id === id);
+  if (!pet) {
+    throw new Error(`No manifest pet with slug "${id}"`);
+  }
+  return pet;
+}
+
+async function annotateCustomMotionMetadata(dest, assignments) {
+  const petJsonPath = path.join(dest, "pet.json");
+  const petJson = JSON.parse(await readFile(petJsonPath, "utf8"));
+  await writeFile(
+    petJsonPath,
+    `${JSON.stringify(
+      {
+        ...petJson,
+        customMotionAssignments: assignments
+      },
+      null,
+      2
+    )}\n`
+  );
+
+  try {
+    const sourceJsonPath = path.join(dest, "source.json");
+    const sourceJson = JSON.parse(await readFile(sourceJsonPath, "utf8"));
+    await writeFile(
+      sourceJsonPath,
+      `${JSON.stringify(
+        {
+          ...sourceJson,
+          customMotionAssignments: assignments
+        },
+        null,
+        2
+      )}\n`
+    );
+  } catch {
+    // source.json is optional for Codex, so a missing file should not block a valid custom install.
+  }
+}
+
+async function writeCustomSpritesheetFromMotionSource({ pet, assignments, outputPath, existingSpritesheetPath }) {
+  const sharp = await loadSharp();
+  const motionSource = pet.motionSource;
+  const animMap = parseAnimData(await fetchText(motionSource.animDataUrl));
+  const assetCache = new Map();
+  const composites = [];
+  const rowSources = motionSource.rowSources ?? [];
+
+  for (const state of codexPetStates) {
+    const stateKey = normalizeMotionStateKey(state.id);
+    const rowSource = findMotionRowSource(rowSources, state);
+    const assignedAction = assignments[stateKey];
+    const renderSource = assignedAction
+      ? {
+          ...rowSource,
+          row: state.row,
+          state: state.id,
+          action: assignedAction,
+          assetAction: assignedAction,
+          direction: defaultDirectionForState(stateKey)
+        }
+      : rowSource;
+
+    if (isStationaryAction(assignedAction)) {
+      const cell = await firstCellFromSpritesheet(existingSpritesheetPath, state.row, sharp);
+      for (let column = 0; column < state.frames; column += 1) {
+        composites.push({ input: cell, left: column * frameWidth, top: state.row * frameHeight });
+      }
+      continue;
+    }
+
+    if (!renderSource) {
+      throw new Error(`${pet.id} is missing row source metadata for ${state.id}`);
+    }
+
+    const cells = await renderCustomSourceRow({
+      sharp,
+      motionSource,
+      animMap,
+      assetCache,
+      rowSource: renderSource,
+      state
+    });
+    for (let column = 0; column < cells.length; column += 1) {
+      composites.push({ input: cells[column], left: column * frameWidth, top: state.row * frameHeight });
+    }
+  }
+
+  await sharp({
+    create: {
+      width: sheetWidth,
+      height: sheetHeight,
+      channels: 4,
+      background: transparent
+    }
+  })
+    .composite(composites)
+    .webp(customSpriteWebpOptions)
+    .toFile(outputPath);
+}
+
+function findMotionRowSource(rowSources, state) {
+  return rowSources.find((rowSource) => Number(rowSource.row) === state.row) ??
+    rowSources.find((rowSource) => normalizeMotionStateKey(rowSource.state) === normalizeMotionStateKey(state.id));
+}
+
+async function renderCustomSourceRow({ sharp, motionSource, animMap, assetCache, rowSource, state }) {
+  const choice = resolveRowAnimation(animMap, rowSource);
+  if (!choice) {
+    throw new Error(`No usable animation for ${rowSource.action ?? state.id}`);
+  }
+
+  if (!assetCache.has(choice.assetAction)) {
+    assetCache.set(choice.assetAction, await fetchBuffer(`${trimTrailingSlash(motionSource.baseUrl)}/${choice.assetAction}-Anim.png`));
+  }
+
+  const frames = await extractCustomAnimationFrames({
+    sharp,
+    pngBuffer: assetCache.get(choice.assetAction),
+    anim: choice.anim,
+    choiceDirection: Number(rowSource.direction ?? defaultDirectionForState(normalizeMotionStateKey(state.id))),
+    state
+  });
+  return Promise.all(frames.map((frame) => customFrameToCell(sharp, frame)));
+}
+
+function resolveRowAnimation(animMap, rowSource) {
+  const action = String(rowSource.action ?? "");
+  const assetAction = String(rowSource.assetAction ?? "");
+  const resolved = resolveAnimation(animMap, action) ?? resolveAnimation(animMap, assetAction);
+  if (!resolved) {
+    return null;
+  }
+  return {
+    anim: resolved,
+    assetAction: assetAction && animMap.has(assetAction) ? assetAction : resolved.assetAction
+  };
+}
+
+async function extractCustomAnimationFrames({ sharp, pngBuffer, anim, choiceDirection, state }) {
+  const metadata = await sharp(pngBuffer).metadata();
+  const sourceFrameCount = Math.floor(metadata.width / anim.frameWidth);
+  const directionCount = Math.max(1, Math.floor(metadata.height / anim.frameHeight));
+  const neededFrames = Math.max(1, Number(state.frames) || 1);
+  const spec = resolveStateRenderSpec(state.id);
+  const usedDirection = choiceDirection < directionCount ? choiceDirection : 0;
+  const selectedIndices = sampleFrameIndices(sourceFrameCount, neededFrames, spec.sample);
+  const fullFrames = [];
+
+  for (const frameIndex of selectedIndices) {
+    fullFrames.push(
+      await sharp(pngBuffer)
+        .extract({
+          left: frameIndex * anim.frameWidth,
+          top: usedDirection * anim.frameHeight,
+          width: anim.frameWidth,
+          height: anim.frameHeight
+        })
+        .ensureAlpha()
+        .raw()
+        .toBuffer()
+    );
+  }
+
+  const visibleFrames = fullFrames
+    .map((frame) => ({
+      raw: frame,
+      width: anim.frameWidth,
+      height: anim.frameHeight,
+      crop: alphaBox(frame, anim.frameWidth, anim.frameHeight),
+      motion: spec.motion ?? null
+    }))
+    .filter((frame) => frame.crop);
+
+  if (visibleFrames.length === 0) {
+    throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
+  }
+
+  const filledFrames = Array.from({ length: neededFrames }, (_, index) => ({
+    ...visibleFrames[index % visibleFrames.length],
+    cellIndex: index,
+    totalCells: neededFrames
+  }));
+
+  if (spec.cropMode === "per-frame") {
+    return filledFrames;
+  }
+
+  const unionBox = unionAlphaBox(filledFrames.map((frame) => frame.raw), anim.frameWidth, anim.frameHeight);
+  if (!unionBox) {
+    throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
+  }
+
+  return filledFrames.map((frame) => ({ ...frame, crop: unionBox }));
+}
+
+async function customFrameToCell(sharp, frame) {
+  const cropBuffer = await sharp(frame.raw, {
+    raw: { width: frame.width, height: frame.height, channels: 4 }
+  })
+    .extract(frame.crop)
+    .png()
+    .toBuffer();
+
+  const targetScale = Math.min(spriteMaxWidth / frame.crop.width, spriteMaxHeight / frame.crop.height);
+  const scale = targetScale >= 1 ? Math.max(1, Math.floor(targetScale)) : targetScale;
+  const scaledWidth = Math.max(1, Math.round(frame.crop.width * scale));
+  const scaledHeight = Math.max(1, Math.round(frame.crop.height * scale));
+  const { data, info } = await sharp(cropBuffer)
+    .resize({
+      width: scaledWidth,
+      height: scaledHeight,
+      fit: "fill",
+      kernel: sharp.kernel.nearest,
+      withoutEnlargement: false
+    })
+    .png()
+    .toBuffer({ resolveWithObject: true });
+  const left = Math.round((frameWidth - info.width) / 2);
+  const jumpOffset =
+    frame.motion === "jump" && frame.totalCells > 1
+      ? Math.round(Math.sin((frame.cellIndex / (frame.totalCells - 1)) * Math.PI) * 42)
+      : 0;
+  const top = clamp(
+    Math.round(frameHeight - spriteBottomPadding - info.height - jumpOffset),
+    4,
+    frameHeight - info.height - 4
+  );
+
+  return sharp({
+    create: {
+      width: frameWidth,
+      height: frameHeight,
+      channels: 4,
+      background: transparent
+    }
+  })
+    .composite([{ input: data, left, top }])
+    .png()
+    .toBuffer();
+}
+
+async function firstCellFromSpritesheet(spritesheetPath, row, sharp) {
+  return sharp(spritesheetPath)
+    .extract({ left: 0, top: row * frameHeight, width: frameWidth, height: frameHeight })
+    .png()
+    .toBuffer();
+}
+
+function parseAnimData(xml) {
+  const parsed = parser.parse(xml);
+  const anims = normalizeArray(parsed?.AnimData?.Anims?.Anim);
+  const map = new Map();
+  for (const anim of anims) {
+    if (!anim?.Name) {
+      continue;
+    }
+    map.set(anim.Name, {
+      name: anim.Name,
+      copyOf: anim.CopyOf ?? null,
+      frameWidth: Number(anim.FrameWidth ?? 1),
+      frameHeight: Number(anim.FrameHeight ?? 1)
+    });
+  }
+  return map;
+}
+
+function resolveAnimation(animMap, action, seen = new Set()) {
+  const anim = animMap.get(action);
+  if (!anim || seen.has(action)) {
+    return null;
+  }
+  if (!anim.copyOf) {
+    return { ...anim, assetAction: action };
+  }
+  seen.add(action);
+  const resolved = resolveAnimation(animMap, anim.copyOf, seen);
+  return resolved ? { ...resolved, assetAction: resolved.assetAction } : null;
+}
+
+function sampleFrameIndices(sourceFrameCount, neededFrames, mode) {
+  if (sourceFrameCount <= 0) {
+    throw new Error("Animation has no source frames");
+  }
+  const indices = [];
+  for (let index = 0; index < neededFrames; index += 1) {
+    indices.push(mode === "spread" && neededFrames > 1 && sourceFrameCount > 1
+      ? Math.round((index / (neededFrames - 1)) * (sourceFrameCount - 1))
+      : index % sourceFrameCount);
+  }
+  return indices;
+}
+
+function resolveStateRenderSpec(stateId) {
+  const stateKey = normalizeMotionStateKey(stateId);
+  if (stateKey === "waving" || stateKey === "failed") {
+    return { sample: "spread", cropMode: "per-frame" };
+  }
+  if (stateKey === "jumping") {
+    return { sample: "spread", cropMode: "per-frame", motion: "jump" };
+  }
+  return { sample: "cycle", cropMode: "per-frame" };
+}
+
+function defaultDirectionForState(stateKey) {
+  if (stateKey === "run-right") {
+    return 2;
+  }
+  if (stateKey === "run-left") {
+    return 6;
+  }
+  if (stateKey === "running") {
+    return 0;
+  }
+  return 1;
+}
+
+function isStationaryAction(action) {
+  return String(action ?? "").trim().toLowerCase() === "stationary";
+}
+
+function alphaBox(frame, width, height) {
+  return unionAlphaBox([frame], width, height);
+}
+
+function unionAlphaBox(frames, width, height) {
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+  for (const frame of frames) {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        if (frame[(y * width + x) * 4 + 3] <= 8) {
+          continue;
+        }
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  if (right < left || bottom < top) {
+    return null;
+  }
+  const padding = 2;
+  left = clamp(left - padding, 0, width - 1);
+  top = clamp(top - padding, 0, height - 1);
+  right = clamp(right + padding, left, width - 1);
+  bottom = clamp(bottom + padding, top, height - 1);
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
+}
+
+function normalizeArray(value) {
+  return value ? (Array.isArray(value) ? value : [value]) : [];
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
 async function overlayPetMetadata(pet, options, dest) {
   if (pet.formGroup !== "pixel") {
     return null;
@@ -341,6 +823,22 @@ async function fetchOptionalText(url) {
   } catch {
     return null;
   }
+}
+
+async function fetchText(url) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`text fetch failed for ${url}: ${res.status}`);
+  }
+  return res.text();
+}
+
+async function fetchBuffer(url) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`asset fetch failed for ${url}: ${res.status}`);
+  }
+  return Buffer.from(await res.arrayBuffer());
 }
 
 async function applyPixelStyleToInstalledPet(sourceJson, dest) {
@@ -538,4 +1036,8 @@ function normalizeBaseUrl(value) {
 
 function joinUrl(baseUrl, pathname) {
   return new URL(pathname, `${normalizeBaseUrl(baseUrl)}/`).toString();
+}
+
+function trimTrailingSlash(value) {
+  return String(value).replace(/\/+$/, "");
 }

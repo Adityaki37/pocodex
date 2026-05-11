@@ -1125,6 +1125,11 @@ p {
   object-fit: contain;
 }
 
+.card-sprite-atlas {
+  display: block;
+  background-repeat: no-repeat;
+}
+
 .card-preview.animated .sprite-frame,
 .card-preview.animated .motion-frame-canvas {
   transform: translateY(calc(2px + var(--pocodex-style-y, 0px))) scale(var(--pocodex-style-scale, 1));
@@ -1456,7 +1461,7 @@ p {
 .pixel-style-hq4x .motion-frame-canvas,
 .pixel-style-hq4x .motion-sprite-frame,
 .sprite-frame.pixel-style-hq4x {
-  image-rendering: pixelated !important;
+  image-rendering: auto !important;
   filter: none;
 }
 
@@ -1464,7 +1469,7 @@ p {
 .pixel-style-xbrz .sprite-frame,
 .pixel-style-xbrz .motion-frame-canvas,
 .sprite-frame.pixel-style-xbrz {
-  image-rendering: pixelated;
+  image-rendering: auto;
   filter: none;
 }
 
@@ -2256,8 +2261,8 @@ p {
 }
 
 .entry-shell > .entry-explore-panel .pokemon-nav-thumb {
-  width: 50px;
-  height: 50px;
+  width: 58px;
+  height: 58px;
 }
 
 .entry-explore-card {
@@ -3440,6 +3445,11 @@ p {
   transform: translateY(var(--pocodex-style-y, 0px)) scale(var(--pocodex-style-scale, 1));
   transform-origin: center center;
   will-change: transform;
+  image-rendering: pixelated;
+}
+
+.viewer-stage .motion-sprite-frame {
+  image-rendering: pixelated;
 }
 
 .viewer-stage > .sprite-frame.pixel-style-plain-xbrz:not(.pixel-style-size-normalized),
@@ -4208,7 +4218,7 @@ p {
   }
 
   .entry-shell > .entry-explore-panel .pokemon-nav-card {
-    grid-template-columns: 36px 54px minmax(0, 1fr);
+    grid-template-columns: 36px 58px minmax(0, 1fr);
   }
 
   .entry-header .evolution-chain {
