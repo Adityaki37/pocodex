@@ -29,7 +29,7 @@
     "site:cli-package": "node scripts/build-cli-package.mjs",
     "site:audit-pixel-contract": "node scripts/audit-pixel-style-manifest-contract.mjs",
     "site:audit-base-coverage": "node scripts/audit-base-coverage.mjs",
-    "site:build": "npm run site:data && npm run site:quality && npm run site:pixel-styles && npm run site:repair-pixel-assets && npm run site:cli-package && npx --yes vite build",
+    "site:build": "npm run site:data && npm run site:quality && npm run site:pixel-styles && npm run site:repair-pixel-assets && npm run site:audit-pixel-contract && npm run site:cli-package && npx --yes vite build",
     "site:preview": "npx --yes vite preview --host 127.0.0.1",
     "validate": "node scripts/validate-pets.mjs",
     "install:pets": "node scripts/install-pets.mjs",
