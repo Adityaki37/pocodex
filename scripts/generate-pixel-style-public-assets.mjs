@@ -13,6 +13,7 @@ import {
   pixelStyleFingerprint,
   pixelStyleGenerationSource,
   pixelStyleId,
+  resizeCropWithPixelStyle,
   transparent,
   writePixelStyleMotionSheetFromMotionSource,
   writePixelStyleSpritesheetFromMotionSource
@@ -265,10 +266,20 @@ async function writePixelStyleSpritesheetFromBaseAtlas({ sourcePet, style, outpu
 
       const crop = await sharp(data, { raw: info }).extract(bounds).png().toBuffer();
       const { data: styledFrame, info: styledInfo } = await styleAtlasCrop(crop, style, bounds);
+      const targetLeft = clamp(
+        bounds.left + Math.round((bounds.width - styledInfo.width) / 2),
+        0,
+        frameWidth - styledInfo.width
+      );
+      const targetTop = clamp(
+        bounds.top + Math.round((bounds.height - styledInfo.height) / 2),
+        0,
+        frameHeight - styledInfo.height
+      );
       composites.push({
         input: styledFrame,
-        left: column * frameWidth + bounds.left + Math.round((bounds.width - styledInfo.width) / 2),
-        top: row * frameHeight + bounds.top + Math.round((bounds.height - styledInfo.height) / 2)
+        left: column * frameWidth + targetLeft,
+        top: row * frameHeight + targetTop
       });
     }
   }
@@ -291,43 +302,18 @@ async function styleAtlasCrop(cropBuffer, style, bounds) {
     return sharp(cropBuffer).png().toBuffer({ resolveWithObject: true });
   }
 
-  const multiplier = Math.max(1, 2 ** Math.min(2, Number(style.scale2xPasses ?? 0)));
-  let image = sharp(cropBuffer);
-  if (multiplier > 1) {
-    image = image
-      .resize({
-        width: Math.max(1, bounds.width * multiplier),
-        height: Math.max(1, bounds.height * multiplier),
-        fit: "fill",
-        kernel: sharp.kernel.nearest,
-        withoutEnlargement: false
-      })
-      .resize({
-        width: bounds.width,
-        height: bounds.height,
-        fit: "fill",
-        kernel: resolvePreviewKernel(style),
-        withoutEnlargement: false
-      });
-  } else {
-    image = image.resize({
-      width: bounds.width,
-      height: bounds.height,
-      fit: "fill",
-      kernel: resolvePreviewKernel(style),
-      withoutEnlargement: false
-    });
-  }
-  if (style.sharpen) {
-    image = image.sharpen(style.sharpen);
-  }
-  if (style.modulate) {
-    image = image.modulate(style.modulate);
-  }
-  if (style.linear) {
-    image = image.linear(style.linear.a, style.linear.b);
-  }
-  return image.png().toBuffer({ resolveWithObject: true });
+  const boostedStyles = new Set(["scale2x", "epx"]);
+  const targetScale = boostedStyles.has(style.id) ? 1.035 : 1;
+  const targetWidth = clamp(Math.round(bounds.width * targetScale), 1, frameWidth - 8);
+  const targetHeight = clamp(Math.round(bounds.height * targetScale), 1, frameHeight - 16);
+  return resizeCropWithPixelStyle(cropBuffer, style, {
+    width: targetWidth,
+    height: targetHeight
+  });
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
 async function writePreviewFromSpritesheet(targetDir, style) {
