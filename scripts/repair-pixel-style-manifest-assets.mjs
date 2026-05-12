@@ -15,6 +15,11 @@ const manifestPath = path.join(publicDir, "pocodex", "manifest.json");
 const catalogPath = path.join(publicDir, "pocodex", "catalog.json");
 const animatedSpriteDir = path.join(rootDir, "dist", "pocodex-animated-sprites");
 const generatedPetDir = path.join(publicDir, "pocodex", "pets");
+const remoteAssetOrigin = normalizeBaseUrl(
+  process.env.POCODEX_PIXEL_ASSET_ORIGIN ?? process.env.POCODEX_URL ?? "https://pocodex.dev"
+);
+const workerCount = Math.max(1, Number(process.env.POCODEX_REPAIR_WORKERS ?? 32) || 32);
+const remoteAssetCache = new Map();
 
 await main();
 
@@ -27,29 +32,37 @@ async function main() {
   const stats = {
     pixelPets: 0,
     generatedPetAssets: 0,
+    remoteGeneratedPetAssets: 0,
     animatedSprites: 0,
     sourceFallbacks: 0
   };
 
-  for (const pet of manifest.pets) {
+  await mapLimit(manifest.pets, workerCount, async (pet) => {
     if (pet.formGroup !== "pixel") {
-      continue;
+      return;
     }
     stats.pixelPets += 1;
     const styleId = pixelStyleId(pet);
     const style = pixelQualityStylesById.get(styleId);
     const sourcePet = sourceById.get(pet.pixelStyle?.sourcePetId);
     if (!style || !sourcePet) {
-      continue;
+      return;
     }
 
     const generatedPath = path.join(generatedPetDir, pet.id, "spritesheet.webp");
     const animatedPath = path.join(animatedSpriteDir, `${pet.id}.webp`);
 
-    if (await fileExists(generatedPath)) {
-      await applyGeneratedPetAssets(pet, style, sourcePet);
+    const hasLocalGeneratedSheet = await fileExists(generatedPath);
+    const hasRemoteGeneratedSheet = !hasLocalGeneratedSheet && await remoteAssetExists(`/pocodex/pets/${pet.id}/spritesheet.webp`);
+
+    if (hasLocalGeneratedSheet || hasRemoteGeneratedSheet) {
+      await applyGeneratedPetAssets(pet, style, sourcePet, { remote: hasRemoteGeneratedSheet });
       applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
-      stats.generatedPetAssets += 1;
+      if (hasRemoteGeneratedSheet) {
+        stats.remoteGeneratedPetAssets += 1;
+      } else {
+        stats.generatedPetAssets += 1;
+      }
     } else if (await fileExists(animatedPath)) {
       applyAnimatedSpritesheet(pet, style, sourcePet);
       applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
@@ -59,19 +72,25 @@ async function main() {
       applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
       stats.sourceFallbacks += 1;
     }
-  }
+  });
 
   await writeFile(manifestPath, `${JSON.stringify(manifest)}\n`);
   await writeFile(catalogPath, `${JSON.stringify(catalog)}\n`);
   console.log(JSON.stringify(stats, null, 2));
 }
 
-async function applyGeneratedPetAssets(pet, style, sourcePet) {
+async function applyGeneratedPetAssets(pet, style, sourcePet, options = {}) {
   const zipName = `${pet.id}.zip`;
-  const preview = await fileExists(path.join(generatedPetDir, pet.id, "preview.png"))
+  const hasPreview = options.remote
+    ? await remoteAssetExists(`/pocodex/pets/${pet.id}/preview.png`)
+    : await fileExists(path.join(generatedPetDir, pet.id, "preview.png"));
+  const hasThumbnail = options.remote
+    ? await remoteAssetExists(`/pocodex/pets/${pet.id}/thumbnail.webp`)
+    : await fileExists(path.join(generatedPetDir, pet.id, "thumbnail.webp"));
+  const preview = hasPreview
     ? `/pocodex/pets/${pet.id}/preview.png`
     : sourcePet.assets?.preview ?? pet.assets?.preview;
-  const thumbnail = await fileExists(path.join(generatedPetDir, pet.id, "thumbnail.webp"))
+  const thumbnail = hasThumbnail
     ? `/pocodex/pets/${pet.id}/thumbnail.webp`
     : sourcePet.assets?.thumbnail ?? pet.assets?.thumbnail;
   pet.assets = {
@@ -147,4 +166,50 @@ async function fileExists(filePath) {
   } catch {
     return false;
   }
+}
+
+async function remoteAssetExists(assetPath) {
+  if (!remoteAssetOrigin) {
+    return false;
+  }
+  if (remoteAssetCache.has(assetPath)) {
+    return remoteAssetCache.get(assetPath);
+  }
+  const promise = remoteHeadOk(`${remoteAssetOrigin}${assetPath}`);
+  remoteAssetCache.set(assetPath, promise);
+  return promise;
+}
+
+async function remoteHeadOk(url) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(url, { method: "HEAD" });
+      if (response.ok) {
+        return true;
+      }
+      if (response.status === 404) {
+        return false;
+      }
+    } catch {
+      // Retry transient network failures; the deployed asset set is large.
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150 * (attempt + 1)));
+  }
+  return false;
+}
+
+async function mapLimit(items, limit, callback) {
+  let index = 0;
+  async function worker() {
+    while (index < items.length) {
+      const item = items[index];
+      index += 1;
+      await callback(item);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+}
+
+function normalizeBaseUrl(value) {
+  return String(value ?? "").replace(/\/+$/, "");
 }
