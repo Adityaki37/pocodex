@@ -14,9 +14,8 @@ const atlasColumns = 8;
 const atlasRows = 9;
 const sheetWidth = frameWidth * atlasColumns;
 const sheetHeight = frameHeight * atlasRows;
-const spriteMaxWidth = 168;
-const spriteMaxHeight = 184;
 const spriteBottomPadding = 12;
+const sourceFrameMaxHeight = frameHeight - spriteBottomPadding - 4;
 const previewScale = 0.5;
 const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
 const spriteWebpOptions = {
@@ -28,7 +27,7 @@ const spriteWebpOptions = {
 const customSpriteWebpOptions = { lossless: true, effort: 6 };
 const parser = new XMLParser({ ignoreAttributes: false });
 let sharpModulePromise = null;
-let manifestPromise = null;
+const sourceFrameGenerationSource = "source-frame-canonical-v3";
 const codexPetStates = [
   { id: "idle", label: "Idle", row: 0, frames: 6, durationMs: 1100 },
   { id: "running-right", label: "Run Right", row: 1, frames: 8, durationMs: 1060 },
@@ -230,8 +229,8 @@ async function installCommand(args, options) {
     throw new Error("Usage: pocodex install <slug|all>");
   }
 
-  const catalog = await fetchCatalog(options.baseUrl);
   if (target === "all") {
+    const catalog = await fetchCatalog(options.baseUrl);
     console.log(`Installing ${catalog.length} Pocodex pet variations into ${path.join(options.codexHome, "pets")}`);
     let installed = 0;
     for (const pet of catalog) {
@@ -244,12 +243,7 @@ async function installCommand(args, options) {
     return;
   }
 
-  const pet = catalog.find((entry) => entry.id === target);
-  if (!pet) {
-    throw new Error(`No pet with slug "${target}". Run "pocodex list" to browse available slugs.`);
-  }
-
-  await installPet(pet, options);
+  await installPet({ id: target }, options);
 }
 
 async function listPets(options) {
@@ -278,17 +272,50 @@ async function installPet(pet, options) {
     throw new Error("catalog entry is missing id");
   }
 
-  const manifestPet = await fetchManifestPet(options.baseUrl, pet.id);
+  const manifestPet = await fetchInstallPetDescriptor(options.baseUrl, pet);
   const dest = path.join(options.codexHome, "pets", pet.id);
   await mkdir(dest, { recursive: true });
   await downloadPetFiles(manifestPet, options, dest);
   const sourceJson = await overlayPetMetadata(manifestPet, options, dest);
-  const customMotionApplied = await applyCustomMotionMapToInstalledPet(manifestPet, options, dest);
+  const customMotionApplied = await applyCustomMotionMapToInstalledPet(manifestPet, options, dest, sourceJson);
   if (!customMotionApplied) {
-    await applyPixelStyleToInstalledPet(sourceJson, dest);
+    const sourceFrameApplied = applySourceFrameSpritesheetToInstalledPet(sourceJson);
+    if (!sourceFrameApplied) {
+      await applyPixelStyleToInstalledPet(sourceJson, dest);
+    }
   }
   await applyAnimationSpeedToInstalledPet(dest, options.animationSpeed);
   console.log(`Installed ${manifestPet.displayName ?? pet.displayName ?? pet.id} to ${dest}`);
+}
+
+async function fetchInstallPetDescriptor(baseUrl, pet) {
+  const sourceJson = await fetchOptionalJson(joinUrl(baseUrl, `/pocodex/pets/${pet.id}/source.json`));
+  const petJson = await fetchOptionalJson(joinUrl(baseUrl, `/pocodex/pets/${pet.id}/pet.json`));
+  if (!sourceJson && !petJson && !pet.assets) {
+    throw new Error(`No pet with slug "${pet.id}". Run "pocodex list" to browse available slugs.`);
+  }
+
+  const derivedMotionSource = deriveMotionSource(sourceJson);
+  return {
+    ...pet,
+    id: pet.id,
+    displayName: pet.displayName ?? petJson?.displayName ?? sourceJson?.displayName ?? pet.id,
+    packageDisplayName: pet.packageDisplayName ?? petJson?.displayName ?? sourceJson?.displayName ?? pet.id,
+    formGroup: pet.formGroup ?? (sourceJson?.pixelStyle ? "pixel" : undefined),
+    motionModel: pet.motionModel ?? sourceJson?.motionModel,
+    motionSource: pet.motionSource ?? derivedMotionSource,
+    pixelStyle: pet.pixelStyle ?? sourceJson?.pixelStyle,
+    sourceUrl: pet.sourceUrl ?? sourceJson?.sourceUrl,
+    sourceBrowserUrl: pet.sourceBrowserUrl ?? sourceJson?.sourceBrowserUrl ?? sourceJson?.spriteBrowserUrl,
+    assets: {
+      petJson: `/pocodex/pets/${pet.id}/pet.json`,
+      spritesheet: `/pocodex/pets/${pet.id}/spritesheet.webp`,
+      sourceJson: `/pocodex/pets/${pet.id}/source.json`,
+      preview: `/pocodex/pets/${pet.id}/preview.png`,
+      thumbnail: `/pocodex/pets/${pet.id}/thumbnail.webp`,
+      ...(pet.assets ?? {})
+    }
+  };
 }
 
 async function downloadPetFiles(pet, options, dest) {
@@ -412,12 +439,12 @@ function normalizeMotionStateKey(value) {
   return key;
 }
 
-async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
+async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest, sourceJson) {
   if (!options.customMotionMap) {
     return false;
   }
 
-  const manifestPet = await fetchManifestPet(options.baseUrl, catalogPet.id);
+  const manifestPet = catalogPet;
   if (!manifestPet?.motionSource?.baseUrl || !manifestPet?.motionSource?.animDataUrl) {
     throw new Error(`${catalogPet.id} does not include motion source metadata for custom sprite assignments`);
   }
@@ -432,12 +459,25 @@ async function applyCustomMotionMapToInstalledPet(catalogPet, options, dest) {
     pet: manifestPet,
     assignments,
     outputPath: spritesheetPath,
-    existingSpritesheetPath: spritesheetPath
+    existingSpritesheetPath: spritesheetPath,
+    copyUnassignedRows: true
   });
   await writeInstalledPreview(spritesheetPath, path.join(dest, "preview.png"));
   await writeInstalledThumbnail(spritesheetPath, path.join(dest, "thumbnail.webp"));
   await annotateCustomMotionMetadata(dest, assignments);
   return true;
+}
+
+function applySourceFrameSpritesheetToInstalledPet(sourceJson) {
+  if (hasCanonicalSourceFrameSheet(sourceJson)) {
+    return true;
+  }
+  return false;
+}
+
+function hasCanonicalSourceFrameSheet(sourceJson) {
+  return sourceJson?.pixelStyle?.generatedAssets === true &&
+    sourceJson?.pixelStyle?.generationSource === sourceFrameGenerationSource;
 }
 
 function normalizeCustomMotionAssignments(assignments, pet) {
@@ -462,23 +502,6 @@ function normalizeCustomMotionAssignments(assignments, pet) {
   }
 
   return normalized;
-}
-
-async function fetchManifestPet(baseUrl, id) {
-  if (!manifestPromise) {
-    manifestPromise = fetch(joinUrl(baseUrl, "/pocodex/manifest.json")).then(async (res) => {
-      if (!res.ok) {
-        throw new Error(`manifest fetch failed: ${res.status}`);
-      }
-      return res.json();
-    });
-  }
-  const manifest = await manifestPromise;
-  const pet = manifest?.pets?.find((entry) => entry.id === id);
-  if (!pet) {
-    throw new Error(`No manifest pet with slug "${id}"`);
-  }
-  return pet;
 }
 
 async function annotateCustomMotionMetadata(dest, assignments) {
@@ -515,7 +538,13 @@ async function annotateCustomMotionMetadata(dest, assignments) {
   }
 }
 
-async function writeCustomSpritesheetFromMotionSource({ pet, assignments, outputPath, existingSpritesheetPath }) {
+async function writeCustomSpritesheetFromMotionSource({
+  pet,
+  assignments,
+  outputPath,
+  existingSpritesheetPath,
+  copyUnassignedRows = false
+}) {
   const sharp = await loadSharp();
   const motionSource = pet.motionSource;
   const style = customMotionPixelStyle(pet);
@@ -543,6 +572,14 @@ async function writeCustomSpritesheetFromMotionSource({ pet, assignments, output
       const cell = await firstCellFromSpritesheet(existingSpritesheetPath, state.row, sharp);
       for (let column = 0; column < state.frames; column += 1) {
         composites.push({ input: cell, left: column * frameWidth, top: state.row * frameHeight });
+      }
+      continue;
+    }
+
+    if (copyUnassignedRows && !assignedAction) {
+      const cells = await cellsFromSpritesheetRow(existingSpritesheetPath, state.row, state.frames, sharp);
+      for (let column = 0; column < cells.length; column += 1) {
+        composites.push({ input: cells[column], left: column * frameWidth, top: state.row * frameHeight });
       }
       continue;
     }
@@ -600,7 +637,7 @@ async function renderCustomSourceRow({ sharp, motionSource, animMap, assetCache,
     choiceDirection: Number(rowSource.direction ?? defaultDirectionForState(normalizeMotionStateKey(state.id))),
     state
   });
-  return Promise.all(frames.map((frame) => customFrameToCell(sharp, frame, style)));
+  return customFramesToCells(sharp, frames, style);
 }
 
 function resolveRowAnimation(animMap, rowSource) {
@@ -641,36 +678,18 @@ async function extractCustomAnimationFrames({ sharp, pngBuffer, anim, choiceDire
     );
   }
 
-  const visibleFrames = fullFrames
-    .map((frame) => ({
-      raw: frame,
-      width: anim.frameWidth,
-      height: anim.frameHeight,
-      crop: alphaBox(frame, anim.frameWidth, anim.frameHeight),
-      motion: spec.motion ?? null
-    }))
-    .filter((frame) => frame.crop);
-
-  if (visibleFrames.length === 0) {
+  if (!fullFrames.some((frame) => alphaBox(frame, anim.frameWidth, anim.frameHeight))) {
     throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
   }
 
-  const filledFrames = Array.from({ length: neededFrames }, (_, index) => ({
-    ...visibleFrames[index % visibleFrames.length],
+  return Array.from({ length: neededFrames }, (_, index) => ({
+    raw: fullFrames[index],
+    width: anim.frameWidth,
+    height: anim.frameHeight,
+    motion: spec.motion ?? null,
     cellIndex: index,
     totalCells: neededFrames
   }));
-
-  if (spec.cropMode === "per-frame") {
-    return filledFrames;
-  }
-
-  const unionBox = unionAlphaBox(filledFrames.map((frame) => frame.raw), anim.frameWidth, anim.frameHeight);
-  if (!unionBox) {
-    throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
-  }
-
-  return filledFrames.map((frame) => ({ ...frame, crop: unionBox }));
 }
 
 function customMotionPixelStyle(pet) {
@@ -679,25 +698,21 @@ function customMotionPixelStyle(pet) {
   return style && style.id !== "original-unchanged" ? style : null;
 }
 
-async function customFrameToCell(sharp, frame, style = null) {
-  const cropBuffer = await sharp(frame.raw, {
-    raw: { width: frame.width, height: frame.height, channels: 4 }
-  })
-    .extract(frame.crop)
-    .png()
-    .toBuffer();
-  const { data, info } = await resizeCustomCrop(sharp, cropBuffer, frame.crop, style);
+async function customFramesToCells(sharp, frames, style = null) {
+  const renderedFrames = await Promise.all(frames.map((frame) => renderCustomSourceFrame(sharp, frame, style)));
+  if (renderedFrames.length === 0) {
+    return [];
+  }
+  const { info } = renderedFrames[0];
+  const rowBounds = unionRenderedAlphaBox(renderedFrames, info.width, info.height);
   const left = Math.round((frameWidth - info.width) / 2);
-  const jumpOffset =
-    frame.motion === "jump" && frame.totalCells > 1
-      ? Math.round(Math.sin((frame.cellIndex / (frame.totalCells - 1)) * Math.PI) * 42)
-      : 0;
-  const top = clamp(
-    Math.round(frameHeight - spriteBottomPadding - info.height - jumpOffset),
-    4,
-    frameHeight - info.height - 4
-  );
+  const top = rowBounds
+    ? Math.max(4, Math.round(frameHeight - spriteBottomPadding - (rowBounds.top + rowBounds.height - 1)))
+    : Math.round(frameHeight - spriteBottomPadding - info.height);
+  return Promise.all(renderedFrames.map((renderedFrame) => renderedCustomFrameToCell(sharp, renderedFrame, { left, top })));
+}
 
+async function renderedCustomFrameToCell(sharp, { input }, { left, top }) {
   return sharp({
     create: {
       width: frameWidth,
@@ -706,63 +721,122 @@ async function customFrameToCell(sharp, frame, style = null) {
       background: transparent
     }
   })
-    .composite([{ input: data, left, top }])
+    .composite([{ input, left, top }])
     .png()
     .toBuffer();
 }
 
-async function resizeCustomCrop(sharp, cropBuffer, crop, style) {
-  const targetWidth = spriteMaxWidth;
-  const targetHeight = spriteMaxHeight;
-  if (!style) {
-    const targetScale = Math.min(targetWidth / crop.width, targetHeight / crop.height);
-    const scale = targetScale >= 1 ? Math.max(1, Math.floor(targetScale)) : targetScale;
-    return sharp(cropBuffer)
-      .resize({
-        width: Math.max(1, Math.round(crop.width * scale)),
-        height: Math.max(1, Math.round(crop.height * scale)),
-        fit: "fill",
-        kernel: sharp.kernel.nearest,
-        withoutEnlargement: false
-      })
-      .png()
-      .toBuffer({ resolveWithObject: true });
-  }
+async function renderCustomSourceFrame(sharp, frame, style = null) {
+  let imageBuffer = await sharp(frame.raw, {
+    raw: { width: frame.width, height: frame.height, channels: 4 }
+  })
+    .png()
+    .toBuffer();
 
-  let imageBuffer = cropBuffer;
-  for (let pass = 0; pass < (style.scale2xPasses ?? 0); pass += 1) {
+  for (let pass = 0; pass < (style?.scale2xPasses ?? 0); pass += 1) {
     imageBuffer = await scale2xBuffer(sharp, imageBuffer);
   }
 
+  const kernel = style ? sharp.kernel[style.kernel] ?? sharp.kernel.lanczos3 : sharp.kernel.nearest;
   let image = sharp(imageBuffer);
-  const kernel = sharp.kernel[style.kernel] ?? sharp.kernel.lanczos3;
-  image = image.resize({
-    width: targetWidth,
-    height: targetHeight,
+  const integerScaled = !style && kernel === sharp.kernel.nearest
+    ? await resizeCustomFrameIntegerScale(sharp, image, frameWidth, sourceFrameMaxHeight)
+    : null;
+  image = integerScaled ?? image.resize({
+    width: frameWidth,
+    height: sourceFrameMaxHeight,
     fit: "inside",
     kernel,
     withoutEnlargement: false
   });
 
-  if (style.blur) {
+  if (style?.blur) {
     image = image.blur(style.blur);
   }
-  if (style.sharpen) {
+  if (style?.sharpen) {
     image = image.sharpen(style.sharpen);
   }
-  if (style.modulate) {
+  if (style?.modulate) {
     image = image.modulate(style.modulate);
   }
-  if (style.linear) {
+  if (style?.linear) {
     image = image.linear(style.linear.a, style.linear.b);
   }
 
   imageBuffer = await image.png().toBuffer();
-  if (style.pixelAdjust) {
+  if (style?.pixelAdjust) {
     imageBuffer = await adjustPixels(sharp, imageBuffer, style.pixelAdjust);
   }
 
-  return sharp(imageBuffer).png().toBuffer({ resolveWithObject: true });
+  const input = await sharp(imageBuffer)
+    .png()
+    .toBuffer();
+  const { data: raw, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  return { input, raw, info };
+}
+
+function unionRenderedAlphaBox(renderedFrames, width, height) {
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+  for (const { raw } of renderedFrames) {
+    const box = tightAlphaBox(raw, width, height);
+    if (!box) {
+      continue;
+    }
+    left = Math.min(left, box.left);
+    top = Math.min(top, box.top);
+    right = Math.max(right, box.left + box.width - 1);
+    bottom = Math.max(bottom, box.top + box.height - 1);
+  }
+  if (right < left || bottom < top) {
+    return null;
+  }
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
+}
+
+async function resizeCustomFrameIntegerScale(sharp, image, targetWidth, targetHeight) {
+  const meta = await image.metadata();
+  const scale = Math.min(
+    Math.floor(targetWidth / Math.max(1, meta.width)),
+    Math.floor(targetHeight / Math.max(1, meta.height))
+  );
+  if (scale < 1) {
+    return null;
+  }
+  return image.resize({
+    width: meta.width * scale,
+    height: meta.height * scale,
+    fit: "fill",
+    kernel: sharp.kernel.nearest,
+    withoutEnlargement: false
+  });
+}
+
+function tightAlphaBox(frame, width, height) {
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (frame[(y * width + x) * 4 + 3] <= 8) {
+        continue;
+      }
+      left = Math.min(left, x);
+      top = Math.min(top, y);
+      right = Math.max(right, x);
+      bottom = Math.max(bottom, y);
+    }
+  }
+  if (right < left || bottom < top) {
+    return null;
+  }
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
 }
 
 async function scale2xBuffer(sharp, inputBuffer) {
@@ -876,6 +950,17 @@ async function firstCellFromSpritesheet(spritesheetPath, row, sharp) {
     .toBuffer();
 }
 
+async function cellsFromSpritesheetRow(spritesheetPath, row, frameCount, sharp) {
+  return Promise.all(
+    Array.from({ length: frameCount }, (_, column) =>
+      sharp(spritesheetPath)
+        .extract({ left: column * frameWidth, top: row * frameHeight, width: frameWidth, height: frameHeight })
+        .png()
+        .toBuffer()
+    )
+  );
+}
+
 function parseAnimData(xml) {
   const parsed = parser.parse(xml);
   const anims = normalizeArray(parsed?.AnimData?.Anims?.Anim);
@@ -891,7 +976,34 @@ function parseAnimData(xml) {
       frameHeight: Number(anim.FrameHeight ?? 1)
     });
   }
+  return map.size > 0 ? map : parseLegacyAnimData(xml);
+}
+
+function parseLegacyAnimData(text) {
+  const tokens = String(text ?? "").trim().split(/\s+/).filter(Boolean);
+  const map = new Map();
+  for (let index = 0; index < tokens.length - 3; index += 1) {
+    if (isNumericToken(tokens[index]) || !isNumericToken(tokens[index + 1])) {
+      continue;
+    }
+    const frameWidth = Number(tokens[index + 2]);
+    const frameHeight = Number(tokens[index + 3]);
+    if (!Number.isFinite(frameWidth) || !Number.isFinite(frameHeight) || frameWidth <= 0 || frameHeight <= 0) {
+      continue;
+    }
+    map.set(tokens[index], {
+      name: tokens[index],
+      copyOf: null,
+      frameWidth,
+      frameHeight
+    });
+    index += 3;
+  }
   return map;
+}
+
+function isNumericToken(token) {
+  return /^-?\d+(?:\.\d+)?$/.test(String(token));
 }
 
 function resolveAnimation(animMap, action, seen = new Set()) {
@@ -923,12 +1035,12 @@ function sampleFrameIndices(sourceFrameCount, neededFrames, mode) {
 function resolveStateRenderSpec(stateId) {
   const stateKey = normalizeMotionStateKey(stateId);
   if (stateKey === "waving" || stateKey === "failed") {
-    return { sample: "spread", cropMode: "per-frame" };
+    return { sample: "spread" };
   }
   if (stateKey === "jumping") {
-    return { sample: "spread", cropMode: "per-frame", motion: "jump" };
+    return { sample: "spread" };
   }
-  return { sample: "cycle", cropMode: "per-frame" };
+  return { sample: "cycle" };
 }
 
 function defaultDirectionForState(stateKey) {
@@ -1018,6 +1130,53 @@ async function fetchOptionalText(url) {
   } catch {
     return null;
   }
+}
+
+async function fetchOptionalJson(url) {
+  try {
+    const res = await fetch(url);
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+function deriveMotionSource(sourceJson) {
+  if (!sourceJson) {
+    return null;
+  }
+  if (sourceJson.motionSource?.baseUrl && sourceJson.motionSource?.animDataUrl) {
+    return sourceJson.motionSource;
+  }
+
+  const browserUrl = sourceJson.sourceBrowserUrl ?? sourceJson.spriteBrowserUrl;
+  const rawBaseUrl = rawAssetBaseUrlFromBrowserUrl(browserUrl) ?? spriteCollabBaseUrlFromSourceJson(sourceJson);
+  const rowSources = sourceJson.rowSources ?? sourceJson.motionSource?.rowSources;
+  if (!rawBaseUrl || !Array.isArray(rowSources) || rowSources.length === 0) {
+    return null;
+  }
+  return {
+    baseUrl: rawBaseUrl,
+    animDataUrl: `${rawBaseUrl}/AnimData.xml`,
+    rowSources
+  };
+}
+
+function rawAssetBaseUrlFromBrowserUrl(browserUrl) {
+  const match = String(browserUrl ?? "").match(
+    /^https:\/\/github\.com\/PMDCollab\/RawAsset\/tree\/([^/]+)\/(.+)$/
+  );
+  if (!match) {
+    return null;
+  }
+  return `https://raw.githubusercontent.com/PMDCollab/RawAsset/${match[1]}/${match[2]}`;
+}
+
+function spriteCollabBaseUrlFromSourceJson(sourceJson) {
+  if (sourceJson?.spriteSource !== "PMDCollab/SpriteCollab" || !sourceJson?.spriteSourcePath) {
+    return null;
+  }
+  return `https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/${sourceJson.spriteSourcePath}`;
 }
 
 async function fetchText(url) {

@@ -9,8 +9,9 @@ export const atlasRows = 9;
 export const spriteMaxWidth = 168;
 export const spriteMaxHeight = 184;
 export const spriteBottomPadding = 12;
+export const sourceFrameMaxHeight = frameHeight - spriteBottomPadding - 4;
 export const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
-export const pixelStyleGenerationSource = "original-motion-source-normalized-v2";
+export const pixelStyleGenerationSource = "source-frame-canonical-v3";
 
 const parser = new XMLParser({ ignoreAttributes: false });
 
@@ -54,7 +55,7 @@ export const pixelQualityStyles = [
     id: "plain-xbrz",
     label: "xBRZ",
     description: "xBRZ-style edge expansion without extra sharpening or contrast restoration.",
-    rendering: "pixelated",
+    rendering: "auto",
     kernel: "lanczos3",
     scale2xPasses: 2,
     webp: { quality: 96, alphaQuality: 100, effort: 6, smartSubsample: false }
@@ -63,7 +64,7 @@ export const pixelQualityStyles = [
     id: "hq4x",
     label: "HQ4-Smooth",
     description: "HQ4x-inspired smooth edge treatment with restored line contrast.",
-    rendering: "pixelated",
+    rendering: "auto",
     kernel: "mks2021",
     scale2xPasses: 2,
     sharpen: { sigma: 0.42, m1: 0.25, m2: 1.2, x1: 2.2, y2: 6, y3: 10 },
@@ -178,7 +179,8 @@ export async function writePixelStyleMotionSheetFromMotionSource({
     const frames = [];
     for (let frameIndex = 0; frameIndex < sourceFrameCount; frameIndex += 1) {
       frames.push(
-        await sharp(pngBuffer)
+        {
+          raw: await sharp(pngBuffer)
           .extract({
             left: frameIndex * resolved.frameWidth,
             top: direction * resolved.frameHeight,
@@ -187,24 +189,20 @@ export async function writePixelStyleMotionSheetFromMotionSource({
           })
           .ensureAlpha()
           .raw()
-          .toBuffer()
+          .toBuffer(),
+          width: resolved.frameWidth,
+          height: resolved.frameHeight,
+          motion: null,
+          cellIndex: frameIndex,
+          totalCells: sourceFrameCount
+        }
       );
     }
 
-    const crop = unionAlphaBox(frames, resolved.frameWidth, resolved.frameHeight);
+    const cells = await framesToCells(frames, style);
     for (let frameIndex = 0; frameIndex < sourceFrameCount; frameIndex += 1) {
       composites.push({
-        input: crop
-          ? await frameToCell({
-              raw: frames[frameIndex],
-              width: resolved.frameWidth,
-              height: resolved.frameHeight,
-              crop,
-              motion: null,
-              cellIndex: frameIndex,
-              totalCells: sourceFrameCount
-            }, style)
-          : await transparentCell(),
+        input: cells[frameIndex],
         left: frameIndex * frameWidth,
         top: direction * frameHeight
       });
@@ -253,7 +251,7 @@ async function renderSourceRow(context, rowSource, manifestState, style) {
     }
   );
 
-  return Promise.all(frames.map((frame) => frameToCell(frame, style)));
+  return framesToCells(frames, style);
 }
 
 function resolveRowAnimation(animMap, rowSource) {
@@ -293,91 +291,138 @@ async function extractAnimationFrames(pngBuffer, anim, choiceDirection, state) {
     );
   }
 
-  const visibleFrames = fullFrames
-    .map((frame) => ({
-      raw: frame,
-      width: anim.frameWidth,
-      height: anim.frameHeight,
-      crop: alphaBox(frame, anim.frameWidth, anim.frameHeight),
-      motion: state.motion ?? null,
-      direction: usedDirection,
-      sourceFrameCount
-    }))
-    .filter((frame) => frame.crop);
-
-  if (visibleFrames.length === 0) {
+  if (!fullFrames.some((frame) => alphaBox(frame, anim.frameWidth, anim.frameHeight))) {
     throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
   }
 
-  const filledFrames = Array.from({ length: neededFrames }, (_, index) => ({
-    ...visibleFrames[index % visibleFrames.length],
+  return Array.from({ length: neededFrames }, (_, index) => ({
+    raw: fullFrames[index],
+    width: anim.frameWidth,
+    height: anim.frameHeight,
+    motion: state.motion ?? null,
+    direction: usedDirection,
+    sourceFrameCount,
     cellIndex: index,
     totalCells: neededFrames
   }));
-
-  if (state.cropMode === "per-frame") {
-    return filledFrames;
-  }
-
-  const unionBox = unionAlphaBox(
-    filledFrames.map((frame) => frame.raw),
-    anim.frameWidth,
-    anim.frameHeight
-  );
-  if (!unionBox) {
-    throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
-  }
-
-  return filledFrames.map((frame) => ({
-    ...frame,
-    crop: unionBox
-  }));
 }
 
-async function frameToCell(frame, style) {
-  const cropBuffer = await sharp(frame.raw, {
+async function framesToCells(frames, style) {
+  const renderedFrames = await Promise.all(frames.map((frame) => renderSourceFrameWithPixelStyle(frame, style)));
+  if (renderedFrames.length === 0) {
+    return [];
+  }
+  const { info } = renderedFrames[0];
+  const rowBounds = unionRenderedAlphaBox(renderedFrames, info.width, info.height);
+  const left = Math.round((frameWidth - info.width) / 2);
+  const top = rowBounds
+    ? Math.max(4, Math.round(frameHeight - spriteBottomPadding - (rowBounds.top + rowBounds.height - 1)))
+    : Math.round(frameHeight - spriteBottomPadding - info.height);
+  return Promise.all(renderedFrames.map((renderedFrame) => renderedFrameToCell(renderedFrame, { left, top })));
+}
+
+async function renderedFrameToCell({ input }, { left, top }) {
+
+  return sharp({
+    create: {
+      width: frameWidth,
+      height: frameHeight,
+      channels: 4,
+      background: transparent
+    }
+  })
+    .composite([{ input, left, top }])
+    .png()
+    .toBuffer();
+}
+
+function unionRenderedAlphaBox(renderedFrames, width, height) {
+  let left = width;
+  let top = height;
+  let right = -1;
+  let bottom = -1;
+  for (const { raw } of renderedFrames) {
+    const box = tightAlphaBox(raw, width, height);
+    if (!box) {
+      continue;
+    }
+    left = Math.min(left, box.left);
+    top = Math.min(top, box.top);
+    right = Math.max(right, box.left + box.width - 1);
+    bottom = Math.max(bottom, box.top + box.height - 1);
+  }
+  if (right < left || bottom < top) {
+    return null;
+  }
+  return { left, top, width: right - left + 1, height: bottom - top + 1 };
+}
+
+async function renderSourceFrameWithPixelStyle(frame, style) {
+  let imageBuffer = await sharp(frame.raw, {
     raw: { width: frame.width, height: frame.height, channels: 4 }
   })
-    .extract(frame.crop)
     .png()
     .toBuffer();
 
-  const { data, info } = await resizeCropWithPixelStyle(cropBuffer, style);
-  const left = Math.round((frameWidth - info.width) / 2);
-  const jumpOffset =
-    frame.motion === "jump" && frame.totalCells > 1
-      ? Math.round(Math.sin((frame.cellIndex / (frame.totalCells - 1)) * Math.PI) * 42)
-      : 0;
-  const top = clamp(
-    Math.round(frameHeight - spriteBottomPadding - info.height - jumpOffset),
-    4,
-    frameHeight - info.height - 4
-  );
+  for (let pass = 0; pass < (style.scale2xPasses ?? 0); pass += 1) {
+    imageBuffer = await scale2xBuffer(imageBuffer);
+  }
 
-  return sharp({
-    create: {
-      width: frameWidth,
-      height: frameHeight,
-      channels: 4,
-      background: transparent
-    }
-  })
-    .composite([{ input: data, left, top }])
+  let image = sharp(imageBuffer);
+  if (style.preScaleNearest) {
+    const meta = await image.metadata();
+    imageBuffer = await image
+      .resize({
+        width: Math.max(1, Math.round(meta.width * style.preScaleNearest)),
+        height: Math.max(1, Math.round(meta.height * style.preScaleNearest)),
+        kernel: sharp.kernel.nearest,
+        fit: "fill",
+        withoutEnlargement: false
+      })
+      .png()
+      .toBuffer();
+    image = sharp(imageBuffer);
+  }
+
+  const kernel = resolveKernel(style.kernel);
+  const resizedWithIntegerScale = style.integerScale && kernel === sharp.kernel.nearest
+    ? await resizeWithIntegerScale(image, frameWidth, sourceFrameMaxHeight)
+    : null;
+  image = resizedWithIntegerScale ?? image.resize({
+    width: frameWidth,
+    height: sourceFrameMaxHeight,
+    fit: "inside",
+    kernel,
+    withoutEnlargement: false
+  });
+
+  if (style.blur) {
+    image = image.blur(style.blur);
+  }
+  if (style.sharpen) {
+    image = image.sharpen(style.sharpen);
+  }
+  if (style.modulate) {
+    image = image.modulate(style.modulate);
+  }
+  if (style.linear) {
+    image = image.linear(style.linear.a, style.linear.b);
+  }
+
+  imageBuffer = await image.png().toBuffer();
+
+  if (style.pixelAdjust) {
+    imageBuffer = await adjustPixels(imageBuffer, style.pixelAdjust);
+  }
+
+  const input = await sharp(imageBuffer)
     .png()
     .toBuffer();
-}
-
-function transparentCell() {
-  return sharp({
-    create: {
-      width: frameWidth,
-      height: frameHeight,
-      channels: 4,
-      background: transparent
-    }
-  })
-    .png()
-    .toBuffer();
+  const { data: raw, info } = await sharp(input)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  return { input, raw, info };
 }
 
 export async function resizeCropWithPixelStyle(cropBuffer, style, options = {}) {
@@ -536,15 +581,15 @@ function findRowSource(rowSources, row, manifestState) {
 function resolveStateRenderSpec(key) {
   const normalized = normalizeStateKey(key);
   if (normalized === "waving") {
-    return { sample: "spread", cropMode: "per-frame" };
+    return { sample: "spread" };
   }
   if (normalized === "jumping") {
-    return { sample: "spread", cropMode: "per-frame", motion: "jump" };
+    return { sample: "spread" };
   }
   if (normalized === "failed") {
-    return { sample: "spread", cropMode: "per-frame" };
+    return { sample: "spread" };
   }
-  return { sample: "cycle", cropMode: "per-frame" };
+  return { sample: "cycle" };
 }
 
 function parseAnimData(xml) {
