@@ -35,6 +35,7 @@ const npmPackageSource = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/
 const previewScale = 0.5;
 const workerCount = Math.max(1, Number(process.env.POCODEX_PIXEL_STYLE_WORKERS ?? 4) || 4);
 const force = process.env.POCODEX_PIXEL_STYLE_FORCE === "1";
+const skipMotionSheets = process.env.POCODEX_PIXEL_STYLE_SKIP_MOTION_SHEETS === "1";
 
 await main();
 
@@ -53,7 +54,7 @@ async function main() {
   let completed = 0;
 
   await mapLimit(groups, workerCount, async (group) => {
-    const context = await createPixelStyleSourceContext(group.sourcePet);
+    const context = skipMotionSheets ? null : await createPixelStyleSourceContext(group.sourcePet);
     for (const pet of group.pixelPets) {
       const style = pixelQualityStylesById.get(pixelStyleId(pet));
       await generatePixelStylePet({ pet, sourcePet: group.sourcePet, style, context, states: manifest.states });
@@ -114,19 +115,18 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
     !(await fileExists(targetThumbnail));
 
   if (needsRender) {
-    await writePixelStyleSpritesheetFromMotionSource({
-      context,
+    await writePixelStyleSpritesheetFromBaseAtlas({
       sourcePet,
       style,
-      outputPath: targetSpritesheet,
-      states
+      outputPath: targetSpritesheet
     });
     await writePreviewFromSpritesheet(targetDir, style);
     await createThumbnail(targetSpritesheet, targetThumbnail, style);
   }
   if (
+    !skipMotionSheets &&
     motionActions.length > 0 &&
-    (needsRender || force || await anyMotionSpriteMissing(targetMotionDir, motionActions))
+    (force || await anyMotionSpriteMissing(targetMotionDir, motionActions))
   ) {
     await mkdir(targetMotionDir, { recursive: true });
     for (const action of motionActions) {
@@ -221,6 +221,9 @@ function pixelStyleMotionActions(pet, style, context) {
   if (existing.length > 0) {
     return existing;
   }
+  if (!context) {
+    return [];
+  }
   if (!["plain-xbrz", "hq4x"].includes(style.id)) {
     return [];
   }
@@ -236,6 +239,95 @@ async function anyMotionSpriteMissing(targetMotionDir, actions) {
     }
   }
   return false;
+}
+
+async function writePixelStyleSpritesheetFromBaseAtlas({ sourcePet, style, outputPath }) {
+  const sourceSpritesheetPath = publicAssetPath(sourcePet.assets?.spritesheet);
+  if (!sourceSpritesheetPath) {
+    throw new Error(`${sourcePet.id} is missing a local source spritesheet`);
+  }
+
+  const sourceSheet = sharp(sourceSpritesheetPath);
+  const composites = [];
+
+  for (let row = 0; row < atlasRows; row += 1) {
+    for (let column = 0; column < 8; column += 1) {
+      const { data, info } = await sourceSheet
+        .clone()
+        .extract({ left: column * frameWidth, top: row * frameHeight, width: frameWidth, height: frameHeight })
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      const bounds = alphaBounds(data, info);
+      if (!bounds) {
+        continue;
+      }
+
+      const crop = await sharp(data, { raw: info }).extract(bounds).png().toBuffer();
+      const { data: styledFrame, info: styledInfo } = await styleAtlasCrop(crop, style, bounds);
+      composites.push({
+        input: styledFrame,
+        left: column * frameWidth + bounds.left + Math.round((bounds.width - styledInfo.width) / 2),
+        top: row * frameHeight + bounds.top + Math.round((bounds.height - styledInfo.height) / 2)
+      });
+    }
+  }
+
+  await sharp({
+    create: {
+      width: frameWidth * 8,
+      height: frameHeight * atlasRows,
+      channels: 4,
+      background: transparent
+    }
+  })
+    .composite(composites)
+    .webp(resolvePreviewWebpOptions(style))
+    .toFile(outputPath);
+}
+
+async function styleAtlasCrop(cropBuffer, style, bounds) {
+  if (style.id === "original-unchanged") {
+    return sharp(cropBuffer).png().toBuffer({ resolveWithObject: true });
+  }
+
+  const multiplier = Math.max(1, 2 ** Math.min(2, Number(style.scale2xPasses ?? 0)));
+  let image = sharp(cropBuffer);
+  if (multiplier > 1) {
+    image = image
+      .resize({
+        width: Math.max(1, bounds.width * multiplier),
+        height: Math.max(1, bounds.height * multiplier),
+        fit: "fill",
+        kernel: sharp.kernel.nearest,
+        withoutEnlargement: false
+      })
+      .resize({
+        width: bounds.width,
+        height: bounds.height,
+        fit: "fill",
+        kernel: resolvePreviewKernel(style),
+        withoutEnlargement: false
+      });
+  } else {
+    image = image.resize({
+      width: bounds.width,
+      height: bounds.height,
+      fit: "fill",
+      kernel: resolvePreviewKernel(style),
+      withoutEnlargement: false
+    });
+  }
+  if (style.sharpen) {
+    image = image.sharpen(style.sharpen);
+  }
+  if (style.modulate) {
+    image = image.modulate(style.modulate);
+  }
+  if (style.linear) {
+    image = image.linear(style.linear.a, style.linear.b);
+  }
+  return image.png().toBuffer({ resolveWithObject: true });
 }
 
 async function writePreviewFromSpritesheet(targetDir, style) {
@@ -272,6 +364,14 @@ async function writePreviewFromSpritesheet(targetDir, style) {
     })
     .png({ compressionLevel: 9, adaptiveFiltering: true, palette: true, quality: 80 })
     .toFile(path.join(targetDir, "preview.png"));
+}
+
+function publicAssetPath(assetPath) {
+  const cleanPath = String(assetPath ?? "").replace(/^https?:\/\/[^/]+/i, "").replace(/^\/+/, "");
+  if (!cleanPath) {
+    return null;
+  }
+  return path.join(rootDir, "public", cleanPath);
 }
 
 async function createThumbnail(spritesheetPath, outputPath, style) {

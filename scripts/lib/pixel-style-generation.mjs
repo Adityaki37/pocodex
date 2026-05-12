@@ -11,7 +11,7 @@ export const spriteMaxHeight = 184;
 export const spriteBottomPadding = 12;
 export const sourceFrameMaxHeight = frameHeight - spriteBottomPadding - 4;
 export const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
-export const pixelStyleGenerationSource = "source-frame-canonical-v3";
+export const pixelStyleGenerationSource = "source-frame-canonical-v4";
 
 const parser = new XMLParser({ ignoreAttributes: false });
 
@@ -199,6 +199,10 @@ export async function writePixelStyleMotionSheetFromMotionSource({
       );
     }
 
+    for (const frame of frames) {
+      frame.crop = alphaBox(frame.raw, frame.width, frame.height);
+    }
+
     const cells = await framesToCells(frames, style);
     for (let frameIndex = 0; frameIndex < sourceFrameCount; frameIndex += 1) {
       composites.push({
@@ -291,7 +295,8 @@ async function extractAnimationFrames(pngBuffer, anim, choiceDirection, state) {
     );
   }
 
-  if (!fullFrames.some((frame) => alphaBox(frame, anim.frameWidth, anim.frameHeight))) {
+  const unionBox = state.cropMode === "per-frame" ? null : unionAlphaBox(fullFrames, anim.frameWidth, anim.frameHeight);
+  if (state.cropMode !== "per-frame" && !unionBox) {
     throw new Error(`${anim.name} direction ${usedDirection} contains no visible pixels`);
   }
 
@@ -299,12 +304,13 @@ async function extractAnimationFrames(pngBuffer, anim, choiceDirection, state) {
     raw: fullFrames[index],
     width: anim.frameWidth,
     height: anim.frameHeight,
+    crop: state.cropMode === "per-frame" ? alphaBox(fullFrames[index], anim.frameWidth, anim.frameHeight) : unionBox,
     motion: state.motion ?? null,
     direction: usedDirection,
     sourceFrameCount,
     cellIndex: index,
     totalCells: neededFrames
-  }));
+  })).filter((frame) => frame.crop);
 }
 
 async function framesToCells(frames, style) {
@@ -358,9 +364,11 @@ function unionRenderedAlphaBox(renderedFrames, width, height) {
 }
 
 async function renderSourceFrameWithPixelStyle(frame, style) {
+  const crop = frame.crop ?? { left: 0, top: 0, width: frame.width, height: frame.height };
   let imageBuffer = await sharp(frame.raw, {
     raw: { width: frame.width, height: frame.height, channels: 4 }
   })
+    .extract(crop)
     .png()
     .toBuffer();
 
@@ -581,10 +589,10 @@ function findRowSource(rowSources, row, manifestState) {
 function resolveStateRenderSpec(key) {
   const normalized = normalizeStateKey(key);
   if (normalized === "waving") {
-    return { sample: "spread" };
+    return { sample: "spread", cropMode: "per-frame" };
   }
   if (normalized === "jumping") {
-    return { sample: "spread" };
+    return { sample: "spread", cropMode: "per-frame", motion: "jump" };
   }
   if (normalized === "failed") {
     return { sample: "spread" };
