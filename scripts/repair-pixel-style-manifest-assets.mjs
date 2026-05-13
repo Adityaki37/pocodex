@@ -20,7 +20,6 @@ const remoteAssetOrigin = normalizeBaseUrl(process.env.POCODEX_PIXEL_ASSET_ORIGI
 const workerCount = Math.max(1, Number(process.env.POCODEX_REPAIR_WORKERS ?? 32) || 32);
 const useLocalGeneratedPacks = process.env.POCODEX_REPAIR_LOCAL_GENERATED !== "0";
 const remoteAssetCache = new Map();
-const stylesThatMayUseAnimatedSprites = new Set(["original-unchanged", "scale2x", "epx"]);
 const pixelStyleOrder = ["original-unchanged", "scale2x", "epx", "plain-xbrz", "hq4x"];
 
 await main();
@@ -51,19 +50,8 @@ async function main() {
       return;
     }
 
-    const animatedPath = path.join(animatedSpriteDir, `${pet.id}.webp`);
-
-    const hasAnimatedSheet = stylesThatMayUseAnimatedSprites.has(styleId) && await fileExists(animatedPath);
-
-    if (hasAnimatedSheet) {
-      applyAnimatedSpritesheet(pet, style, sourcePet);
-      applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
-      stats.animatedSprites += 1;
-      return;
-    }
-
-    const hasLocalGeneratedPack = useLocalGeneratedPacks && await hasLocalGeneratedAssets(pet.id);
-    const hasRemoteGeneratedPack = !hasLocalGeneratedPack && await hasRemoteGeneratedAssets(pet.id);
+    const hasLocalGeneratedPack = useLocalGeneratedPacks && await hasLocalGeneratedAssets(pet, style);
+    const hasRemoteGeneratedPack = !hasLocalGeneratedPack && await hasRemoteGeneratedAssets(pet, style);
 
     if (hasLocalGeneratedPack || hasRemoteGeneratedPack) {
       await applyGeneratedPetAssets(pet, style, sourcePet, { remote: hasRemoteGeneratedPack });
@@ -74,9 +62,15 @@ async function main() {
         stats.generatedPetAssets += 1;
       }
     } else {
-      applySourceFallback(pet, style, sourcePet);
+      const animatedPath = path.join(animatedSpriteDir, `${pet.id}.webp`);
+      if (await fileExists(animatedPath)) {
+        applyAnimatedFallback(pet, style, sourcePet);
+        stats.animatedSprites += 1;
+      } else {
+        applySourceFallback(pet, style, sourcePet);
+        stats.sourceFallbacks += 1;
+      }
       applyCatalogGeneratedAssets(catalogById.get(pet.id), pet);
-      stats.sourceFallbacks += 1;
     }
   });
 
@@ -110,26 +104,31 @@ async function applyGeneratedPetAssets(pet, style, sourcePet, options = {}) {
     sourceJson: `/pocodex/pets/${pet.id}/source.json`,
     zip: `/pocodex/downloads/${zipName}`,
     installSh: `/install/${pet.id}`,
-    installPs1: `/install/${pet.id}.ps1`
+    installPs1: `/install/${pet.id}.ps1`,
+    motionSpriteLayout: undefined,
+    motionSprites: undefined
   };
   pet.pixelStyle = normalizedPixelStyle(pet, style, true);
 }
 
-async function hasLocalGeneratedAssets(petId) {
-  return Promise.all([
+async function hasLocalGeneratedAssets(pet, style) {
+  const petId = pet.id;
+  const required = await Promise.all([
     fileExists(path.join(generatedPetDir, petId, "spritesheet.webp")),
     fileExists(path.join(generatedPetDir, petId, "preview.png")),
     fileExists(path.join(generatedPetDir, petId, "thumbnail.webp")),
     fileExists(path.join(generatedPetDir, petId, "pet.json")),
     fileExists(path.join(generatedPetDir, petId, "source.json")),
     fileExists(path.join(publicDir, "pocodex", "downloads", `${petId}.zip`))
-  ]).then((results) => results.every(Boolean));
+  ]);
+  return required.every(Boolean) && await localGeneratedMetadataMatches(pet, style);
 }
 
-async function hasRemoteGeneratedAssets(petId) {
+async function hasRemoteGeneratedAssets(pet, style) {
   if (!remoteAssetOrigin) {
     return false;
   }
+  const petId = pet.id;
   return Promise.all([
     remoteAssetExists(`/pocodex/pets/${petId}/spritesheet.webp`),
     remoteAssetExists(`/pocodex/pets/${petId}/preview.png`),
@@ -137,10 +136,10 @@ async function hasRemoteGeneratedAssets(petId) {
     remoteAssetExists(`/pocodex/pets/${petId}/pet.json`),
     remoteAssetExists(`/pocodex/pets/${petId}/source.json`),
     remoteAssetExists(`/pocodex/downloads/${petId}.zip`)
-  ]).then((results) => results.every(Boolean));
+  ]).then(async (results) => results.every(Boolean) && await remoteGeneratedMetadataMatches(pet, style));
 }
 
-function applyAnimatedSpritesheet(pet, style, sourcePet) {
+function applyAnimatedFallback(pet, style, sourcePet) {
   pet.assets = {
     ...pet.assets,
     preview: sourcePet.assets?.preview ?? pet.assets?.preview,
@@ -152,7 +151,7 @@ function applyAnimatedSpritesheet(pet, style, sourcePet) {
     installSh: `/install/${pet.id}`,
     installPs1: `/install/${pet.id}.ps1`
   };
-  pet.pixelStyle = normalizedPixelStyle(pet, style, true);
+  pet.pixelStyle = normalizedPixelStyle(pet, style, false);
 }
 
 function applySourceFallback(pet, style, sourcePet) {
@@ -243,18 +242,11 @@ function isVisualReady(pet) {
   const generatedAssets = pet.pixelStyle?.generatedAssets === true;
   const spritesheet = normalizePublicPath(pet.assets?.spritesheet);
   const selfSheet = `/pocodex/pets/${pet.id}/spritesheet.webp`;
-  const animatedSheet = `/pocodex-animated-sprites/${pet.id}.webp`;
 
   if (!styleId) {
     return false;
   }
-  if (styleId === "original-unchanged") {
-    return true;
-  }
-  if (styleId === "plain-xbrz" || styleId === "hq4x") {
-    return generatedAssets && spritesheet === selfSheet;
-  }
-  return generatedAssets && (spritesheet === selfSheet || spritesheet === animatedSheet);
+  return generatedAssets && spritesheet === selfSheet;
 }
 
 function comparePixelStylePets(a, b) {
@@ -272,6 +264,32 @@ async function localAssetHash(publicPath) {
   } catch {
     return "";
   }
+}
+
+async function localGeneratedMetadataMatches(pet, style) {
+  try {
+    const sourceJson = JSON.parse(await readFile(path.join(generatedPetDir, pet.id, "source.json"), "utf8"));
+    return generatedMetadataMatches(sourceJson?.pixelStyle, pet, style);
+  } catch {
+    return false;
+  }
+}
+
+async function remoteGeneratedMetadataMatches(pet, style) {
+  try {
+    const sourceJson = await remoteAssetJson(`/pocodex/pets/${pet.id}/source.json`);
+    return generatedMetadataMatches(sourceJson?.pixelStyle, pet, style);
+  } catch {
+    return false;
+  }
+}
+
+function generatedMetadataMatches(pixelStyle, pet, style) {
+  return pixelStyle?.id === style.id &&
+    pixelStyle?.sourcePetId === pet.pixelStyle?.sourcePetId &&
+    pixelStyle?.generationSource === pixelStyleGenerationSource &&
+    pixelStyle?.generatedAssets === true &&
+    pixelStyle?.styleFingerprint === pixelStyleFingerprint(style);
 }
 
 function normalizePublicPath(value) {
@@ -314,6 +332,21 @@ async function remoteAssetExists(assetPath) {
   }
   const promise = remoteHeadOk(`${remoteAssetOrigin}${assetPath}`);
   remoteAssetCache.set(assetPath, promise);
+  return promise;
+}
+
+async function remoteAssetJson(assetPath) {
+  const cacheKey = `json:${assetPath}`;
+  if (remoteAssetCache.has(cacheKey)) {
+    return remoteAssetCache.get(cacheKey);
+  }
+  const promise = fetch(`${remoteAssetOrigin}${assetPath}`).then(async (response) => {
+    if (!response.ok) {
+      throw new Error(`${assetPath} returned ${response.status}`);
+    }
+    return response.json();
+  });
+  remoteAssetCache.set(cacheKey, promise);
   return promise;
 }
 

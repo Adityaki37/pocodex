@@ -1,4 +1,4 @@
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import JSZip from "jszip";
@@ -28,6 +28,7 @@ const publicRoot = path.join(rootDir, "public", "pocodex");
 const publicPetsDir = path.join(publicRoot, "pets");
 const publicDownloadsDir = path.join(publicRoot, "downloads");
 const publicInstallDir = path.join(rootDir, "public", "install");
+const animatedSpritesDir = path.join(rootDir, "dist", "pocodex-animated-sprites");
 const manifestPath = path.join(publicRoot, "manifest.json");
 const catalogPath = path.join(publicRoot, "catalog.json");
 const publicBaseUrl = normalizeBaseUrl(process.env.POCODEX_URL ?? "https://pocodex.dev");
@@ -36,7 +37,9 @@ const npmPackageSource = "https://codeload.github.com/Adityaki37/pocodex/tar.gz/
 const previewScale = 0.5;
 const workerCount = Math.max(1, Number(process.env.POCODEX_PIXEL_STYLE_WORKERS ?? 4) || 4);
 const force = process.env.POCODEX_PIXEL_STYLE_FORCE === "1";
-const skipMotionSheets = process.env.POCODEX_PIXEL_STYLE_SKIP_MOTION_SHEETS === "1";
+const skipMotionSheets =
+  process.env.POCODEX_PIXEL_STYLE_SKIP_MOTION_SHEETS === "1" ||
+  process.env.POCODEX_PIXEL_STYLE_MOTION_SHEETS !== "1";
 
 await main();
 
@@ -55,10 +58,17 @@ async function main() {
   let completed = 0;
 
   await mapLimit(groups, workerCount, async (group) => {
-    const context = skipMotionSheets ? null : await createPixelStyleSourceContext(group.sourcePet);
+    let context = null;
+    const getContext = async () => {
+      if (skipMotionSheets) {
+        return null;
+      }
+      context ??= await createPixelStyleSourceContext(group.sourcePet);
+      return context;
+    };
     for (const pet of group.pixelPets) {
       const style = pixelQualityStylesById.get(pixelStyleId(pet));
-      await generatePixelStylePet({ pet, sourcePet: group.sourcePet, style, context, states: manifest.states });
+      await generatePixelStylePet({ pet, sourcePet: group.sourcePet, style, getContext, states: manifest.states });
       completed += 1;
       if (completed % 100 === 0 || completed === pixelPets.length) {
         console.log(`Generated ${completed}/${pixelPets.length} source-based pixel-style asset packs`);
@@ -90,7 +100,7 @@ function groupPixelPetsBySource(pixelPets, petsById, styleOrder) {
   }));
 }
 
-async function generatePixelStylePet({ pet, sourcePet, style, context, states }) {
+async function generatePixelStylePet({ pet, sourcePet, style, getContext, states }) {
   const targetDir = path.join(publicPetsDir, pet.id);
   await mkdir(targetDir, { recursive: true });
   const packageDisplayName = pet.packageDisplayName ?? `${sourcePet.displayName} ${style.label}`;
@@ -103,7 +113,6 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
   const targetMotionDir = path.join(targetDir, "motion");
   const sourceJson = await readJsonIfExists(targetSourceJson);
   const styleFingerprint = pixelStyleFingerprint(style);
-  const motionActions = pixelStyleMotionActions(pet, style, context);
   const sourceGenerated =
     sourceJson?.pixelStyle?.generationSource === pixelStyleGenerationSource &&
     sourceJson?.pixelStyle?.generatedAssets === true &&
@@ -116,13 +125,20 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
     !(await fileExists(targetThumbnail));
 
   if (needsRender) {
-    await writePixelStyleSpritesheetFromBaseAtlas({
-      sourcePet,
-      style,
-      outputPath: targetSpritesheet
-    });
+    await writePixelStyleSpritesheet({ pet, sourcePet, style, outputPath: targetSpritesheet });
     await writePreviewFromSpritesheet(targetDir, style);
     await createThumbnail(targetSpritesheet, targetThumbnail, style);
+  }
+
+  let context = null;
+  let motionActions = [];
+  if (!skipMotionSheets) {
+    const existingMotionActions = Object.keys(pet.assets?.motionSprites ?? {});
+    const shouldGenerateStyleMotion = existingMotionActions.length > 0 || ["plain-xbrz", "hq4x"].includes(style.id);
+    if (shouldGenerateStyleMotion) {
+      context = await getContext();
+      motionActions = pixelStyleMotionActions(pet, style, context);
+    }
   }
   if (
     !skipMotionSheets &&
@@ -195,6 +211,8 @@ async function generatePixelStylePet({ pet, sourcePet, style, context, states })
     zip: `/pocodex/downloads/${zipName}`,
     installSh: `/install/${pet.id}`,
     installPs1: `/install/${pet.id}.ps1`,
+    motionSpriteLayout: undefined,
+    motionSprites: undefined,
     ...(motionActions.length > 0
       ? {
           motionSpriteLayout: "codex-cell-v1",
@@ -231,6 +249,65 @@ function pixelStyleMotionActions(pet, style, context) {
   return [...context.animMap.keys()]
     .filter((action) => action && action !== "Head")
     .sort((a, b) => a.localeCompare(b));
+}
+
+async function canUseAnimatedSpritesheet(pet, style) {
+  if (!["original-unchanged", "scale2x", "epx"].includes(style.id)) {
+    return false;
+  }
+  return fileExists(path.join(animatedSpritesDir, `${pet.id}.webp`));
+}
+
+async function writePixelStyleSpritesheet({ pet, sourcePet, style, outputPath }) {
+  if (await canUseAnimatedSpritesheet(pet, style)) {
+    await copyFile(path.join(animatedSpritesDir, `${pet.id}.webp`), outputPath);
+    return;
+  }
+  if (["plain-xbrz", "hq4x"].includes(style.id)) {
+    await writePixelStyleSpritesheetFromWholeAtlas({ sourcePet, style, outputPath });
+    return;
+  }
+  await writePixelStyleSpritesheetFromBaseAtlas({ sourcePet, style, outputPath });
+}
+
+async function writePixelStyleSpritesheetFromWholeAtlas({ sourcePet, style, outputPath }) {
+  const sourceSpritesheetPath = publicAssetPath(sourcePet.assets?.spritesheet);
+  if (!sourceSpritesheetPath) {
+    throw new Error(`${sourcePet.id} is missing a local source spritesheet`);
+  }
+
+  const metadata = await sharp(sourceSpritesheetPath).metadata();
+  const width = metadata.width ?? frameWidth * 8;
+  const height = metadata.height ?? frameHeight * atlasRows;
+  const scale = Math.max(1, 2 ** Math.max(0, Number(style.scale2xPasses ?? 0)));
+  let image = sharp(sourceSpritesheetPath)
+    .ensureAlpha()
+    .resize({
+      width: width * scale,
+      height: height * scale,
+      fit: "fill",
+      kernel: sharp.kernel.nearest,
+      withoutEnlargement: false
+    })
+    .resize({
+      width,
+      height,
+      fit: "fill",
+      kernel: resolvePreviewKernel(style),
+      withoutEnlargement: false
+    });
+
+  if (style.sharpen) {
+    image = image.sharpen(style.sharpen);
+  }
+  if (style.modulate) {
+    image = image.modulate(style.modulate);
+  }
+  if (style.linear) {
+    image = image.linear(style.linear.a, style.linear.b);
+  }
+
+  await image.webp(resolvePreviewWebpOptions(style)).toFile(outputPath);
 }
 
 async function anyMotionSpriteMissing(targetMotionDir, actions) {

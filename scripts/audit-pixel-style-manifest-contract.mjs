@@ -2,14 +2,17 @@ import { createHash } from "node:crypto";
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  pixelQualityStylesById,
+  pixelStyleFingerprint,
+  pixelStyleGenerationSource
+} from "./lib/pixel-style-generation.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, "..");
 const manifestPath = path.join(rootDir, "public", "pocodex", "manifest.json");
 const reportPath = path.join(rootDir, "output", "pixel-style-manifest-contract.json");
 
-const stylesThatMayUseAnimatedSprites = new Set(["original-unchanged", "scale2x", "epx"]);
-const generatedOnlyStyles = new Set(["plain-xbrz", "hq4x"]);
 const pixelStyleOrder = ["original-unchanged", "scale2x", "epx", "plain-xbrz", "hq4x"];
 
 await main();
@@ -42,11 +45,9 @@ async function main() {
     const generatedAssets = pet.pixelStyle?.generatedAssets === true;
     const spritesheet = normalizePublicPath(pet.assets?.spritesheet);
     const expectedPetSheet = `/pocodex/pets/${pet.id}/spritesheet.webp`;
-    const expectedAnimatedSheet = `/pocodex-animated-sprites/${pet.id}.webp`;
     const sourcePet = petsById.get(sourcePetId);
     const sourceSheet = normalizePublicPath(sourcePet?.assets?.spritesheet);
     const usesGeneratedPetAsset = spritesheet === expectedPetSheet;
-    const usesAnimatedSprite = spritesheet === expectedAnimatedSheet;
     const usesSourceFallback = sourceSheet && spritesheet === sourceSheet;
     const visualReady = isVisualReady(pet);
 
@@ -57,10 +58,10 @@ async function main() {
     }
     if (usesGeneratedPetAsset) {
       summary.generatedPetAssets += 1;
-    } else if (usesAnimatedSprite) {
-      summary.animatedSprites += 1;
     } else if (usesSourceFallback) {
       summary.sourceFallbacks += 1;
+    } else if (spritesheet.startsWith("/pocodex-animated-sprites/")) {
+      summary.animatedSprites += 1;
     }
 
     if (!styleId || !sourcePetId || !sourcePet) {
@@ -80,32 +81,22 @@ async function main() {
       });
     }
 
-    if (generatedOnlyStyles.has(styleId)) {
-      if (visualReady && !usesGeneratedPetAsset) {
-        failures.push({
-          petId: pet.id,
-          styleId,
-          spritesheet,
-          reason: "HQ/xBRZ visual style must use its own generated pet asset"
-        });
-      }
-      if (!visualReady && generatedAssets) {
-        failures.push({
-          petId: pet.id,
-          styleId,
-          spritesheet,
-          reason: "HQ/xBRZ fallback should not be marked generated"
-        });
-      }
-      continue;
-    }
-
-    if (stylesThatMayUseAnimatedSprites.has(styleId) && visualReady && !usesGeneratedPetAsset && !usesAnimatedSprite) {
+    if (!visualReady) {
       failures.push({
         petId: pet.id,
         styleId,
         spritesheet,
-        reason: "visual-ready pixel style must use generated pet or animated spritesheet asset"
+        reason: "every pixel style must have a current generated pet asset"
+      });
+      continue;
+    }
+
+    if (!usesGeneratedPetAsset) {
+      failures.push({
+        petId: pet.id,
+        styleId,
+        spritesheet,
+        reason: "visual-ready pixel style must use its own generated pet asset"
       });
     }
   }
@@ -118,6 +109,14 @@ async function main() {
   summary.groupsWithAtLeastThreeStyles = duplicateStyleAssets.groupsWithAtLeastThreeStyles;
   summary.duplicateStylePairs = duplicateStyleAssets.failures.length;
   failures.push(...duplicateStyleAssets.failures);
+
+  if (summary.fullFiveStyleGroups !== summary.sourceGroupsChecked) {
+    failures.push({
+      sourceGroupsChecked: summary.sourceGroupsChecked,
+      fullFiveStyleGroups: summary.fullFiveStyleGroups,
+      reason: "every source Pokemon variation must expose all five pixel styles"
+    });
+  }
 
   const report = {
     manifest: path.relative(rootDir, manifestPath),
@@ -142,18 +141,11 @@ function isVisualReady(pet) {
   const generatedAssets = pet.pixelStyle?.generatedAssets === true;
   const spritesheet = normalizePublicPath(pet.assets?.spritesheet);
   const selfSheet = `/pocodex/pets/${pet.id}/spritesheet.webp`;
-  const animatedSheet = `/pocodex-animated-sprites/${pet.id}.webp`;
 
   if (!styleId) {
     return false;
   }
-  if (styleId === "original-unchanged") {
-    return true;
-  }
-  if (generatedOnlyStyles.has(styleId)) {
-    return generatedAssets && spritesheet === selfSheet;
-  }
-  return generatedAssets && (spritesheet === selfSheet || spritesheet === animatedSheet);
+  return generatedAssets && spritesheet === selfSheet;
 }
 
 function pixelStyleId(pet) {
@@ -183,8 +175,34 @@ async function findMissingVisualAssets(pets) {
         reason: "visual-ready pixel pet references a missing spritesheet"
       });
     }
+    if (!await generatedMetadataMatches(pet)) {
+      failures.push({
+        petId: pet.id,
+        spritesheet,
+        reason: "visual-ready pixel pet source metadata does not match the current style recipe"
+      });
+    }
   }
   return failures;
+}
+
+async function generatedMetadataMatches(pet) {
+  const styleId = pixelStyleId(pet);
+  const style = pixelQualityStylesById.get(styleId);
+  if (!style) {
+    return false;
+  }
+  try {
+    const sourceJson = JSON.parse(await readFile(path.join(rootDir, "public", "pocodex", "pets", pet.id, "source.json"), "utf8"));
+    const pixelStyle = sourceJson?.pixelStyle;
+    return pixelStyle?.id === styleId &&
+      pixelStyle?.sourcePetId === pet.pixelStyle?.sourcePetId &&
+      pixelStyle?.generationSource === pixelStyleGenerationSource &&
+      pixelStyle?.generatedAssets === true &&
+      pixelStyle?.styleFingerprint === pixelStyleFingerprint(style);
+  } catch {
+    return false;
+  }
 }
 
 async function findDuplicateVisualStyleAssets(pets) {

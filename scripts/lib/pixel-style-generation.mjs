@@ -11,7 +11,7 @@ export const spriteMaxHeight = 184;
 export const spriteBottomPadding = 12;
 export const sourceFrameMaxHeight = frameHeight - spriteBottomPadding - 4;
 export const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
-export const pixelStyleGenerationSource = "source-frame-canonical-v5";
+export const pixelStyleGenerationSource = "source-frame-canonical-v6";
 
 const parser = new XMLParser({ ignoreAttributes: false });
 
